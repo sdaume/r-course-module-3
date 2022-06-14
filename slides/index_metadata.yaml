@@ -1,0 +1,10 @@
+---
+title: "SRC PhD R course Module 3"
+subtitle: "RMarkdown, Github & Co"
+author: "Stefan Daume"
+date: "16. June 2022"
+theme: white
+highlight: zenburn
+transition: none
+css: ./css/mycustom.css
+---

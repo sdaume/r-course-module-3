@@ -1,0 +1,131 @@
+---
+output:
+  md_document:
+    variant: markdown
+---
+
+```{r setup, include=FALSE}
+# pandoc cmd snippet:
+# pandoc -t revealjs --template=./slides/custom_pandoc_template/default.revealjs -s -o ./slides/index.html ./slides/index.md ./slides/index_metadata.yaml -V revealjs-url=./reveal.js-3.6.0 --mathjax --no-highlight -V highlighting-css=zenburn -V controlsLayout=edges
+
+# create pdf
+# decktape -s 1920x1080 reveal ./slides/index.html ./slides/2022-R-Course-Module-3.pdf
+
+# create screenshots
+# decktape reveal ./slides/index.html ./slides/2022-R-Course-Module-3.pdf --screenshots --screenshots-directory ./slides/handouts/screenshots
+
+knitr::opts_chunk$set(echo = FALSE)
+
+library(curl)
+library(jsonlite)
+library(htmltools)
+
+
+embed_tweet <- function(tweetId, userScreenName, maxwidth = 375, 
+                        hideThread = TRUE, omitScript = TRUE) {
+  tweet_url <- paste("https://publish.twitter.com/oembed?url=https%3A%2F%2Ftwitter.com%2F",
+                     userScreenName,
+                     "%2Fstatus%2F",
+                     tweetId,
+                     "&omit_script=", omitScript,
+                     "&align=center",
+                     "&maxwidth=", maxwidth,
+                     "&hide_thread=", hideThread,
+                     sep = "")
+
+  htmltools::HTML(jsonlite::fromJSON(curl::curl(tweet_url))$html)
+}
+```
+
+[//]: <> (Alternative background colours are #002b36 #333 #1E8C45)
+
+
+## &nbsp; {.hideslideheader data-background="#061C30"}
+<div style="display:table;width:100%;table-layout: fixed;">
+  <div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
+  SRC PhD R course Module 3
+  
+  RMarkdown, Github & Co
+    
+  &nbsp;
+    
+  &nbsp;
+  
+  &nbsp;
+  
+  &nbsp;
+  </div>
+</div>
+
+<div style="display:table;width:100%;table-layout: fixed;">
+  <div class="mytitlepage linksection" style="display:table-cell;width:30%;padding-left:3%;vertical-align:bottom;">
+  *[\@stefandaume](https://twitter.com/stefandaume)* 
+
+  *https://scitingly.net/*
+  
+  *stefan.daume@su.se*
+  </div>
+  
+  
+  <div class="mytitlepage authorsection" style="display:table-cell;width:70%;padding-right:3%;">
+  &nbsp;
+  **Stefan Daume**
+  
+  *[Stockholm Resilience Centre, Stockholm University](https://www.stockholmresilience.org/meet-our-team/staff/2021-01-27-daume.html)* 
+  
+  & *[Beijer Institute of Ecological Economics](https://beijer.kva.se/programmes/complexity/)*
+
+  &nbsp;
+
+  *16. June 2022*
+  </div>
+</div>
+
+
+## First slide 
+
+* TBD
+
+
+
+
+
+# Thank You!
+
+
+
+## Colophon {.colophon}
+**SRC PhD R course Module 3 --- RMarkdown, Github & Co"** by *Stefan Daume*
+
+&nbsp;
+
+Presented on 16. June 2022.
+
+&nbsp;
+
+This presentation can be cited using: *doi:...*
+
+&nbsp;
+
+**PRESENTATION DETAILS**
+
+**Author/Affiliation:** Stefan Daume, Stockholm Resilience Centre, Stockholm University
+
+**Presentation URL:** https://sdaume.github.io/r-course-module-3/slides
+
+**Presentation Source:** [TBD]
+
+**Presentation PDF:** [TBD]
+
+&nbsp;
+
+**CREDITS & LICENSES**
+
+This presentation is delivered with the help of several free and open source tools and libraries. It utilises the [reveal.js](https://revealjs.com/) presentation framework and has been created using [RMarkdown](https://rmarkdown.rstudio.com), [knitr](https://yihui.name/knitr/), [RStudio](https://www.rstudio.com) and [Pandoc](https://pandoc.org/). [highlight.js](https://highlightjs.org) provides syntax highlighting for code sections. [MathJax](https://www.mathjax.org) supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with [DeckTape](https://github.com/astefanutti/decktape). Please note the respective licenses of these tools and libraries.
+
+
+&nbsp;
+
+If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are **Copyright &copy; 2022 of the Author** and provided under a *CC BY 4.0* public domain license. 
+
+
