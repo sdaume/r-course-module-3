@@ -1,0 +1,239 @@
+/*Presentation-wide style changes*/
+
+.reveal {
+  font-size: 32px;
+  background-color: #F9F9F9;
+}
+
+
+
+.reveal section img {
+  border: 0;
+  background: None;
+  box-shadow: None;
+}
+
+
+/*===========================================*/
+/*Style elements for use on individual slides*/
+/*===========================================*/
+
+/*-----------------------------------------------------------*/
+/* Classes used to accomodate dark and light backgrounds.*/
+.darkslide > p {
+    color: white;
+}
+
+.darkslide > ul > li {
+    color: white;
+}
+
+
+
+/*-----------------------------------------------------------*/
+/* Classes used to hide, remove or change a header on individual slides.*/
+.hideslideheader h1,
+.hideslideheader h2 {
+    display: none;
+}
+
+.slideheader-light h1,
+.slideheader-light h2 {
+    color: white;
+}
+
+.slideheader-dark h1,
+.slideheader-dark h2 {
+    color: black;
+}
+
+/*---------------------------------------------------*/
+/* Classes used to customize slides with blockquotes.*/
+.quoteslide {
+  background: 'black';
+}
+
+.quoteslide > blockquote {
+  background: none;
+  box-shadow: none;
+}
+
+.quoteslide > blockquote > p {
+  font-size: 1em;
+  text-align: left;
+  font-family: 'Source Sans Serif';
+}
+
+.quoteslide > p {
+  font-size: 0.6em;
+  font-weight: bold;
+  width: 70%;
+  text-align: right;
+  font-family: 'Source Sans Pro';
+  margin: auto;
+  text-decoration: none;
+}
+
+.quoteslide > p > a {
+  text-decoration: none;
+}
+
+/*---------------------------------------------------------------*/
+/* Classes used change alignment of a single slide.*/
+.left-aligned-slide {
+  text-align: left;
+}
+
+.right-aligned-slide {
+  text-align: right;
+}
+
+.top-aligned-slide {
+  top: 0 !important;
+  display: block;
+}
+
+.bottom-aligned-div {
+  /*bottom:0px;
+  right:0px;
+  position:absolute;*/
+  color: white;
+  bottom: 0 !important;
+  display: block;
+}
+
+
+/*---------------------------------------------------------------*/
+/* Classes used provide atribution texts.*/
+.attribution-dark p {
+    position: absolute;
+    font-weight: bold;
+    bottom: 0px;
+    right: 0px;
+    font-size: 0.4em;
+    color: black;
+}
+
+.attribution-dark a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.attribution-light p {
+    position: absolute;
+    font-weight: bold;
+    bottom: 0px;
+    right: 0px;
+    font-size: 0.4em;
+    color: white;
+    text-decoration: none;
+}
+
+.attribution-light a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+
+/*---------------------------------------------------------------*/
+/* Classes used change text size*/
+.small-pg-text > p {
+  font-size: 0.9em;
+}
+
+.x-small-pg-text > p {
+  font-size: 0.8em;
+}
+
+.xs-small-pg-text > p {
+  font-size: 0.6em;
+}
+
+
+.figure-caption-text > p {
+  font-size: 0.6em;
+  text-align: left;
+}
+
+/*---------------------------------------------------------------*/
+/* Classes used to customize a special additional(!) title slide.*/
+
+.title-with-logo p {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: left;
+  text-transform: uppercase;
+  margin: 3px 0;
+}
+
+.title-with-logo p ~ p {
+  font-size: 0.9em;
+  font-style: italic;
+  font-weight: normal;
+  text-align: left;
+  text-transform: capitalize;
+  margin: 3px 0;
+}
+
+.title-without-logo p {
+/*  font-family: 'Source Sans Serif'; */
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: left;
+  text-transform: uppercase;
+/*  text-transform: capitalize; */
+  margin: 3px 0;
+}
+
+.title-without-logo p ~ p {
+/*  font-family: 'Source Sans Serif'; */
+  font-size: 0.8em;
+  font-style: italic;
+  text-align: left;
+  text-transform: capitalize;
+  margin: 3px 0;
+}
+
+.mytitlepage a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.authorsection p {
+  font-size: 0.65em;
+  text-align: right;
+  text-decoration: none;
+  margin: 1px 0;
+}
+
+.linksection p {
+  font-size: 0.5em;
+  font-style: italic;
+  margin: 3px 0;
+  text-decoration: none;
+  text-align:left;
+}
+
+
+/*---------------------------------------------------------------*/
+/* Classes used for the colophon slide*/
+.colophon > p {
+  text-align: left;
+  font-size: 0.6em;
+  margin: 1px;
+}
+
+.colophon > h2 {
+  text-align: left;
+}
+
+#refs {
+  font-size: 0.5em;
+  text-align: left;
+  column-count: 2;
+}
+
+#refs > div > p {
+  margin: 0px 0px 10px 0px;
+}
