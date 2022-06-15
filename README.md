@@ -42,6 +42,7 @@ apply:
     **[tufte](https://github.com/rstudio/tufte)** packages have been
     used to generate presentation handouts. The former is released under
     a GPL2/GPL3 license and the latter under a GPL3 license.
+  - Included [CSL (Citation Style Language) files](https://citationstyles.org/) are shared under a [CC BY-SA 3.0 license](https://creativecommons.org/licenses/by-sa/3.0/).
 
 Other credits:
 
