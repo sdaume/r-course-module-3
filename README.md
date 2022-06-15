@@ -2,9 +2,21 @@
 
 This is the source of slides, handouts, examples and other resources for module 3 of the SRC PhD R course. Module 3 of the course was held on 16. June 2022.
 
+## Presentation sLides
+
 A live version of the presentation slides can be found here: https://sdaume.github.io/r-course-module-3/slides/.
 
-Some simple summary notes which also serve as an example for a typcial R Markdown document are accessible here: https://sdaume.github.io/r-course-module-3/handouts/markdown-handout.html.
+## Handouts
+
+Some simple summary notes which also serve as an example for a typical R Markdown document are accessible here: https://sdaume.github.io/r-course-module-3/handouts/markdown-handout.html.
+
+### Output format variations
+
+Below here samples of different output formats generated from the handouts:
+
+* [PDF](https://sdaume.github.io/r-course-module-3/handouts/variations/markdown-handout.pdf) 
+* [HTML with a different theme ('darkly')](https://sdaume.github.io/r-course-module-3/handouts/variations/markdown-handout-darkly.html) 
+* [HTML in Tufte style](https://sdaume.github.io/r-course-module-3/handouts/variations/markdown-handout-tufte.html) 
 
 
 
