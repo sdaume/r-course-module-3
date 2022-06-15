@@ -4,6 +4,8 @@ This is the source of slides, handouts, examples and other resources for module 
 
 A live version of the presentation slides can be found here: https://sdaume.github.io/r-course-module-3/slides/.
 
+Some simple summary notes which also serve as an example for a typcial R Markdown document are accessible here: https://sdaume.github.io/r-course-module-3/handouts/.
+
 
 
 ## Licenses and credits

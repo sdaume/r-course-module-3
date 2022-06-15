@@ -1,0 +1,88 @@
+---
+title: "R Markdown: Key Takeaways"
+subtitle: "SRC R Course, Module 3"
+author: "Stefan Daume"
+date: '2022-06-16'
+output:
+  bookdown::html_document2:
+    theme: flatly
+    toc: yes
+    number_sections: true
+bibliography: references.bib
+link-citations: yes
+#csl: global-environmental-change.csl
+#csl: nature.csl
+#csl: plos-one.csl
+#csl: science.csl
+csl: ecology-and-society.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(gapminder)
+library(kableExtra)
+
+year_of_interest <- 2007
+```
+
+
+# Introduction
+
+The key motivation for learning and using **R Markdown** is to avoid repetitive and error-prone tasks. More specifically, you should use R Markdown if you want to:
+
+* concentrate on content rather than formatting
+* share one document in many different formats (Markdown, PDF, Word, HTML)
+* ensure correct citations and bibliographies
+* switch between different citation formats
+* integrate your data analysis automatically, not statically
+
+This course module can only scratch the surface of the available features in *R Markdown* and aims to introduce a few key concepts and simple recipes. Consult the standard reference, *R Markdown: The Definitive Guide* [@XieAllaire_et_2022], to learn more. A useful resource for daily work with R Markdown is also the 'R Studio Cheatsheet' [Dynamic documents with rmarkdown](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf).
+
+This document is a simple summary of the course module. Most importantly however it is created using R Markdown and is thus a self-documenting example. The source for this document can be found in this Github repository: <https://github.com/sdaume/r-course-module-3>
+
+
+# Basic Markdown
+
+*Markdown* is a type of *Markup* language; HTML is a well-known example for markup. In contrast to the latter *Markdown* is a light-weight and easily readable type of markup. If you have ever edited a Wikipedia page, you have come across one type of lightweight markup. Markdown is even easier. 
+
+The following Figure \@ref(fig:markdown-editor) shows some common Markdown syntax and how this is interpreted (or rendered) in for example an HTML page. The figure is a screenshot of the [Atom](https://atom.io/) text editor which supports Markdown syntax and offers a preview of the interpreted Markdown. 
+
+```{r markdown-editor, echo=FALSE, fig.cap="This is a screenshot of the Atom text editor showing some basic Markdown syntax and how it would be rendered."}
+
+knitr::include_graphics('./images/markdown_basics.jpg')
+```
+
+A look at the table syntax shows however that even Markdown could get complicated. Most importantly, we might want our table content to be dynamically generated. This is where `R Markdown` shines and will help.
+
+
+# R Markdown
+
+* primary motivation is however to allow dynamic content
+
+## Dynamic content
+
+* integrate your analysis as code and generate the results dynamically with `knitr`
+
+
+### Dynamic plots
+
+
+### Dynamic tables
+
+
+## Managing citations and bibliographies
+
+### Using BibTeX
+
+
+### Citing
+
+
+### Changing styles
+
+
+# References
