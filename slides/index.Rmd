@@ -3,8 +3,6 @@ output:
   md_document:
     variant: markdown
 always_allow_html: true
-bibliography: references.bib
-link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -28,6 +26,8 @@ knitr::opts_chunk$set(
 library(readr)
 library(dplyr)
 library(ggplot2)
+
+year_of_interest <- 1952
 ```
 
 [//]: <> (Alternative background colours are #002b36 #333 #1E8C45)
@@ -100,17 +100,15 @@ Avoid repetitive and error-prone tasks.
 # (R)Markdown
 
 
-
-
 ## Markdown vs markup
 
-**Markdown** allows us to concentrate on document structure and content rather than worry about styling and presentation later.
+**Markdown** allows us to concentrate on document structure and content. We can then worry about styling and presentation later.
 
-**Markdown** is a type of **markup language** (like HTML), but it is lightweight and human-readable.
+**Markdown** is a type of **markup language** (like HTML), but it is lightweight and more readable.
 
 
 
-## Some text with simple formatting
+## Some text with simple formatting {.left-aligned-slide}
 
 This is a list:
 
@@ -166,8 +164,16 @@ measure.
 
 
 
+
+
 ## The same with Markdown
 
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-left:1%;vertical-align:top;">
+  
+  **Basic Markdown**
+  
 ```
 This is a list:
 
@@ -177,10 +183,20 @@ This is a list:
 And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.
 ```
 
-Typical workflow: 
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-right:1%;text-align:left;vertical-align:top;">
+  
+Typical workflow with markdown: 
 
 1. produce content as a Markdown document, 
 2. generate the final document in a suitable output format (commonly HTML, PDF, Word)
+3. publish
+    
+  </div>
+</div>
+
 
 
 
@@ -222,16 +238,16 @@ An overview of core markdown syntax can be found in [this RMarkdown book chapter
 
 
 
-## Key difference to basic Markdown
+## Differences to basic Markdown
 
-* R Markdown files are signalled by the file extension `.Rmd` instead of `.md`.
+* R Markdown files use the file extension **`.Rmd`** instead of **`.md`**.
 * R Markdown files must start with a so-called **YAML header** section.
 
 
 
 ## YAML - Yet Another Markup Language?
 
-The YAML header must be placed at the beginning of a document and is enclosed by three dashes `---`.
+The **YAML header** must be placed at the beginning of a document and is enclosed by three dashes `---`.
 
 ````{verbatim}
 ---
@@ -259,7 +275,7 @@ A YAML header with more options might look like this:
 ---
 title: "R Course SRC"
 subtitle: "Module 3"
-date: '2022-06-16'
+date: "`r Sys.Date()`"
 author: 'Stefan Daume' 
 output: 
   html_document:
@@ -270,18 +286,46 @@ link-citations: yes
 ````
 
 
-## Exercise
 
+
+## Exercise 
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-left:1%;text-align:left;vertical-align:middle;">
+  
 1. Create a default 'R Markdown' document in R Studio.
 2. "knit" the document to HTML and view the result.
 3. Use the **Knit** button to select different output formats and check the YAML header afterwards.
 
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-right:1%;vertical-align:middle;">
+  
+```{r echo=FALSE}
+knitr::include_graphics('./images/rstudio_knit.jpg')
+```
+    
+  </div>
+</div>
+
+<aside class="notes">
+* may have to [install TinyTeX](https://bookdown.org/yihui/rmarkdown-cookbook/install-latex.html) to get PDF to work
+#tinytex::install_tinytex()
+
+* pandoc is bundled, but may not be the latest; hence may need to install pandoc [see here](https://bookdown.org/yihui/rmarkdown-cookbook/install-pandoc.html)
+* check installed version
+#rmarkdown::find_pandoc()
+</aside>
 
 
-## Key difference 2 to basic Markdown
+
+
+## R Markdown: data-driven documents
 
 * You can now integrate your analysis as R code into the document
 * The analysis (i.e. the R code) is executed and the  results updated when you `knit` the document.
+* Text are interspersed.
 * Code sections are included in code chunks like this. 
 
 ````{verbatim}
@@ -291,7 +335,6 @@ link-citations: yes
 ```
 
 ````
-
 
 <aside class="notes">
 * contains an **optional** label (can be used for references), options controlling the output, such as figure size, caption, resolution 
@@ -317,7 +360,7 @@ gapminder %>%
 
 
 
-## Markup samples
+## Plots in R Markdown
 
 
 <div style="display:table;width:100%;table-layout:fixed;">
@@ -362,17 +405,16 @@ gapminder %>%
 
 
 
-## Create a default RMarkdown file in R Studio
+## Remember the Markdown table format?
 
-* create a file and click the **Knit** button at the top of the editor
-* include screenshot
-* try different formats (options offered by the **Knit** button); show image
-* many more styles and themes as well as options to control the output 
-
+```{r echo=FALSE}
+knitr::include_graphics('./images/markdown_tables.jpg')
+```
 
 
 
-## A dynamic table
+
+## Dynamic tables with R Markdown
 
 <div style="display:table;width:100%;table-layout:fixed;">
   <div style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;">
@@ -383,7 +425,7 @@ gapminder %>%
 ```{r}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -404,7 +446,7 @@ gapminder_latest %>%
 ```{r, echo=FALSE}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -418,7 +460,10 @@ gapminder_latest %>%
 </div>
 
 
-## A dynamic table
+
+
+
+## Customizing `kable` tables
 
 <div style="display:table;width:100%;table-layout:fixed;">
   <div style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;">
@@ -429,7 +474,7 @@ gapminder_latest %>%
 ```{r}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -450,7 +495,7 @@ gapminder_latest %>%
 ```{r, echo=FALSE}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -464,7 +509,25 @@ gapminder_latest %>%
 </div>
 
 
-## Advanced dynamic tables
+
+
+## Expressive tables with `kableExtra` 
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+  
+The [`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) package offers even more options:
+
+* data-driven colouring
+* interactive tables
+* grouped headers
+* tables with (interactive) sparklines
+* and more ... 
+
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-left:5%;vertical-align:top;">
 
 ```{r, echo=FALSE}
 library(kableExtra)
@@ -472,14 +535,14 @@ library(gapminder)
 library(dplyr)
 
 gapminder_latest <- gapminder::gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
             
 gapminder_latest %>%
   kbl(digits = c(0,1,2),
-      caption = "Dynamic formatting with the the help of `kableExtra`.",
+      caption = paste("Table caption: Dynamic formatting with the the help of `kableExtra`. This example shows Gapminder data summarised by continent for the year ", year_of_interest, ".", sep = ""),
       col.names = c("Continent", "Mean life expectancy", "Mean GDP")) %>%
   kable_styling(font_size = 10) %>%
   kable_paper(full_width = F) %>%
@@ -488,21 +551,9 @@ gapminder_latest %>%
   column_spec(3, color = "white",
                  background = spec_color(gapminder_latest$avrg_gdp[1:5]))
 ```
-
-
-## Advanced options with `kableExtra`
-
-* or beautify it endlessly 
-
-* TBD
-* [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
-
-
-
-## Many more control and output options
-
-* show examples and include links
-* reference this document as an example
+    
+  </div>
+</div>
 
 
 
@@ -517,6 +568,8 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(gapminder)
+
+year_of_interest <- 2007
 ```
 ````
 
@@ -527,13 +580,14 @@ Simplify library import and prepare datasets for reference in the whole document
 # Handling citations
 
 
+## Citations and bibliographies
+
+One of the most useful and powerful features for researchers using R Markdown.
 
 
 ## Requires a BibTeX database
 
-* one of the most powerful features of RMarkdown
-
-Which is simply a text file with the extension `.bib` and entries such as:
+A **BibTeX** database is simply a text file with the extension `.bib` and entries such as:
 
 ```
 @misc{XieAllaire_et_2022,
@@ -545,20 +599,67 @@ Which is simply a text file with the extension `.bib` and entries such as:
 }
 ```
 
-Export those simply from your reference manager. 
+No need to write those. Export from your reference manager or journal pages. 
 
-
-
-## Citations, bibliography, cross-referencing
-
+<aside class="notes">
 * requires a ".bib" (BibTeX format) file of citations; 
 * looks like this: ...
 * easy to export from the reference manager of your choice
+</aside>
+
+
+## Include citations
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+  
+**Point to the `.bib` file in the YAML header.**
+  
+````
+---
+title: "R Course SRC"
+subtitle: "Module 3"
+date: "`r Sys.Date()`"
+author: 'Stefan Daume' 
+output: 
+  html_document:
+    toc: yes
+bibliography: references.bib 
+link-citations: yes
+---
+````
+
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+  
+And then include citations in the text with the format **`[@CitationKey]`**, which in the shown entry was for example **`[@XieAllaire_et_2022]`**, which is a reference to [@XieAllaire_et_2022]. 
+
+Add the header `# References` at the end of your document, `knit`and you get: pure magic!
+  </div>
+</div>
+
+
+<aside class="notes">
 * you then point to the ".bib" file in the document's YAML header and include citations of your references as such `[@CitationKey]` in your text
 * and add a `# References` section at the end of your header
+</aside>
+
+
+## Include bibliography
+
+
+## Switch citation styles dynamically
+
+
+## bib notes
+ 
 * now you `knit` and get ... pure magic!
 * goodbye to: incorrect citations, missing citations, incorrect bibliographies and wasted time
 * even better: switch styles dynamically for the target journal
+
+
 
 
 ## Easy sharing and online publishing
