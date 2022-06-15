@@ -1,0 +1,3 @@
+```{r some-explanatory-label, echo=FALSE}
+# here goes your R code
+```

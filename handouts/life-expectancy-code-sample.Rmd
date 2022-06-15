@@ -1,0 +1,12 @@
+```{r life-expectancy, echo=FALSE}
+library(gapminder)
+
+gapminder %>% 
+    group_by(year) %>%
+    summarise(ale = mean(lifeExp)) %>%
+    ggplot(aes(x = year, y = ale)) +
+    geom_line(color = "orange") +
+    labs(x = "Year", 
+         y = "Average life expectancy") +
+    theme_classic(base_size = 16)
+```

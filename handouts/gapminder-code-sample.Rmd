@@ -1,0 +1,12 @@
+```{r}
+# summarize gapminder data by continent
+gapminder_latest <- gapminder %>% 
+  filter(year == year_of_interest) %>%
+  group_by(continent) %>%
+  summarise(avrg_le = mean(lifeExp),
+            avrg_gdp = mean(gdpPercap))
+              
+# print the results as a table
+gapminder_latest %>%
+  knitr::kable()
+```
