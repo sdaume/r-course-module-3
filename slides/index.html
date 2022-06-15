@@ -86,9 +86,9 @@
 </section></section>
 <section><section id="rmarkdown" class="title-slide slide level1"><h1>(R)Markdown</h1></section><section id="markdown-vs-markup" class="slide level2">
 <h2>Markdown vs markup</h2>
-<p><strong>Markdown</strong> allows us to concentrate on document structure and content rather than worry about styling and presentation later.</p>
-<p><strong>Markdown</strong> is a type of <strong>markup language</strong> (like HTML), but it is lightweight and human-readable.</p>
-</section><section id="some-text-with-simple-formatting" class="slide level2">
+<p><strong>Markdown</strong> allows us to concentrate on document structure and content. We can then worry about styling and presentation later.</p>
+<p><strong>Markdown</strong> is a type of <strong>markup language</strong> (like HTML), but it is lightweight and more readable.</p>
+</section><section id="some-text-with-simple-formatting" class="slide level2 left-aligned-slide">
 <h2>Some text with simple formatting</h2>
 <p>This is a list:</p>
 <ul>
@@ -127,17 +127,25 @@ measure.</code></pre>
 </div>
 </section><section id="the-same-with-markdown" class="slide level2">
 <h2>The same with Markdown</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-left:1%;vertical-align:top;">
+<p><strong>Basic Markdown</strong></p>
 <pre><code>This is a list:
 
 * with some **bold** and 
 * some *italic* text.
 
 And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.</code></pre>
-<p>Typical workflow:</p>
+</div>
+<div style="display:table-cell;width:50%;padding-right:1%;text-align:left;vertical-align:top;">
+<p>Typical workflow with markdown:</p>
 <ol type="1">
-<li>produce content as a Markdown document,</li>
-<li>generate the final document in a suitable output format (commonly HTML, PDF, Word)</li>
+<li><strong>write</strong> content as a Markdown document,</li>
+<li><strong>generate</strong> the final document in a suitable output format (commonly HTML, PDF, Word)</li>
+<li><strong>publish</strong></li>
 </ol>
+</div>
+</div>
 </section></section>
 <section><section id="essential-markdown-syntax" class="title-slide slide level1"><h1>Essential markdown syntax</h1></section><section id="basic-formatting-and-structuring" class="slide level2">
 <h2>Basic formatting and structuring</h2>
@@ -160,15 +168,15 @@ And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.</code
 <li>Purpose: dynamically weave together text, data and analysis workflows.</li>
 <li>This is accomplished with the <a href="https://yihui.org/knitr/"><code>knitr</code></a> package, an R package conveniently integrated into the R Studio UI.</li>
 </ul>
-</section><section id="key-difference-to-basic-markdown" class="slide level2">
-<h2>Key difference to basic Markdown</h2>
+</section><section id="differences-to-basic-markdown" class="slide level2">
+<h2>Differences to basic Markdown</h2>
 <ul>
-<li>R Markdown files are signalled by the file extension <code>.Rmd</code> instead of <code>.md</code>.</li>
+<li>R Markdown files use the file extension <strong><code>.Rmd</code></strong> instead of <strong><code>.md</code></strong>.</li>
 <li>R Markdown files must start with a so-called <strong>YAML header</strong> section.</li>
 </ul>
 </section><section id="yaml---yet-another-markup-language" class="slide level2">
 <h2>YAML - Yet Another Markup Language?</h2>
-<p>The YAML header must be placed at the beginning of a document and is enclosed by three dashes <code>---</code>.</p>
+<p>The <strong>YAML header</strong> must be placed at the beginning of a document and is enclosed by three dashes <code>---</code>.</p>
 <pre class="default"><code>---
 title: &quot;Untitled&quot;
 output: html_document
@@ -188,7 +196,7 @@ date: &#39;2022-06-14&#39;
 <pre class="default"><code>---
 title: &quot;R Course SRC&quot;
 subtitle: &quot;Module 3&quot;
-date: &#39;2022-06-16&#39;
+date: &quot;`r Sys.Date()`&quot;
 author: &#39;Stefan Daume&#39; 
 output: 
   html_document:
@@ -198,17 +206,32 @@ link-citations: yes
 ---</code></pre>
 </section><section id="exercise" class="slide level2">
 <h2>Exercise</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-left:1%;text-align:left;vertical-align:middle;">
 <ol type="1">
 <li>Create a default ‘R Markdown’ document in R Studio.</li>
 <li>“knit” the document to HTML and view the result.</li>
 <li>Use the <strong>Knit</strong> button to select different output formats and check the YAML header afterwards.</li>
 </ol>
-</section><section id="key-difference-2-to-basic-markdown" class="slide level2">
-<h2>Key difference 2 to basic Markdown</h2>
+</div>
+<div style="display:table-cell;width:50%;padding-right:1%;vertical-align:middle;">
+<p><img src="./images/rstudio_knit.jpg" width="399" /></p>
+</div>
+</div>
+<aside class="notes">
 <ul>
-<li>You can now integrate your analysis as R code into the document</li>
-<li>The analysis (i.e. the R code) is executed and the results updated when you <code>knit</code> the document.</li>
-<li>Code sections are included in code chunks like this.</li>
+<li><p>may have to <a href="https://bookdown.org/yihui/rmarkdown-cookbook/install-latex.html">install TinyTeX</a> to get PDF to work #tinytex::install_tinytex()</p></li>
+<li><p>pandoc is bundled, but may not be the latest; hence may need to install pandoc <a href="https://bookdown.org/yihui/rmarkdown-cookbook/install-pandoc.html">see here</a></p></li>
+<li><p>check installed version #rmarkdown::find_pandoc()</p></li>
+</ul>
+</aside>
+</section><section id="r-markdown-data-driven-documents" class="slide level2">
+<h2>R Markdown: data-driven documents</h2>
+<ul>
+<li>You can now integrate your analysis as <strong>R code</strong> into the document</li>
+<li>The analysis (i.e. the R code) is executed and the results updated when you <strong><code>knit</code></strong> the document.</li>
+<li>Text and code are <strong>interspersed</strong>.</li>
+<li>Code sections are included in <strong>code chunks</strong> like this.</li>
 </ul>
 <pre class="default"><code>```{r some-explanatory-label, echo=FALSE}
 # here goes your R code
@@ -232,8 +255,8 @@ gapminder %&gt;%
          y = &quot;Average life expectancy&quot;) +
     theme_classic(base_size = 16)
 ```</code></pre>
-</section><section id="markup-samples-1" class="slide level2">
-<h2>Markup samples</h2>
+</section><section id="plots-in-r-markdown" class="slide level2">
+<h2>Plots in R Markdown</h2>
 <div style="display:table;width:100%;table-layout:fixed;">
 <div style="display:table-cell;width:50%;padding-left:1%;vertical-align:middle;">
 <pre class="default"><code>```{r life-expectancy, echo=FALSE}
@@ -253,23 +276,18 @@ gapminder %&gt;%
 <p><img data-src="index_files/figure-markdown/life-expectancy-1.png" /></p>
 </div>
 </div>
-</section><section id="create-a-default-rmarkdown-file-in-r-studio" class="slide level2">
-<h2>Create a default RMarkdown file in R Studio</h2>
-<ul>
-<li>create a file and click the <strong>Knit</strong> button at the top of the editor</li>
-<li>include screenshot</li>
-<li>try different formats (options offered by the <strong>Knit</strong> button); show image</li>
-<li>many more styles and themes as well as options to control the output</li>
-</ul>
-</section><section id="a-dynamic-table" class="slide level2">
-<h2>A dynamic table</h2>
+</section><section id="remember-the-markdown-table-format" class="slide level2">
+<h2>Remember the Markdown table format?</h2>
+<p><img src="./images/markdown_tables.jpg" width="1302" /></p>
+</section><section id="dynamic-tables-with-r-markdown" class="slide level2">
+<h2>Dynamic tables with R Markdown</h2>
 <div style="display:table;width:100%;table-layout:fixed;">
 <div style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;">
 <p><strong>This code …</strong></p>
 <pre class="default"><code>```{r}
 # summarize gapminder data by continent
 gapminder_latest &lt;- gapminder %&gt;% 
-  filter(year == max(year)) %&gt;%
+  filter(year == year_of_interest) %&gt;%
   group_by(continent) %&gt;%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -319,15 +337,15 @@ gapminder_latest %&gt;%
 </table>
 </div>
 </div>
-</section><section id="a-dynamic-table-1" class="slide level2">
-<h2>A dynamic table</h2>
+</section><section id="customizing-kable-tables" class="slide level2">
+<h2>Customizing <code>kable</code> tables</h2>
 <div style="display:table;width:100%;table-layout:fixed;">
 <div style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;">
 <p><strong>This code …</strong></p>
 <pre class="default"><code>```{r}
 # summarize gapminder data by continent
 gapminder_latest &lt;- gapminder %&gt;% 
-  filter(year == max(year)) %&gt;%
+  filter(year == year_of_interest) %&gt;%
   group_by(continent) %&gt;%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -377,11 +395,23 @@ gapminder_latest %&gt;%
 </table>
 </div>
 </div>
-</section><section id="advanced-dynamic-tables" class="slide level2">
-<h2>Advanced dynamic tables</h2>
+</section><section id="more-expressive-tables-with-kableextra" class="slide level2">
+<h2>More expressive tables with <code>kableExtra</code></h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+<p>The <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html"><code>kableExtra</code></a> package offers even more options:</p>
+<ul>
+<li><p>data-driven colouring</p></li>
+<li><p>interactive tables</p></li>
+<li><p>grouped headers</p></li>
+<li><p>tables with (interactive) sparklines</p></li>
+<li><p>and more …</p>
+</div>
+<div style="display:table-cell;width:50%;padding-left:5%;vertical-align:top;"></li>
+</ul>
 <table class="table lightable-paper" style="font-size: 10px; margin-left: auto; margin-right: auto; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<p>Dynamic formatting with the the help of <code>kableExtra</code>.</p>
+<p>Table caption: Dynamic formatting with the the help of <code>kableExtra</code>. This example shows Gapminder data summarised by continent for the year 2007.</p>
 </caption>
 <thead>
 <tr>
@@ -454,19 +484,8 @@ gapminder_latest %&gt;%
 </tr>
 </tbody>
 </table>
-</section><section id="advanced-options-with-kableextra" class="slide level2">
-<h2>Advanced options with <code>kableExtra</code></h2>
-<ul>
-<li><p>or beautify it endlessly</p></li>
-<li><p>TBD</p></li>
-<li><p><a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">kableExtra</a></p></li>
-</ul>
-</section><section id="many-more-control-and-output-options" class="slide level2">
-<h2>Many more control and output options</h2>
-<ul>
-<li>show examples and include links</li>
-<li>reference this document as an example</li>
-</ul>
+</div>
+</div>
 </section><section id="central-setup-code-section" class="slide level2">
 <h2>Central ‘Setup’ code section</h2>
 <pre class="default"><code>```{r setup, include=FALSE}
@@ -476,15 +495,17 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(gapminder)
+
+year_of_interest &lt;- 2007
 ```</code></pre>
 <p>Simplify library import and prepare datasets for reference in the whole document.</p>
 </section></section>
-<section><section id="handling-citations" class="title-slide slide level1"><h1>Handling citations</h1></section><section id="requires-a-bibtex-database" class="slide level2">
+<section><section id="handling-citations" class="title-slide slide level1"><h1>Handling citations</h1></section><section id="citations-and-bibliographies" class="slide level2">
+<h2>Citations and bibliographies</h2>
+<p>One of the most useful and powerful features for researchers using R Markdown.</p>
+</section><section id="requires-a-bibtex-database" class="slide level2">
 <h2>Requires a BibTeX database</h2>
-<ul>
-<li>one of the most powerful features of RMarkdown</li>
-</ul>
-<p>Which is simply a text file with the extension <code>.bib</code> and entries such as:</p>
+<p>A <strong>BibTeX</strong> database is simply a text file with the extension <strong><code>.bib</code></strong> and entries such as:</p>
 <pre><code>@misc{XieAllaire_et_2022,
   author = {Xie, Yihui and Allaire, J. J. and Grolemund, Garrett},
   title = {{R Markdown: The Definitive Guide}},
@@ -492,36 +513,151 @@ library(gapminder)
   urldate = {2022-06-07},
   year = {2022}
 }</code></pre>
-<p>Export those simply from your reference manager.</p>
-</section><section id="citations-bibliography-cross-referencing" class="slide level2">
-<h2>Citations, bibliography, cross-referencing</h2>
+<p>No need to write those. Export from your reference manager or journal pages.</p>
+<aside class="notes">
 <ul>
 <li>requires a “.bib” (BibTeX format) file of citations;</li>
 <li>looks like this: …</li>
 <li>easy to export from the reference manager of your choice</li>
+</ul>
+</aside>
+</section><section id="include-citations" class="slide level2">
+<h2>Include citations</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+<p><strong>Point to the <code>.bib</code> file in the YAML header.</strong></p>
+<pre><code>---
+title: &quot;R Course SRC&quot;
+subtitle: &quot;Module 3&quot;
+date: &quot;2022-06-15&quot;
+author: &#39;Stefan Daume&#39; 
+output: 
+  html_document:
+    toc: yes
+bibliography: references.bib 
+link-citations: yes
+---</code></pre>
+</div>
+<div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+<p>And then include citations in the text with the format <strong><code>[@CitationKey]</code></strong>, which in the previously shown example was <strong><code>[@XieAllaire_et_2022]</code></strong>, which is a reference to <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span>.</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
 <li>you then point to the “.bib” file in the document’s YAML header and include citations of your references as such <code>[@CitationKey]</code> in your text</li>
 <li>and add a <code># References</code> section at the end of your header</li>
+</ul>
+</aside>
+</section><section id="include-a-bibliography" class="slide level2">
+<h2>Include a bibliography</h2>
+<pre class="default"><code>After presenting all results we have now reached the end of the document. Here should follow the bibliograpy.
+
+# References</code></pre>
+<p>Add the header <code># References</code> at the end of your document, <code>knit</code> and the complete bibliography is added to the output document.</p>
+</section><section id="include-a-bibliography-1" class="slide level2">
+<h2>Include a bibliography</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+<pre class="default"><code>After presenting all results we have now reached the end of the manuscript. As a final section should follow the bibliography.
+
+# References</code></pre>
+</div>
+<div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+<p>Add the header <strong><code># References</code></strong> at the end of your document, <strong><code>knit</code></strong> and the complete bibliography is added to the output document.</p>
+</div>
+</div>
+</section><section id="switch-citation-and-bibliography-styles-dynamically" class="slide level2">
+<h2>Switch citation and bibliography styles dynamically</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+<p><strong>Specify citation style in the YAML header.</strong></p>
+<pre><code>---
+title: &quot;R Course SRC&quot;
+subtitle: &quot;Module 3&quot;
+date: &quot;2022-06-15&quot;
+author: &#39;Stefan Daume&#39; 
+output: 
+  html_document:
+    toc: yes
+bibliography: references.bib 
+link-citations: yes
+csl: ecology-and-society.csl
+---</code></pre>
+</div>
+<div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+<p>The <strong><a href="https://www.zotero.org/styles">Citation Style Database</a></strong> database contains thousands of journal <a href="https://citationstyles.org/">citation styles</a>. Download the relevant one, reference in the YAML header and the output document will have the required citation style.</p>
+</div>
+</div>
+<aside class="notes">
+<ul>
 <li>now you <code>knit</code> and get … pure magic!</li>
 <li>goodbye to: incorrect citations, missing citations, incorrect bibliographies and wasted time</li>
 <li>even better: switch styles dynamically for the target journal</li>
 </ul>
+</aside>
 </section><section id="easy-sharing-and-online-publishing" class="slide level2">
 <h2>Easy sharing and online publishing</h2>
-<ul>
-<li>push HTML to Github (next section)</li>
-<li>enable sharing and share the link</li>
-<li>this is how this presentation works (and the others before)</li>
-</ul>
-</section><section id="example" class="slide level2">
-<h2>Example</h2>
-<ul>
-<li>create an Rmd file in RMarkdown, open it, then click on <strong>Knit</strong> button</li>
-<li>try the different options (HTML, PDF, Word)</li>
-</ul>
+<ol type="1">
+<li><code>knit</code> your R Mardown document to HTML</li>
+<li>push the HTML to Github (next part of this module)</li>
+<li>enable sharing of <strong>Github Pages</strong></li>
+</ol>
+<p>This is how this presentation works (and the others before).</p>
 </section><section id="continous-analysis-as-the-ultimate-goal" class="slide level2">
 <h2>“Continous Analysis” as the ultimate goal</h2>
 </section></section>
-<section><section id="git-and-github" class="title-slide slide level1"><h1>Git and Github</h1></section><section id="you-need-git-and-github-if-non-exhaustive-list" class="slide level2">
+<section><section id="thank-you" class="title-slide slide level1"><h1>Thank You!</h1></section><section id="colophon" class="slide level2 colophon">
+<h2>Colophon</h2>
+<p><strong>SRC PhD R course Module 3 — RMarkdown, Github &amp; Co"</strong> by <em>Stefan Daume</em></p>
+<p> </p>
+<p>Presented on 16. June 2022.</p>
+<p> </p>
+<p>This presentation can be cited using: <em>doi:…</em></p>
+<p> </p>
+<p><strong>PRESENTATION DETAILS</strong></p>
+<p><strong>Author/Affiliation:</strong> Stefan Daume, Stockholm Resilience Centre, Stockholm University</p>
+<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides" class="uri">https://sdaume.github.io/r-course-module-3/slides</a></p>
+<p><strong>Presentation Source:</strong> [TBD]</p>
+<p><strong>Presentation PDF:</strong> [TBD]</p>
+<p> </p>
+<p><strong>CREDITS &amp; LICENSES</strong></p>
+<p>This presentation is delivered with the help of several free and open source tools and libraries. It utilises the <a href="https://revealjs.com/">reveal.js</a> presentation framework and has been created using <a href="https://rmarkdown.rstudio.com">RMarkdown</a>, <a href="https://yihui.name/knitr/">knitr</a>, <a href="https://www.rstudio.com">RStudio</a> and <a href="https://pandoc.org/">Pandoc</a>. <a href="https://highlightjs.org">highlight.js</a> provides syntax highlighting for code sections. <a href="https://www.mathjax.org">MathJax</a> supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with <a href="https://github.com/astefanutti/decktape">DeckTape</a>. Please note the respective licenses of these tools and libraries.</p>
+<p> </p>
+<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2022 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
+</section><section id="key-resources" class="slide level2">
+<h2>Key Resources</h2>
+<ul>
+<li>R Markdown
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Cheatsheet: Dynamic documents with rmarkdown cheatsheet</a></li>
+</ul></li>
+<li>Git/Github:
+<ul>
+<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span></li>
+<li>“Excuse me, do you have a moment to talk about version control?” <span class="citation" data-cites="Bryan2017">(Bryan 2017)</span></li>
+<li>Advanced git use: <a href="https://git-scm.com/book/en/v2">Pro Git</a> book <span class="citation" data-cites="Chacon_et_2014_Book">(Chacon and Straub 2014)</span></li>
+<li><a href="https://cbea.ms/git-commit/">How to write a great commit message</a></li>
+</ul></li>
+</ul>
+</section><section id="references" class="slide level2">
+<h2>References</h2>
+<div id="refs" role="doc-bibliography">
+<div id="ref-Bryan2017">
+<p>Bryan, Jennifer. 2017. “Excuse me, do you have a moment to talk about version control?” <em>PeerJ Preprints</em> 5:e3159v2 (August). <a href="https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2">https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2</a>.</p>
+</div>
+<div id="ref-Bryan2021">
+<p>———. 2021. “Happy Git and GitHub for the useR.” <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.</p>
+</div>
+<div id="ref-Chacon_et_2014_Book">
+<p>Chacon, Scott, and Ben Straub. 2014. <em>Pro Git</em>. Apress. <a href="https://doi.org/10.1007/978-1-4842-0076-6">https://doi.org/10.1007/978-1-4842-0076-6</a>.</p>
+</div>
+<div id="ref-XieAllaire_et_2022">
+<p>Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2022. “R Markdown: The Definitive Guide.” <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.</p>
+</div>
+</div>
+</section></section>
+<section><section id="appendix-some-notes-on-github" class="title-slide slide level1"><h1>Appendix (some notes on Github)</h1></section><section id="you-need-git-and-github-if-non-exhaustive-list" class="slide level2">
 <h2>You need git and Github if … (non-exhaustive list)</h2>
 <ul>
 <li>… you have files like this, but realise that this is not efficient
@@ -563,9 +699,8 @@ library(gapminder)
 <ul>
 <li>.gitignore</li>
 </ul>
-</section><section id="conventions" class="slide level2">
-<h2>Conventions</h2>
-<p>How to write a great commit comment (8 rules):</p>
+</section><section id="how-to-write-a-great-commit-comment" class="slide level2 left-aligned-slide">
+<h2>How to write a great commit comment</h2>
 <p>Most important:</p>
 <ul>
 <li>Keep things atomic!</li>
@@ -576,15 +711,8 @@ library(gapminder)
 <li>Use the imperative mood in the subject line (Because a commit message should always complete the following line: “If applied, this commit will [YOUR_SUBJECT_LINE].”)</li>
 <li>Use the body to explain what and why vs. how (Because “the how” can be obtained from the <em>diff</em>. The commit message should provide the context for “the how”.)</li>
 </ul>
-<p>Other common conventions:</p>
-<ul>
-<li>Limit the subject line to 50 characters (As a rule of thumb and a reminder to strive for atomic commits.)</li>
-<li>Capitalize the subject line</li>
-<li>Do not end the subject line with a period</li>
-<li>Wrap the body at 72 characters (Because Git never wraps text automatically.)</li>
-</ul>
 </section></section>
-<section><section id="setting-things-up-with-r-studio" class="title-slide slide level1"><h1>Setting things up with R Studio</h1></section><section id="do-this-once" class="slide level2">
+<section><section id="setting-git-up-with-r-studio" class="title-slide slide level1"><h1>Setting Git up with R Studio</h1></section><section id="do-this-once" class="slide level2">
 <h2>Do this once:</h2>
 <ul>
 <li>install git locally (see <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span>)</li>
@@ -610,64 +738,17 @@ library(gapminder)
 </section><section id="when-your-new-project-is-set-up" class="slide level2">
 <h2>When your new project is set up</h2>
 <ul>
-<li>make a change to the README</li>
+<li>make a change to the <code>README.md</code> (a useful project description)</li>
+<li><code>commit</code> the changes of the README file</li>
+<li>and <code>push</code> to the remote Github repo</li>
+<li>check the Github repo</li>
 </ul>
-</section><section id="show-a-basic-workflow" class="slide level2">
-<h2>Show a basic workflow</h2>
+<aside class="notes">
 <ul>
+<li>Show a basic workflow</li>
 <li>screenshots</li>
 </ul>
-</section></section>
-<section><section id="thank-you" class="title-slide slide level1"><h1>Thank You!</h1></section><section id="colophon" class="slide level2 colophon">
-<h2>Colophon</h2>
-<p><strong>SRC PhD R course Module 3 — RMarkdown, Github &amp; Co"</strong> by <em>Stefan Daume</em></p>
-<p> </p>
-<p>Presented on 16. June 2022.</p>
-<p> </p>
-<p>This presentation can be cited using: <em>doi:…</em></p>
-<p> </p>
-<p><strong>PRESENTATION DETAILS</strong></p>
-<p><strong>Author/Affiliation:</strong> Stefan Daume, Stockholm Resilience Centre, Stockholm University</p>
-<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides" class="uri">https://sdaume.github.io/r-course-module-3/slides</a></p>
-<p><strong>Presentation Source:</strong> [TBD]</p>
-<p><strong>Presentation PDF:</strong> [TBD]</p>
-<p> </p>
-<p><strong>CREDITS &amp; LICENSES</strong></p>
-<p>This presentation is delivered with the help of several free and open source tools and libraries. It utilises the <a href="https://revealjs.com/">reveal.js</a> presentation framework and has been created using <a href="https://rmarkdown.rstudio.com">RMarkdown</a>, <a href="https://yihui.name/knitr/">knitr</a>, <a href="https://www.rstudio.com">RStudio</a> and <a href="https://pandoc.org/">Pandoc</a>. <a href="https://highlightjs.org">highlight.js</a> provides syntax highlighting for code sections. <a href="https://www.mathjax.org">MathJax</a> supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with <a href="https://github.com/astefanutti/decktape">DeckTape</a>. Please note the respective licenses of these tools and libraries.</p>
-<p> </p>
-<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2022 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
-</section><section id="key-resources" class="slide level2">
-<h2>Key Resources</h2>
-<ul>
-<li>Git/Github:
-<ul>
-<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span></li>
-<li>“Excuse me, do you have a moment to talk about version control?” <span class="citation" data-cites="Bryan2017">(Bryan 2017)</span></li>
-<li>Advanced git use: <a href="https://git-scm.com/book/en/v2">Pro Git</a> book <span class="citation" data-cites="Chacon_et_2014_Book">(Chacon and Straub 2014)</span></li>
-<li><a href="https://cbea.ms/git-commit/">How to write a great commit message</a></li>
-</ul></li>
-<li>R Markdown
-<ul>
-<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
-<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Cheatsheet: Dynamic documents with rmarkdown cheatsheet</a></li>
-</ul></li>
-</ul>
-</section><section id="references" class="slide level2 unnumbered">
-<h2>References</h2>
-<div id="refs" class="references" role="doc-bibliography">
-<div id="ref-Bryan2017">
-<p>Bryan, Jennifer. 2017. “Excuse me, do you have a moment to talk about version control?” <em>PeerJ Preprints</em> 5:e3159v2 (August). <a href="https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2">https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2</a>.</p>
-</div>
-<div id="ref-Bryan2021">
-<p>———. 2021. “Happy Git and GitHub for the useR.” <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.</p>
-</div>
-<div id="ref-Chacon_et_2014_Book">
-<p>Chacon, Scott, and Ben Straub. 2014. <em>Pro Git</em>. Apress. <a href="https://doi.org/10.1007/978-1-4842-0076-6">https://doi.org/10.1007/978-1-4842-0076-6</a>.</p>
-</div>
-<div id="ref-XieAllaire_et_2022">
-<p>Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2022. “R Markdown: The Definitive Guide.” <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.</p>
-</div>
-</div>
+</aside>
 </section></section>
     </div>
   </div>

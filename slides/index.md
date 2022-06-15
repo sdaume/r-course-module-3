@@ -60,13 +60,13 @@ Avoid repetitive and error-prone tasks.
 
 ## Markdown vs markup
 
-**Markdown** allows us to concentrate on document structure and content
-rather than worry about styling and presentation later.
+**Markdown** allows us to concentrate on document structure and content.
+We can then worry about styling and presentation later.
 
 **Markdown** is a type of **markup language** (like HTML), but it is
-lightweight and human-readable.
+lightweight and more readable.
 
-## Some text with simple formatting
+## Some text with simple formatting {#some-text-with-simple-formatting .left-aligned-slide}
 
 This is a list:
 
@@ -111,18 +111,27 @@ measure.
 
 ## The same with Markdown
 
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-left:1%;vertical-align:top;"}
+**Basic Markdown**
+
     This is a list:
 
     * with some **bold** and 
     * some *italic* text.
 
     And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.
+:::
 
-Typical workflow:
+::: {style="display:table-cell;width:50%;padding-right:1%;text-align:left;vertical-align:top;"}
+Typical workflow with markdown:
 
-1.  produce content as a Markdown document,
-2.  generate the final document in a suitable output format (commonly
-    HTML, PDF, Word)
+1.  **write** content as a Markdown document,
+2.  **generate** the final document in a suitable output format
+    (commonly HTML, PDF, Word)
+3.  **publish**
+:::
+:::
 
 # Essential markdown syntax
 
@@ -159,16 +168,16 @@ sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
 -   This is accomplished with the [`knitr`](https://yihui.org/knitr/)
     package, an R package conveniently integrated into the R Studio UI.
 
-## Key difference to basic Markdown
+## Differences to basic Markdown
 
--   R Markdown files are signalled by the file extension `.Rmd` instead
-    of `.md`.
+-   R Markdown files use the file extension **`.Rmd`** instead of
+    **`.md`**.
 -   R Markdown files must start with a so-called **YAML header**
     section.
 
 ## YAML - Yet Another Markup Language?
 
-The YAML header must be placed at the beginning of a document and is
+The **YAML header** must be placed at the beginning of a document and is
 enclosed by three dashes `---`.
 
 ``` default
@@ -203,7 +212,7 @@ A YAML header with more options might look like this:
 ---
 title: "R Course SRC"
 subtitle: "Module 3"
-date: '2022-06-16'
+date: "`r Sys.Date()`"
 author: 'Stefan Daume' 
 output: 
   html_document:
@@ -215,17 +224,42 @@ link-citations: yes
 
 ## Exercise
 
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-left:1%;text-align:left;vertical-align:middle;"}
 1.  Create a default 'R Markdown' document in R Studio.
 2.  "knit" the document to HTML and view the result.
 3.  Use the **Knit** button to select different output formats and check
     the YAML header afterwards.
+:::
 
-## Key difference 2 to basic Markdown
+::: {style="display:table-cell;width:50%;padding-right:1%;vertical-align:middle;"}
+`<img src="./images/rstudio_knit.jpg" width="399" />`{=html}
+:::
+:::
 
--   You can now integrate your analysis as R code into the document
+```{=html}
+<aside class="notes">
+```
+-   may have to [install
+    TinyTeX](https://bookdown.org/yihui/rmarkdown-cookbook/install-latex.html)
+    to get PDF to work #tinytex::install_tinytex()
+
+-   pandoc is bundled, but may not be the latest; hence may need to
+    install pandoc [see
+    here](https://bookdown.org/yihui/rmarkdown-cookbook/install-pandoc.html)
+
+-   check installed version #rmarkdown::find_pandoc()
+
+```{=html}
+</aside>
+```
+## R Markdown: data-driven documents
+
+-   You can now integrate your analysis as **R code** into the document
 -   The analysis (i.e. the R code) is executed and the results updated
-    when you `knit` the document.
--   Code sections are included in code chunks like this.
+    when you **`knit`** the document.
+-   Text and code are **interspersed**.
+-   Code sections are included in **code chunks** like this.
 
 ```` default
 ```{r some-explanatory-label, echo=FALSE}
@@ -259,7 +293,7 @@ gapminder %>%
 ```
 ````
 
-## Markup samples
+## Plots in R Markdown
 
 ::: {style="display:table;width:100%;table-layout:fixed;"}
 ::: {style="display:table-cell;width:50%;padding-left:1%;vertical-align:middle;"}
@@ -284,15 +318,11 @@ gapminder %>%
 :::
 :::
 
-## Create a default RMarkdown file in R Studio
+## Remember the Markdown table format?
 
--   create a file and click the **Knit** button at the top of the editor
--   include screenshot
--   try different formats (options offered by the **Knit** button); show
-    image
--   many more styles and themes as well as options to control the output
+`<img src="./images/markdown_tables.jpg" width="1302" />`{=html}
 
-## A dynamic table
+## Dynamic tables with R Markdown
 
 ::: {style="display:table;width:100%;table-layout:fixed;"}
 ::: {style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;"}
@@ -302,7 +332,7 @@ gapminder %>%
 ```{r}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -327,7 +357,7 @@ gapminder_latest %>%
 :::
 :::
 
-## A dynamic table
+## Customizing `kable` tables
 
 ::: {style="display:table;width:100%;table-layout:fixed;"}
 ::: {style="display:table-cell;width:50%;padding-right:5%;vertical-align:top;"}
@@ -337,7 +367,7 @@ gapminder_latest %>%
 ```{r}
 # summarize gapminder data by continent
 gapminder_latest <- gapminder %>% 
-  filter(year == max(year)) %>%
+  filter(year == year_of_interest) %>%
   group_by(continent) %>%
   summarise(avrg_le = mean(lifeExp),
             avrg_gdp = mean(gdpPercap))
@@ -362,7 +392,30 @@ gapminder_latest %>%
 :::
 :::
 
-## Advanced dynamic tables
+## More expressive tables with `kableExtra`
+
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;"}
+The
+[`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+package offers even more options:
+
+-   data-driven colouring
+
+-   interactive tables
+
+-   grouped headers
+
+-   tables with (interactive) sparklines
+
+-   and more ...
+
+    ```{=html}
+    </div>
+    ```
+    ```{=html}
+    <div style="display:table-cell;width:50%;padding-left:5%;vertical-align:top;">
+    ```
 
 ```{=html}
 <table class="table lightable-paper" style="font-size: 10px; margin-left: auto; margin-right: auto; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
@@ -370,7 +423,9 @@ gapminder_latest %>%
 ```{=html}
 <caption style="font-size: initial !important;">
 ```
-Dynamic formatting with the the help of `kableExtra`.
+Table caption: Dynamic formatting with the the help of `kableExtra`.
+This example shows Gapminder data summarised by continent for the year
+2007.
 ```{=html}
 </caption>
 ```
@@ -551,18 +606,8 @@ Oceania
 ```{=html}
 </table>
 ```
-## Advanced options with `kableExtra`
-
--   or beautify it endlessly
-
--   TBD
-
--   [kableExtra](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
-
-## Many more control and output options
-
--   show examples and include links
--   reference this document as an example
+:::
+:::
 
 ## Central 'Setup' code section
 
@@ -574,6 +619,8 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(gapminder)
+
+year_of_interest <- 2007
 ```
 ````
 
@@ -582,12 +629,15 @@ document.
 
 # Handling citations
 
+## Citations and bibliographies
+
+One of the most useful and powerful features for researchers using R
+Markdown.
+
 ## Requires a BibTeX database
 
--   one of the most powerful features of RMarkdown
-
-Which is simply a text file with the extension `.bib` and entries such
-as:
+A **BibTeX** database is simply a text file with the extension
+**`.bib`** and entries such as:
 
     @misc{XieAllaire_et_2022,
       author = {Xie, Yihui and Allaire, J. J. and Grolemund, Garrett},
@@ -597,135 +647,135 @@ as:
       year = {2022}
     }
 
-Export those simply from your reference manager.
+No need to write those. Export from your reference manager or journal
+pages.
 
-## Citations, bibliography, cross-referencing
-
+```{=html}
+<aside class="notes">
+```
 -   requires a ".bib" (BibTeX format) file of citations;
 -   looks like this: ...
 -   easy to export from the reference manager of your choice
+
+```{=html}
+</aside>
+```
+## Include citations
+
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;"}
+**Point to the `.bib` file in the YAML header.**
+
+    ---
+    title: "R Course SRC"
+    subtitle: "Module 3"
+    date: "2022-06-15"
+    author: 'Stefan Daume' 
+    output: 
+      html_document:
+        toc: yes
+    bibliography: references.bib 
+    link-citations: yes
+    ---
+:::
+
+::: {style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;"}
+And then include citations in the text with the format
+**`[@CitationKey]`**, which in the previously shown example was
+**`[@XieAllaire_et_2022]`**, which is a reference to
+[@XieAllaire_et_2022].
+:::
+:::
+
+```{=html}
+<aside class="notes">
+```
 -   you then point to the ".bib" file in the document's YAML header and
     include citations of your references as such `[@CitationKey]` in
     your text
 -   and add a `# References` section at the end of your header
+
+```{=html}
+</aside>
+```
+## Include a bibliography
+
+``` default
+After presenting all results we have now reached the end of the document. Here should follow the bibliograpy.
+
+# References
+```
+
+Add the header `# References` at the end of your document, `knit` and
+the complete bibliography is added to the output document.
+
+## Include a bibliography
+
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;"}
+``` default
+After presenting all results we have now reached the end of the manuscript. As a final section should follow the bibliography.
+
+# References
+```
+:::
+
+::: {style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;"}
+Add the header **`# References`** at the end of your document,
+**`knit`** and the complete bibliography is added to the output
+document.
+:::
+:::
+
+## Switch citation and bibliography styles dynamically
+
+::: {style="display:table;width:100%;table-layout:fixed;"}
+::: {style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;"}
+**Specify citation style in the YAML header.**
+
+    ---
+    title: "R Course SRC"
+    subtitle: "Module 3"
+    date: "2022-06-15"
+    author: 'Stefan Daume' 
+    output: 
+      html_document:
+        toc: yes
+    bibliography: references.bib 
+    link-citations: yes
+    csl: ecology-and-society.csl
+    ---
+:::
+
+::: {style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;"}
+The **[Citation Style Database](https://www.zotero.org/styles)**
+database contains thousands of journal [citation
+styles](https://citationstyles.org/). Download the relevant one,
+reference in the YAML header and the output document will have the
+required citation style.
+:::
+:::
+
+```{=html}
+<aside class="notes">
+```
 -   now you `knit` and get ... pure magic!
 -   goodbye to: incorrect citations, missing citations, incorrect
     bibliographies and wasted time
 -   even better: switch styles dynamically for the target journal
 
+```{=html}
+</aside>
+```
 ## Easy sharing and online publishing
 
--   push HTML to Github (next section)
--   enable sharing and share the link
--   this is how this presentation works (and the others before)
+1.  `knit` your R Mardown document to HTML
+2.  push the HTML to Github (next part of this module)
+3.  enable sharing of **Github Pages**
 
-## Example
-
--   create an Rmd file in RMarkdown, open it, then click on **Knit**
-    button
--   try the different options (HTML, PDF, Word)
+This is how this presentation works (and the others before).
 
 ## "Continous Analysis" as the ultimate goal
-
-# Git and Github
-
-## You need git and Github if ... (non-exhaustive list)
-
--   ... you have files like this, but realise that this is not efficient
-    -   my_paper_draft_2021_05_16.docx
-    -   my_paper_draft_2021_05_18.docx
-    -   my_paper_draft_2021_05_19.docx
-    -   my_paper_draft_2021_05_19_v1.docx
-    -   my_paper_draft_2021_05_19_v2.docx
-    -   my_paper_draft_2021_05_19_v3_with_comments.docx
--   ... you are not creating regular backups of your work
--   ... you want to collaborate with others
--   ... you want to maintain projects rather than a single file (Google
-    Doc)
--   ... you want to be able to easily revert back to previous versions
-    of your work
-
-## Git history
-
--   linux development, started 2005
--   a version management system, i.e. tracks changes in project
-    resources
--   git takes snapshots of a managed project (image)
--   distributed version control system (that means you always have a
-    complete copy of your version history on your local computer)
-
-## Key concepts
-
--   repo
--   staging
--   commit
--   diff
--   push
--   pull
--   branch (advanced)
--   remote origin
-
-## Useful things
-
--   .gitignore
-
-## Conventions
-
-How to write a great commit comment (8 rules):
-
-Most important:
-
--   Keep things atomic!
-
-Document consistently:
-
--   Keep the subject line short.
--   Use the imperative mood in the subject line (Because a commit
-    message should always complete the following line: "If applied, this
-    commit will \[YOUR_SUBJECT_LINE\].")
--   Use the body to explain what and why vs. how (Because "the how" can
-    be obtained from the *diff*. The commit message should provide the
-    context for "the how".)
-
-Other common conventions:
-
--   Limit the subject line to 50 characters (As a rule of thumb and a
-    reminder to strive for atomic commits.)
--   Capitalize the subject line
--   Do not end the subject line with a period
--   Wrap the body at 72 characters (Because Git never wraps text
-    automatically.)
-
-# Setting things up with R Studio
-
-## Do this once:
-
--   install git locally (see [@Bryan2021])
--   sign up for a Github account
--   create a personal access token
-    -   either via Github (<https://github.com/settings/tokens>)
-    -   or via R with: `usethis::create_github_token()`
-    -   and then store it with `gitcreds::gitcreds_set()`
-
-## Do this for every new project:
-
--   create a Github repo first (follow the [New project, Github
-    first](https://happygitwithr.com/new-github-first.html) workflow in
-    [@Bryan2021])
-    -   say yes to creating a README
-    -   why? its easiest! you have everything in place to create remote
-        backups!
--   copy the HTTPS link of your new repo
--   then create an R Studio project with the option from "version
-    control \> git"
-
-## When your new project is set up
-
--   make a change to the README
-
-## Show a basic workflow
-
--   screenshots
 
 # Thank You!
 
@@ -780,6 +830,12 @@ provided under a *CC BY 4.0* public domain license.
 
 ## Key Resources
 
+-   R Markdown
+    -   [R Markdown: The Definitive
+        Guide](https://bookdown.org/yihui/rmarkdown/)
+        [@XieAllaire_et_2022]
+    -   [Cheatsheet: Dynamic documents with rmarkdown
+        cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
 -   Git/Github:
     -   [Happy Git and GitHub for the useR](https://happygitwithr.com/)
         [@Bryan2021]
@@ -789,11 +845,106 @@ provided under a *CC BY 4.0* public domain license.
         [@Chacon_et_2014_Book]
     -   [How to write a great commit
         message](https://cbea.ms/git-commit/)
--   R Markdown
-    -   [R Markdown: The Definitive
-        Guide](https://bookdown.org/yihui/rmarkdown/)
-        [@XieAllaire_et_2022]
-    -   [Cheatsheet: Dynamic documents with rmarkdown
-        cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
 
-## References {#references .unnumbered}
+## References
+
+::: {#refs}
+:::
+
+# Appendix (some notes on Github)
+
+## You need git and Github if ... (non-exhaustive list)
+
+-   ... you have files like this, but realise that this is not efficient
+    -   my_paper_draft_2021_05_16.docx
+    -   my_paper_draft_2021_05_18.docx
+    -   my_paper_draft_2021_05_19.docx
+    -   my_paper_draft_2021_05_19_v1.docx
+    -   my_paper_draft_2021_05_19_v2.docx
+    -   my_paper_draft_2021_05_19_v3_with_comments.docx
+-   ... you are not creating regular backups of your work
+-   ... you want to collaborate with others
+-   ... you want to maintain projects rather than a single file (Google
+    Doc)
+-   ... you want to be able to easily revert back to previous versions
+    of your work
+
+## Git history
+
+-   linux development, started 2005
+-   a version management system, i.e. tracks changes in project
+    resources
+-   git takes snapshots of a managed project (image)
+-   distributed version control system (that means you always have a
+    complete copy of your version history on your local computer)
+
+## Key concepts
+
+-   repo
+-   staging
+-   commit
+-   diff
+-   push
+-   pull
+-   branch (advanced)
+-   remote origin
+
+## Useful things
+
+-   .gitignore
+
+## How to write a great commit comment {#how-to-write-a-great-commit-comment .left-aligned-slide}
+
+Most important:
+
+-   Keep things atomic!
+
+Document consistently:
+
+-   Keep the subject line short.
+-   Use the imperative mood in the subject line (Because a commit
+    message should always complete the following line: "If applied, this
+    commit will \[YOUR_SUBJECT_LINE\].")
+-   Use the body to explain what and why vs. how (Because "the how" can
+    be obtained from the *diff*. The commit message should provide the
+    context for "the how".)
+
+# Setting Git up with R Studio
+
+## Do this once:
+
+-   install git locally (see [@Bryan2021])
+-   sign up for a Github account
+-   create a personal access token
+    -   either via Github (<https://github.com/settings/tokens>)
+    -   or via R with: `usethis::create_github_token()`
+    -   and then store it with `gitcreds::gitcreds_set()`
+
+## Do this for every new project:
+
+-   create a Github repo first (follow the [New project, Github
+    first](https://happygitwithr.com/new-github-first.html) workflow in
+    [@Bryan2021])
+    -   say yes to creating a README
+    -   why? its easiest! you have everything in place to create remote
+        backups!
+-   copy the HTTPS link of your new repo
+-   then create an R Studio project with the option from "version
+    control \> git"
+
+## When your new project is set up
+
+-   make a change to the `README.md` (a useful project description)
+-   `commit` the changes of the README file
+-   and `push` to the remote Github repo
+-   check the Github repo
+
+```{=html}
+<aside class="notes">
+```
+-   Show a basic workflow
+-   screenshots
+
+```{=html}
+</aside>
+```

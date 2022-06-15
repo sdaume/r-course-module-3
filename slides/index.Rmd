@@ -27,7 +27,7 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 
-year_of_interest <- 1952
+year_of_interest <- 2007
 ```
 
 [//]: <> (Alternative background colours are #002b36 #333 #1E8C45)
@@ -190,9 +190,9 @@ And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.
   
 Typical workflow with markdown: 
 
-1. produce content as a Markdown document, 
-2. generate the final document in a suitable output format (commonly HTML, PDF, Word)
-3. publish
+1. **write** content as a Markdown document, 
+2. **generate** the final document in a suitable output format (commonly HTML, PDF, Word)
+3. **publish** 
     
   </div>
 </div>
@@ -323,10 +323,10 @@ knitr::include_graphics('./images/rstudio_knit.jpg')
 
 ## R Markdown: data-driven documents
 
-* You can now integrate your analysis as R code into the document
-* The analysis (i.e. the R code) is executed and the  results updated when you `knit` the document.
-* Text are interspersed.
-* Code sections are included in code chunks like this. 
+* You can now integrate your analysis as **R code** into the document
+* The analysis (i.e. the R code) is executed and the results updated when you **`knit`** the document.
+* Text and code are **interspersed**.
+* Code sections are included in **code chunks** like this. 
 
 ````{verbatim}
 
@@ -511,7 +511,7 @@ gapminder_latest %>%
 
 
 
-## Expressive tables with `kableExtra` 
+## More expressive tables with `kableExtra` 
 
 <div style="display:table;width:100%;table-layout:fixed;">
   <div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
@@ -585,9 +585,10 @@ Simplify library import and prepare datasets for reference in the whole document
 One of the most useful and powerful features for researchers using R Markdown.
 
 
+
 ## Requires a BibTeX database
 
-A **BibTeX** database is simply a text file with the extension `.bib` and entries such as:
+A **BibTeX** database is simply a text file with the extension **`.bib`** and entries such as:
 
 ```
 @misc{XieAllaire_et_2022,
@@ -634,9 +635,8 @@ link-citations: yes
   
   <div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
   
-And then include citations in the text with the format **`[@CitationKey]`**, which in the shown entry was for example **`[@XieAllaire_et_2022]`**, which is a reference to [@XieAllaire_et_2022]. 
+And then include citations in the text with the format **`[@CitationKey]`**, which in the previously shown example was **`[@XieAllaire_et_2022]`**, which is a reference to [@XieAllaire_et_2022]. 
 
-Add the header `# References` at the end of your document, `knit`and you get: pure magic!
   </div>
 </div>
 
@@ -647,137 +647,96 @@ Add the header `# References` at the end of your document, `knit`and you get: pu
 </aside>
 
 
-## Include bibliography
+## Include  a bibliography
 
 
-## Switch citation styles dynamically
+````{verbatim}
+After presenting all results we have now reached the end of the document. Here should follow the bibliograpy.
+
+# References
+````
 
 
-## bib notes
- 
+Add the header `# References` at the end of your document, `knit` and the complete bibliography is added to the output document.
+
+
+
+
+## Include  a bibliography
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+  
+````{verbatim}
+After presenting all results we have now reached the end of the manuscript. As a final section should follow the bibliography.
+
+# References
+````
+
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+  
+Add the header **`# References`** at the end of your document, **`knit`** and the complete bibliography is added to the output document.
+
+  </div>
+</div>
+
+
+
+
+## Switch citation and bibliography styles dynamically
+
+<div style="display:table;width:100%;table-layout:fixed;">
+  <div style="display:table-cell;width:50%;padding-right:5%;text-align:left;vertical-align:top;">
+  
+**Specify citation style in the YAML header.**
+  
+````
+---
+title: "R Course SRC"
+subtitle: "Module 3"
+date: "`r Sys.Date()`"
+author: 'Stefan Daume' 
+output: 
+  html_document:
+    toc: yes
+bibliography: references.bib 
+link-citations: yes
+csl: ecology-and-society.csl
+---
+````
+
+  </div>
+  
+  
+  <div style="display:table-cell;width:50%;padding-left:5%;text-align:left;vertical-align:top;">
+
+The **[Citation Style Database](https://www.zotero.org/styles)** database contains thousands of journal [citation styles](https://citationstyles.org/). Download the relevant one, reference in the YAML header and the output document will have the required citation style. 
+
+  </div>
+</div>
+
+
+<aside class="notes">
 * now you `knit` and get ... pure magic!
 * goodbye to: incorrect citations, missing citations, incorrect bibliographies and wasted time
 * even better: switch styles dynamically for the target journal
-
-
+</aside>
 
 
 ## Easy sharing and online publishing
 
-* push HTML to Github (next section)
-* enable sharing and share the link
-* this is how this presentation works (and the others before)
+1. `knit` your R Mardown document to HTML
+2. push the HTML to Github (next part of this module)
+3. enable sharing of **Github Pages** 
 
+This is how this presentation works (and the others before).
 
-## Example
-
-* create an Rmd file in RMarkdown, open it, then click on **Knit** button
-* try the different options (HTML, PDF, Word)
 
 
 ## "Continous Analysis" as the ultimate goal
-
-
-
-
-# Git and Github
-
-## You need git and Github if ... (non-exhaustive list)
-
-* ... you have files like this, but realise that this is not efficient
-  * my_paper_draft_2021_05_16.docx
-  * my_paper_draft_2021_05_18.docx
-  * my_paper_draft_2021_05_19.docx
-  * my_paper_draft_2021_05_19_v1.docx
-  * my_paper_draft_2021_05_19_v2.docx
-  * my_paper_draft_2021_05_19_v3_with_comments.docx
-* ... you are not creating regular backups of your work
-* ... you want to collaborate with others 
-* ... you want to maintain projects rather than a single file (Google Doc)
-* ... you want to be able to easily revert back to previous versions of your work 
-
-
-## Git history
-
-* linux development, started 2005
-* a version management system, i.e. tracks changes in project resources
-* git takes snapshots of a managed project (image)
-* distributed version control system (that means you always have a complete copy of your version history on your local computer)
-
-
-## Key concepts
-
-* repo
-* staging
-* commit
-* diff
-* push
-* pull
-* branch (advanced)
-* remote origin
-
-
-
-## Useful things 
-
-* .gitignore
-
-
-
-## Conventions
-
-How to write a great commit comment (8 rules): 
-
-Most important:
-
-* Keep things atomic!
-
-Document consistently:
-
-* Keep the subject line short.
-* Use the imperative mood in the subject line (Because a commit message should always complete the following line: "If applied, this commit will [YOUR_SUBJECT_LINE].")
-* Use the body to explain what and why vs. how (Because "the how" can be obtained from the *diff*. The commit message should provide the context for "the how".)
-
-Other common conventions:
-
-* Limit the subject line to 50 characters (As a rule of thumb and a reminder to strive for atomic commits.)
-* Capitalize the subject line
-* Do not end the subject line with a period
-* Wrap the body at 72 characters (Because Git never wraps text automatically.)
-
-
-# Setting things up with R Studio
-
-## Do this once: 
-
-* install git locally (see [@Bryan2021]) 
-* sign up for a Github account
-* create a personal access token 
-  * either via Github (https://github.com/settings/tokens)
-  * or via R with: `usethis::create_github_token()`
-  * and then store it with `gitcreds::gitcreds_set()`
-
-## Do this for every new project:
-
-* create a Github repo first (follow the [New project, Github first](https://happygitwithr.com/new-github-first.html) workflow in [@Bryan2021])
-  * say yes to creating a README
-  * why? its easiest! you have everything in place to create remote backups!
-* copy the HTTPS link of your new repo
-* then create an R Studio project with the option from "version control > git"  
-
-
-## When your new project is set up
-
-* make a change to the README
-
-
-## Show a basic workflow
-
-* screenshots
-
-
-
-
 
 
 
@@ -822,15 +781,109 @@ If not noted and attributed otherwise, the contents (text, charts, images) of th
 
 ## Key Resources
 
+* R Markdown
+  * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) [@XieAllaire_et_2022]
+  * [Cheatsheet: Dynamic documents with rmarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
 * Git/Github:
   * [Happy Git and GitHub for the useR](https://happygitwithr.com/) [@Bryan2021]
   * "Excuse me, do you have a moment to talk about version control?" [@Bryan2017]
   * Advanced git use: [Pro Git](https://git-scm.com/book/en/v2) book [@Chacon_et_2014_Book]
   * [How to write a great commit message](https://cbea.ms/git-commit/)
-* R Markdown
-  * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) [@XieAllaire_et_2022]
-  * [Cheatsheet: Dynamic documents with rmarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
+
 
 
 ## References
+
+<div id="refs"></div>
+
+
+# Appendix (some notes on Github)
+
+## You need git and Github if ... (non-exhaustive list)
+
+* ... you have files like this, but realise that this is not efficient
+  * my_paper_draft_2021_05_16.docx
+  * my_paper_draft_2021_05_18.docx
+  * my_paper_draft_2021_05_19.docx
+  * my_paper_draft_2021_05_19_v1.docx
+  * my_paper_draft_2021_05_19_v2.docx
+  * my_paper_draft_2021_05_19_v3_with_comments.docx
+* ... you are not creating regular backups of your work
+* ... you want to collaborate with others 
+* ... you want to maintain projects rather than a single file (Google Doc)
+* ... you want to be able to easily revert back to previous versions of your work 
+
+
+## Git history
+
+* linux development, started 2005
+* a version management system, i.e. tracks changes in project resources
+* git takes snapshots of a managed project (image)
+* distributed version control system (that means you always have a complete copy of your version history on your local computer)
+
+
+
+## Key concepts
+
+* repo
+* staging
+* commit
+* diff
+* push
+* pull
+* branch (advanced)
+* remote origin
+
+
+
+## Useful things 
+
+* .gitignore
+
+
+## How to write a great commit comment {.left-aligned-slide} 
+
+Most important:
+
+* Keep things atomic!
+
+Document consistently:
+
+* Keep the subject line short.
+* Use the imperative mood in the subject line (Because a commit message should always complete the following line: "If applied, this commit will [YOUR_SUBJECT_LINE].")
+* Use the body to explain what and why vs. how (Because "the how" can be obtained from the *diff*. The commit message should provide the context for "the how".)
+
+
+# Setting Git up with R Studio
+
+## Do this once: 
+
+* install git locally (see [@Bryan2021]) 
+* sign up for a Github account
+* create a personal access token 
+  * either via Github (https://github.com/settings/tokens)
+  * or via R with: `usethis::create_github_token()`
+  * and then store it with `gitcreds::gitcreds_set()`
+
+
+## Do this for every new project:
+
+* create a Github repo first (follow the [New project, Github first](https://happygitwithr.com/new-github-first.html) workflow in [@Bryan2021])
+  * say yes to creating a README
+  * why? its easiest! you have everything in place to create remote backups!
+* copy the HTTPS link of your new repo
+* then create an R Studio project with the option from "version control > git"  
+
+
+## When your new project is set up
+
+* make a change to the `README.md` (a useful project description) 
+* `commit` the changes of the README file
+* and `push` to the remote Github repo
+* check the Github repo
+
+<aside class="notes">
+* Show a basic workflow
+* screenshots
+</aside>
 
