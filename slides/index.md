@@ -669,7 +669,7 @@ pages.
     ---
     title: "R Course SRC"
     subtitle: "Module 3"
-    date: "2022-06-15"
+    date: "2022-06-16"
     author: 'Stefan Daume' 
     output: 
       html_document:
@@ -736,7 +736,7 @@ document.
     ---
     title: "R Course SRC"
     subtitle: "Module 3"
-    date: "2022-06-15"
+    date: "2022-06-16"
     author: 'Stefan Daume' 
     output: 
       html_document:
@@ -778,6 +778,29 @@ This is how this presentation works (and the others before).
 ## "Continous Analysis" as the ultimate goal
 
 # Thank You!
+
+## Key Resources
+
+-   R Markdown
+    -   [R Markdown: The Definitive
+        Guide](https://bookdown.org/yihui/rmarkdown/)
+        [@XieAllaire_et_2022]
+    -   [Cheatsheet: Dynamic documents with rmarkdown
+        cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
+-   Git/Github:
+    -   [Happy Git and GitHub for the useR](https://happygitwithr.com/)
+        [@Bryan2021]
+    -   "Excuse me, do you have a moment to talk about version control?"
+        [@Bryan2017]
+    -   Advanced git use: [Pro Git](https://git-scm.com/book/en/v2) book
+        [@Chacon_et_2014_Book]
+    -   [How to write a great commit
+        message](https://cbea.ms/git-commit/)
+
+## References
+
+::: {#refs}
+:::
 
 ## Colophon {#colophon .colophon}
 
@@ -827,29 +850,6 @@ Please note the respective licenses of these tools and libraries.
 If not noted and attributed otherwise, the contents (text, charts,
 images) of this presentation are **Copyright © 2022 of the Author** and
 provided under a *CC BY 4.0* public domain license.
-
-## Key Resources
-
--   R Markdown
-    -   [R Markdown: The Definitive
-        Guide](https://bookdown.org/yihui/rmarkdown/)
-        [@XieAllaire_et_2022]
-    -   [Cheatsheet: Dynamic documents with rmarkdown
-        cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
--   Git/Github:
-    -   [Happy Git and GitHub for the useR](https://happygitwithr.com/)
-        [@Bryan2021]
-    -   "Excuse me, do you have a moment to talk about version control?"
-        [@Bryan2017]
-    -   Advanced git use: [Pro Git](https://git-scm.com/book/en/v2) book
-        [@Chacon_et_2014_Book]
-    -   [How to write a great commit
-        message](https://cbea.ms/git-commit/)
-
-## References
-
-::: {#refs}
-:::
 
 # Appendix (some notes on Github)
 
