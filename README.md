@@ -1,14 +1,17 @@
 # SRC PhD R course
 
-This is the source of slides, handouts, examples and other resources for module 3 of the SRC PhD R course. Module 3 of the course was held on 16. June 2022.
+This is the source of slides, handouts, examples and other resources for module 3 and 7 of the SRC PhD R course. Module 3 of the course was held on 16. June 2022, module 7 on 16. December 2022.
 
 ## Presentation sLides
 
-A live version of the presentation slides can be found here: https://sdaume.github.io/r-course-module-3/slides/.
+A live version of the presentation slides can be found here:
+
+* Module 3: https://sdaume.github.io/r-course-module-3/slides/index.html
+* Module 7: https://sdaume.github.io/r-course-module-3/slides/shiny-module.html
 
 ## Handouts
 
-Some simple summary notes which also serve as an example for a typical R Markdown document are accessible here: https://sdaume.github.io/r-course-module-3/handouts/markdown-handout.html.
+Some simple summary notes for module 3, which also serve as an example for a typical R Markdown document, are accessible here: https://sdaume.github.io/r-course-module-3/handouts/markdown-handout.html.
 
 ### Output format variations
 

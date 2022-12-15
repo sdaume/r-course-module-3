@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Stefan Daume">
+  <title>SRC PhD R course Module 7</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js-3.6.0/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="./custom_highlight.js-9.12.0/styles/zenburn.css">
+  <script src="./custom_highlight.js-9.12.0/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="./reveal.js-3.6.0/css/theme/white.css" id="theme">
+  <link rel="stylesheet" href="./css/mycustom_v3.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js-3.6.0/css/print/pdf.css' : './reveal.js-3.6.0/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js-3.6.0/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">SRC PhD R course Module 7</h1>
+  <p class="subtitle">Interactive R Markdown with Shiny</p>
+  <p class="author">Stefan Daume</p>
+  <p class="date">16. December 2022</p>
+</section>
+
+<section id="section" class="slide level2 hideslideheader" data-background="#061C30">
+<h2> </h2>
+<div style="display:table;width:100%;table-layout: fixed;">
+<div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
+<p>SRC PhD R course Module 7</p>
+<p>Interactive R Markdown with Shiny</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+</div>
+<div style="display:table;width:100%;table-layout: fixed;">
+<div class="mytitlepage linksection" style="display:table-cell;width:30%;padding-left:3%;vertical-align:bottom;">
+<p><em><a href="https://twitter.com/stefandaume">@stefandaume</a></em></p>
+<p><em><a href="https://scitingly.net/" class="uri">https://scitingly.net/</a></em></p>
+<p><em><a href="mailto:stefan.daume@su.se" class="email">stefan.daume@su.se</a></em></p>
+</div>
+<div class="mytitlepage authorsection" style="display:table-cell;width:70%;padding-right:3%;">
+<p>  <strong>Stefan Daume</strong></p>
+<p><em><a href="https://www.stockholmresilience.org/meet-our-team/staff/2021-01-27-daume.html">Stockholm Resilience Centre, Stockholm University</a></em></p>
+<p>&amp; <em><a href="https://beijer.kva.se/programmes/complexity/">Beijer Institute of Ecological Economics</a></em></p>
+<p> </p>
+<p><em>16. December 2022</em></p>
+</div>
+</div>
+</section>
+<section id="why-interactive-web-based-r-applications" class="slide level2">
+<h2>Why interactive web-based R applications?</h2>
+<ul>
+<li>communication of research</li>
+<li>data collection</li>
+<li>exploratory analysis</li>
+<li>collaboration</li>
+</ul>
+</section>
+<section id="shiny" class="slide level2">
+<h2>“shiny”</h2>
+<ul>
+<li><p>Allows to create interactive web applications running R.</p></li>
+<li><p>Requires three components:</p>
+<ol type="1">
+<li>an HTML user interface,</li>
+<li>a server component (running R logic),</li>
+<li>a wrapper to launch the application</li>
+</ol></li>
+<li><p>In order to run this a web server is required, a basic server is built into R/RStudio</p></li>
+<li><p>or apps can be deployed to hosted R Servers like <a href="https://shinyapps.io">shinyapps.io</a></p></li>
+</ul>
+</section>
+<section id="basic-structure" class="slide level2">
+<h2>Basic structure</h2>
+<pre><code>library(shiny)
+
+ui &lt;- fluidPage(
+  # defines layout and web page components
+)
+
+server &lt;- function(input, output) {
+  # defines the R logic and maps web page 
+  # inputs to rendered outputs
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+</section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<pre><code>library(shiny)
+
+ui &lt;- fluidPage(
+  selectInput(inputId = &quot;selectedDataset&quot;, label = &quot;Dataset&quot;,
+              choices = ls(&quot;package:datasets&quot;)),
+
+  tableOutput(outputId = &quot;myTable&quot;)
+)
+
+server &lt;- function(input, output) {
+    output$myTable &lt;- renderTable({
+      dataset &lt;- get(input$selectedDataset, &quot;package:datasets&quot;)
+      dataset
+    })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+<p>Test it here: <a href="https://scitingly.shinyapps.io/datasets/" class="uri">https://scitingly.shinyapps.io/datasets/</a></p>
+</section>
+<section id="building-from-scratch" class="slide level2">
+<h2>Building from scratch …</h2>
+<ul>
+<li>… gives complete flexibility</li>
+<li>… but also requires “building from scratch”</li>
+</ul>
+</section>
+<section id="alternative" class="slide level2">
+<h2>Alternative</h2>
+<p>If you are already using RMarkdown for writing your papers or to document your analyses, then it is easy to turn these documents into interactive web applications.</p>
+</section>
+<section id="todays-focus-shiny-enabled-rmarkdown" class="slide level2">
+<h2>Today’s focus: Shiny-enabled RMarkdown</h2>
+<ul>
+<li class="fragment">specifically: <a href="https://pkgs.rstudio.com/flexdashboard/index.html"><code>flexdashboard</code>s</a></li>
+<li class="fragment">at basic level this is just a custom (non-dynamic) HTML output of R analyses</li>
+<li class="fragment">but it can be made interactive with <code>shiny</code> and deployed as a web application</li>
+<li class="fragment">easily enabled with one line in the YAML header</li>
+</ul>
+</section>
+<section><section id="recap-rmarkdown" class="title-slide slide level1"><h1>Recap: (R)Markdown</h1></section><section id="markdown" class="slide level2">
+<h2>Markdown</h2>
+<p><strong>Markdown</strong> allows us to concentrate on document structure and content. We can then worry about styling and presentation later.</p>
+</section><section id="rmarkdown" class="slide level2">
+<h2>RMarkdown</h2>
+<ul>
+<li>Purpose: dynamically weave together text, data and analysis workflows.</li>
+<li>This is accomplished with the <a href="https://yihui.org/knitr/"><code>knitr</code></a> package, an R package conveniently integrated into the R Studio UI.</li>
+</ul>
+</section><section id="sample-markdown" class="slide level2">
+<h2>Sample Markdown</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-left:1%;vertical-align:top;">
+<p><strong>Basic (R)Markdown</strong></p>
+<pre><code># Top-level header
+
+## Second-level header
+
+This is a list:
+
+* with some **bold** and 
+* some *italic* text.
+
+And a [hyperlink](https://bookdown.org/yihui/rmarkdown/) for good measure.</code></pre>
+</div>
+<div style="display:table-cell;width:50%;padding-right:1%;text-align:left;vertical-align:top;">
+<p>Typical workflow with markdown:</p>
+<ol type="1">
+<li><strong>write</strong> content as a Markdown document,</li>
+<li><strong>generate</strong> the final document in a suitable output format (commonly HTML, PDF, Word)</li>
+<li><strong>publish</strong></li>
+</ol>
+</div>
+</div>
+</section><section id="basic-formatting-and-structuring" class="slide level2">
+<h2>Basic formatting and structuring</h2>
+<p><img data-src="./images/markdown_basic.jpg" /></p>
+</section><section id="rmarkdown-data-driven-documents" class="slide level2">
+<h2>RMarkdown: data-driven documents!</h2>
+<ul>
+<li>Analysis can be integrated as <strong>R code</strong> into the document</li>
+<li>The analysis (i.e. the R code) is executed and the results updated when you <strong><code>knit</code></strong> the document.</li>
+<li>Text and code are <strong>interspersed</strong>.</li>
+<li>Code sections are included in <strong>code chunks</strong> like this.</li>
+</ul>
+<p><verbatim></p>
+<p></verbatim></p>
+<aside class="notes">
+<ul>
+<li>contains an <strong>optional</strong> label (can be used for references), options controlling the output, such as figure size, caption, resolution</li>
+</ul>
+</aside>
+</section><section id="the-yaml-header" class="slide level2">
+<h2>The ‘YAML’ header</h2>
+<p>The <strong>YAML header</strong> must be placed at the beginning of a document and is enclosed by three dashes <code>---</code>.</p>
+<pre class="default"><code>---
+title: &quot;Untitled&quot;
+output: html_document
+date: &#39;2022-12-16&#39;
+---</code></pre>
+<p>Above is the default <em>YAML header</em> when generating an <code>RMarkdown</code> file in R Studio.</p>
+<aside class="notes">
+<ul>
+<li>see RMarkdown book for details</li>
+<li>The <strong>YAML header</strong> contains meta-data (e.g. title, date, author(s) etc) as well as information about the output format and style.</li>
+<li>show the YAML header and explain; output format (default HTML, others are possible)</li>
+</ul>
+</aside>
+</section><section id="translating-rmarkdown-to-html-pdf-word-etc" class="slide level2">
+<h2>Translating RMarkdown to HTML, PDF, Word etc</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-left:1%;text-align:left;vertical-align:middle;">
+<p>The RMarkdown document is <strong>knit</strong> to the output format specified in the YAML header.</p>
+</div>
+<div style="display:table-cell;width:50%;padding-right:1%;vertical-align:middle;">
+<p><img data-src="./images/rstudio_knit.jpg" /></p>
+</div>
+</div>
+</section><section id="turning-rmarkdown-into-a-shiny-app" class="slide level2">
+<h2>Turning RMarkdown into a shiny app</h2>
+<pre class="default"><code>---
+title: &quot;Untitled&quot;
+output: html_document
+date: &#39;2022-12-16&#39;
+runtime: shiny
+---</code></pre>
+</section><section id="now-knit-is-replaced-by-run" class="slide level2">
+<h2>Now “knit” is replaced by “run”</h2>
+<div style="display:table;width:100%;table-layout:fixed;">
+<div style="display:table-cell;width:50%;padding-left:1%;text-align:left;vertical-align:middle;">
+<p>The <strong>output format</strong> is now a web application.</p>
+</div>
+<div style="display:table-cell;width:50%;padding-right:1%;vertical-align:middle;">
+<p><img data-src="./images/rstudio_shiny_markdown.jpg" /></p>
+</div>
+</div>
+</section><section id="and-you-need-the-app-logic" class="slide level2">
+<h2>And you need the “app logic”</h2>
+<p>Which will be included in the <strong>code chunks</strong> of the R Markdown document.</p>
+</section></section>
+<section><section id="example-and-exercise" class="title-slide slide level1"><h1>Example and Exercise</h1></section><section id="create-a-sample-interactive-r-markdown-document" class="slide level2">
+<h2>Create a sample interactive R Markdown document</h2>
+<p>In RStudio select: <code>File &gt; New File &gt; R Markdown</code></p>
+<p><img src="./images/rstudio_create_shiny_markdown.jpg" width="40%" /></p>
+<p>Default <a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/basic-shiny-rmarkdown.Rmd">example</a></p>
+</section><section id="interactive-code-in-the-default-example" class="slide level2">
+<h2>Interactive code in the default example</h2>
+<pre class="default"><code>```{r eruptions, echo=FALSE}
+inputPanel(
+  selectInput(&quot;n_breaks&quot;, label = &quot;Number of bins:&quot;,
+              choices = c(10, 20, 35, 50), selected = 20),
+  
+  sliderInput(&quot;bw_adjust&quot;, label = &quot;Bandwidth adjustment:&quot;,
+              min = 0.2, max = 2, value = 1, step = 0.2)
+)
+
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = &quot;Duration (minutes)&quot;, main = &quot;Geyser eruption duration&quot;)
+  
+  dens &lt;- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = &quot;blue&quot;)
+})
+```</code></pre>
+</section><section id="change-the-output-format-to-flex_dashboard" class="slide level2">
+<h2>Change the output format to flex_dashboard</h2>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/1-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="change-the-layout" class="slide level2">
+<h2>Change the layout</h2>
+<p>Dashboards are composed of rows and columns. Each output component is indicated by a <em>level 3</em> header (i.e. <code>###</code>).</p>
+<ul>
+<li>turn all sections into components</li>
+<li>change the <code>flex_dashboard</code> layout to <a href="https://pkgs.rstudio.com/flexdashboard/articles/flexdashboard.html#layout">vertical</a></li>
+</ul>
+<!-- -->
+<pre><code>---
+title: &quot;Untitled&quot;
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: scroll
+date: &quot;2022-12-16&quot;
+runtime: shiny
+---</code></pre>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/2-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="split-input-and-output-logic-into-different-components" class="slide level2">
+<h2>Split input and output logic into different “components”</h2>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/3-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="change-the-component-layout" class="slide level2">
+<h2>Change the component layout</h2>
+<p><code>flexdashboard</code> allows <a href="https://pkgs.rstudio.com/flexdashboard/articles/layouts.html">flexible layouts</a> that are basically <strong>controlled through markdown section headers at three levels</strong>.</p>
+<ul>
+<li>create two separate dash board pages by adding a <em>level 1</em> markdown section header above the first two and the last “components” respectively. Both the header variant <code>#</code> and <code>===========================</code> will work.</li>
+</ul>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/4-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="create-a-nested-layout-for-the-first-page" class="slide level2">
+<h2>Create a nested layout for the first page</h2>
+<p>Place the “Inputs” and “Outputs” sections next to each other. This can be achieved by adding a <em>level 2</em> markdown section header named <code>Column</code> above each of these sections. Both the header variant <code>##</code> and <code>-----------------------</code> will work.</p>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/5-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="change-the-dashboard-theme-and-add" class="slide level2">
+<h2>Change the dashboard theme and add</h2>
+<p><code>flexdashboard</code> offers flexible styling of the output. Several built-in <a href="https://pkgs.rstudio.com/flexdashboard/articles/theme.html">themes</a> can be applied via the YAML header.</p>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/6-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section><section id="and-more-options" class="slide level2">
+<h2>and more options …</h2>
+<p>There is a broad range of styling options and components that can be controlled via the YAML header and standard R Markdown elements.</p>
+<p><a href="https://github.com/sdaume/r-course-module-3/blob/main/shiny_examples/markdown/7-basic-shiny-rmarkdown.Rmd">Example</a></p>
+</section></section>
+<section><section id="thank-you" class="title-slide slide level1"><h1>Thank You!</h1></section><section id="key-resources" class="slide level2">
+<h2>Key Resources</h2>
+<ul>
+<li>R Markdown
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Cheatsheet: Dynamic documents with rmarkdown cheatsheet</a></li>
+</ul></li>
+<li>Git/Github:
+<ul>
+<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span></li>
+<li>“Excuse me, do you have a moment to talk about version control?” <span class="citation" data-cites="Bryan2017">(Bryan 2017)</span></li>
+<li>Advanced git use: <a href="https://git-scm.com/book/en/v2">Pro Git</a> book <span class="citation" data-cites="Chacon_et_2014_Book">(Chacon and Straub 2014)</span></li>
+<li><a href="https://cbea.ms/git-commit/">How to write a great commit message</a></li>
+</ul></li>
+</ul>
+</section><section id="references" class="slide level2">
+<h2>References</h2>
+<div id="refs" role="doc-bibliography">
+<div id="ref-Bryan2017">
+<p>Bryan, Jennifer. 2017. “Excuse me, do you have a moment to talk about version control?” <em>PeerJ Preprints</em> 5:e3159v2 (August). <a href="https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2">https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2</a>.</p>
+</div>
+<div id="ref-Bryan2021">
+<p>———. 2021. “Happy Git and GitHub for the useR.” <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.</p>
+</div>
+<div id="ref-Chacon_et_2014_Book">
+<p>Chacon, Scott, and Ben Straub. 2014. <em>Pro Git</em>. Apress. <a href="https://doi.org/10.1007/978-1-4842-0076-6">https://doi.org/10.1007/978-1-4842-0076-6</a>.</p>
+</div>
+<div id="ref-XieAllaire_et_2022">
+<p>Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2022. “R Markdown: The Definitive Guide.” <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.</p>
+</div>
+</div>
+</section><section id="colophon" class="slide level2 colophon">
+<h2>Colophon</h2>
+<p><strong>SRC PhD R course Module 7 — Interactive R Markdown with Shiny"</strong> by <em>Stefan Daume</em></p>
+<p> </p>
+<p>Presented on 16. December 2022.</p>
+<p> </p>
+<p>This presentation can be cited using: <em>doi:…</em></p>
+<p> </p>
+<p><strong>PRESENTATION DETAILS</strong></p>
+<p><strong>Author/Affiliation:</strong> Stefan Daume, Stockholm Resilience Centre, Stockholm University</p>
+<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides/shiny-module.html" class="uri">https://sdaume.github.io/r-course-module-3/slides/shiny-module.html</a></p>
+<p><strong>Presentation Source:</strong> [TBD]</p>
+<p><strong>Presentation PDF:</strong> [TBD]</p>
+<p> </p>
+<p><strong>CREDITS &amp; LICENSES</strong></p>
+<p>This presentation is delivered with the help of several free and open source tools and libraries. It utilises the <a href="https://revealjs.com/">reveal.js</a> presentation framework and has been created using <a href="https://rmarkdown.rstudio.com">RMarkdown</a>, <a href="https://yihui.name/knitr/">knitr</a>, <a href="https://www.rstudio.com">RStudio</a> and <a href="https://pandoc.org/">Pandoc</a>. <a href="https://highlightjs.org">highlight.js</a> provides syntax highlighting for code sections. <a href="https://www.mathjax.org">MathJax</a> supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with <a href="https://github.com/astefanutti/decktape">DeckTape</a>. Please note the respective licenses of these tools and libraries.</p>
+<p> </p>
+<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2022 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js-3.6.0/lib/js/head.min.js"></script>
+  <script src="./reveal.js-3.6.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+        // Push each slide change to the browser history
+        history: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        math: {
+          mathjax: './MathJax-2.7.5/MathJax.js',
+          config: 'TeX-MML-AM_SVG-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js-3.6.0/plugin/math/math.js', async: true },
+          { src: './reveal.js-3.6.0/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
