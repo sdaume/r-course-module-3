@@ -1,0 +1,500 @@
+---
+output:
+  md_document:
+    variant: markdown
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+# pandoc cmd snippet:
+# pandoc -t revealjs --template=./slides/custom_pandoc_template/default.revealjs -s -o ./slides/textmining-module.html ./slides/textmining-module.md ./slides/textmining-module_metadata.yaml -V revealjs-url=./reveal.js-3.6.0 --mathjax --no-highlight -V highlighting-css=zenburn -V controlsLayout=edges --bibliography ./slides/references.bib
+
+# create pdf
+# decktape -s 1920x1080 reveal ./slides/textmining-module.html ./slides/2023-R-Course-Module-9.pdf
+
+# create screenshots
+# decktape reveal ./slides/textmining-module.html ./slides/2023-R-Course-Module-9.pdf --screenshots --screenshots-directory ./slides/handouts/screenshots
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  cache = FALSE,
+  comment = "#>")
+
+
+library(dplyr)
+library(ggplot2)
+library(topicsplorrr)
+
+# read and clean up the raw document data
+src_pubs <- readr::read_csv("../topicmodels/data/src_pubs_annotated.csv",
+                            col_types = "c") %>%
+  mutate(pub_date = lubridate::ymd(year, truncated = 4L))
+
+load("../topicmodels/data/pubs_dfm.Rdata")
+load("../topicmodels/data/stm_docs.Rdata")
+load("../topicmodels/data/src_topics.Rdata")
+load("../topicmodels/data/src_topic_effect.Rdata")
+```
+
+[//]: <> (Alternative background colours are #002b36 #333 #1E8C45)
+
+
+## &nbsp; {.hideslideheader data-background="#061C30"}
+<div style="display:table;width:100%;table-layout: fixed;">
+  <div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
+  SRC PhD R course Module 9
+  
+  Topic modelling
+    
+  &nbsp;
+    
+  &nbsp;
+  
+  &nbsp;
+  
+  &nbsp;
+  </div>
+</div>
+
+<div style="display:table;width:100%;table-layout: fixed;">
+  <div class="mytitlepage linksection" style="display:table-cell;width:30%;padding-left:3%;vertical-align:bottom;">
+  *[\@stefandaume](https://twitter.com/stefandaume)* 
+
+  *https://scitingly.net/*
+  
+  *stefan.daume@su.se*
+  </div>
+  
+  
+  <div class="mytitlepage authorsection" style="display:table-cell;width:70%;padding-right:3%;">
+  &nbsp;
+  **Stefan Daume**
+  
+  *[Stockholm Resilience Centre, Stockholm University](https://www.stockholmresilience.org/meet-our-team/staff/2021-01-27-daume.html)* 
+  
+  & *[Beijer Institute of Ecological Economics](https://beijer.kva.se/programmes/complexity/)*
+
+  &nbsp;
+
+  *16. March 2023*
+  </div>
+</div>
+
+
+
+## Why topic modelling?
+
+* discovery, summary, answering causal questions in social science
+
+
+## How does it work?
+
+* unsupervised, probabilistic classification 
+* generative model (reverses the document generation process)
+
+
+## The notion of "latent topics"
+
+
+## Topic modelling algorithms
+
+* LSA, LDA, CTM, STM
+
+
+## STM vs "vanilla LDA"
+
+* assumption: topics are independent 
+* test relationship between topics and document meta-data, test hypothesis
+
+
+## Basic text mining concepts
+
+* documents
+* corpus
+* tokens
+* terms
+
+
+## Basic steps
+
+* get documents to analyse
+* preprocess
+* create a corpus
+* tokenization
+* create document-term matrix
+
+
+## R packages to use
+
+* quanteda
+* tidytext
+* snowballc
+* spacyr 
+* stringr
+* stm
+
+
+## An example: SRC publications
+
+```{r echo=FALSE, fig.height=4, fig.width=8, dpi=200}
+pub_freqs <- src_pubs %>%
+  count(pub_date, organisation_phase)
+
+ggplot(pub_freqs, aes(x = pub_date, y = n)) +
+  geom_col(aes(fill = organisation_phase), show.legend = FALSE) +
+  scale_x_date(minor_breaks = "year") +
+  ggtitle(paste(nrow(src_pubs), "publications with SRC-affiliated researchers between", 
+                min(src_pubs$year), "and", max(src_pubs$year))) +
+  xlab("") +
+  ylab("Publications / year") +
+  theme_minimal()
+```
+
+
+
+## A simplistic approach {.xs-small-pg-text}
+
+```{r echo=FALSE}
+# extract unigrams
+src_unigrams <- unigrams_by_date(textData = src_pubs,
+                                 textColumn = "title",
+                                 dateColumn = "year") %>%
+  count(term) 
+
+#src_unigrams %>%
+#  slice_max(order_by = n, n = 10) %>%
+#  kableExtra::kable(col.names = c("Term", "N")) %>%
+#  kableExtra::kable_paper() %>%
+#  kableExtra::kable_styling(font_size = 10)
+
+src_unigrams %>%
+  slice_max(order_by = n, n = 9) %>%
+  knitr::kable(col.names = c("Term", "N")) 
+```
+
+
+
+## ngrams: closer to "topics"
+
+```{r echo=FALSE}
+# extract unigrams
+src_bigrams <- bigrams_by_date(textData = src_pubs,
+                               textColumn = "title",
+                               dateColumn = "year") %>%
+  count(term) 
+
+#src_unigrams %>%
+#  slice_max(order_by = n, n = 10) %>%
+#  kableExtra::kable(col.names = c("Term", "N")) %>%
+#  kableExtra::kable_paper() %>%
+#  kableExtra::kable_styling(font_size = 10)
+
+src_bigrams %>%
+  slice_max(order_by = n, n = 9) %>%
+  knitr::kable(col.names = c("Term", "N")) 
+```
+
+
+
+## What about temporal trends?
+
+```{r echo=FALSE, fig.width=5, fig.height=5, dpi=200, out.width = "50%"}
+terms_by_date(textData = src_pubs,
+              textColumn = "title",
+              dateColumn = "pub_date",
+              tokenType = "bigram") %>%
+  plot_term_frequencies(timeBinUnit = "year", topN = 9, nCols = 3,
+                        minTermTimeBins = 0)
+```
+
+
+
+
+## Topic modelling with STM
+
+Questions:
+
+* Which latent topics exists?
+* How promiment are they?
+* Is the topic prevalence influence by document variables?
+* How are topics related?
+
+
+## Create a document corpus
+
+* Decide what constitutes a **document**.
+* Create a structured representation of documents with unique document identifiers.
+
+
+
+## Document corpus with `quanteda`
+
+```r
+# read the source documents
+src_pubs <- readr::read_csv("./topicmodels/data/src_pubs_annotated.csv",
+                            col_types = "c")
+
+# create a document corpus using quanteda
+pubs_corpus <- src_pubs %>%
+  quanteda::corpus(docid_field = "doc_id", text_field = "abstract")
+```
+
+## Tokenize with `quanteda`
+
+```r
+# tokenize the document corpus (here we use words as tokens)
+pubs_tokens <- pubs_corpus %>%
+  quanteda::tokens(what = "word",
+                   remove_punct = TRUE,
+                   remove_symbols = TRUE,
+                   remove_numbers = TRUE,
+                   remove_url = TRUE,
+                   remove_separators = TRUE,
+                   split_hyphens = TRUE)
+```
+
+
+## Create a 'document-feature matrix' with `quanteda`
+
+```r
+# create a document feature matrix and filter the
+# features (here by removing common English stopwords)
+pubs_dfm <- pubs_tokens %>%
+  quanteda::dfm(tolower = TRUE) %>%
+  quanteda::dfm_remove(pattern = quanteda::stopwords("english")) %>%
+  quanteda::dfm_wordstem()
+```
+
+
+## Filter documents and/or terms
+
+```r
+# we can apply additional filtering to the document feature matrix
+pubs_dfm <- pubs_dfm %>%
+  quanteda::dfm_remove(min_nchar = 2) %>% 
+  quanteda::dfm_trim(min_docfreq = 2, docfreq_type = "count") %>%  
+  quanteda::dfm_subset(quanteda::ntoken(.) > 2)
+```
+
+
+## Fit the STM topic model
+
+```r
+# create a native STM representation of the DFM
+stm_docs <- quanteda::convert(pubs_dfm, to = "stm")
+
+# we use 20 topics and consider two covariates
+src_topics <- stm(documents = stm_docs$documents,
+                  vocab = stm_docs$vocab,
+                  data = stm_docs$meta,
+                  prevalence = ~ organisation_phase * src_author_role,
+                  K = 20,
+                  verbose = TRUE)
+```
+
+
+
+
+## Inspect the topic model
+
+```r
+# list most probable words (different groups of words are available)
+summary(src_topics)
+
+# plot the topic shares/probabilities using plot.STM
+plot(src_topics, n = 5)
+```
+
+## Topics - Terms
+
+```{r}
+summary(src_topics)
+```
+
+
+
+## Topic shares
+
+```{r echo=TRUE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+plot(src_topics, n = 5)
+```
+
+
+## Topic shares
+
+```{r echo=FALSE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+plot(src_topics, n = 5)
+```
+
+
+## Estimate covariate effects
+
+```r
+# this can be estimated for selected topics (here we evaluate all topics)
+src_topic_effect <- estimateEffect(1:20 ~ organisation_phase * src_author_role,
+                                   stmobj = src_topics,
+                                   metadata = stm_docs$meta, uncertainty = "None")
+
+# this summarises the regression stats for the estimated covriate effects
+summary(src_topic_effect)
+```
+
+## Covariate effects summary {.xs-small-pg-text}
+
+```{r}
+summary(src_topic_effect)
+```
+
+
+
+## Example 1: Topics over time
+
+```{r echo=FALSE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+org_phase_values <- src_pubs %>%
+  group_by(organisation_phase, organisation_phase_label) %>%
+  summarise(n_pubs = n()) %>%
+  ungroup()
+
+plot(src_topic_effect,
+     covariate = "organisation_phase",
+     method = "continuous",
+     model = src_topics,
+     #printlegend = FALSE,
+     ylim = c(0, 0.18),
+     topics = c(3, 19),
+     xaxt = "n",
+     main = 'Effect of organisational phases on prevalence of\nTopic 3 ("sustainable development") and Topic 19 ("baltic sea") ',
+     #labeltype = "prob",
+     xlab = "Organisation phase")
+axis(1, at = org_phase_values$organisation_phase,
+     labels = org_phase_values$organisation_phase_label)
+```
+
+
+## Example 2: SRC lead authorship
+
+```{r echo=FALSE, fig.width=12, fig.height=10, dpi=200, out.width = "70%"}
+plot(src_topic_effect, covariate = "src_author_role",
+     topics = c(7, 2, 16, 19, 14),
+     model = src_topics, method = "difference",
+     cov.value1 = "SRC lead", cov.value2 = "SRC collaborator(s)",
+     xlab = "SRC collaborator(s) ... SRC lead",
+     xlim = c(-0.06, 0.06),
+     main = "Effect of SRC lead authorship",
+     labeltype = "prob")
+```
+
+
+## Example 3: SRC lead authorship
+
+```{r echo=FALSE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+plot(src_topic_effect, covariate = "src_author_role",
+     topics = c(14),
+     model = src_topics, method = "pointestimate",
+     cov.value1 = "SRC lead", cov.value2 = "SRC collaborator(s)",
+     xlab = "SRC collaborator(s) ... SRC lead",
+     main = "Effect of SRC lead authorship",
+     xlim = c(0.005, 0.08),
+     labeltype = "prob")
+```
+
+
+## Example 4: Combined effects 
+
+```{r echo=FALSE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+plot(src_topic_effect,
+     topics = c(16),
+     covariate = "organisation_phase",
+     model = src_topics,
+     ci.level = 0.95,
+     method = "continuous",
+     moderator = "src_author_role",
+     moderator.value = "SRC lead",
+     linecol = "#eb7125", lwd = 4,
+     xlab = "Organisational phase",
+     ylim = c(0, .12),
+     main = 'Effect of SRC lead authorship on Topic 16 ("planetary boundaries")',
+     xaxt = "n",
+     printlegend = F)
+plot(src_topic_effect,
+     topics = c(16),
+     covariate = "organisation_phase",
+     model = src_topics,
+     method = "continuous",
+     moderator = "src_author_role",
+     moderator.value = "SRC collaborator(s)",
+     linecol = "#363636", lwd = 2,
+     add = T,
+     printlegend = F)
+legend(2, .12, c("SRC lead", "SRC collaborator(s)"), lwd = 2, col = c("#eb7125", "#363636"))
+axis(1, at = org_phase_values$organisation_phase,
+     labels = org_phase_values$organisation_phase_label)
+```
+
+
+
+## Exercise
+
+1. fit the model with a different K
+2. test a different prevalence formula (for example `n_authors` or `open_access`)
+3. estimate the covariate effect for this model
+4. adapt the examples in the script for other topics and covariates
+
+
+# Thank You!
+
+
+## Key Resources
+
+* R Markdown
+  * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) [@XieAllaire_et_2022]
+  * [Cheatsheet: Dynamic documents with rmarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
+* Git/Github:
+  * [Happy Git and GitHub for the useR](https://happygitwithr.com/) [@Bryan2021]
+  * "Excuse me, do you have a moment to talk about version control?" [@Bryan2017]
+  * Advanced git use: [Pro Git](https://git-scm.com/book/en/v2) book [@Chacon_et_2014_Book]
+  * [How to write a great commit message](https://cbea.ms/git-commit/)
+
+
+
+## References
+
+<div id="refs"></div>
+
+
+## Colophon {.colophon}
+**SRC PhD R course Module 7 --- Interactive R Markdown with Shiny"** by *Stefan Daume*
+
+&nbsp;
+
+Presented on 16. December 2022.
+
+&nbsp;
+
+This presentation can be cited using: *doi:...*
+
+&nbsp;
+
+**PRESENTATION DETAILS**
+
+**Author/Affiliation:** Stefan Daume, Stockholm Resilience Centre, Stockholm University
+
+**Presentation URL:** https://sdaume.github.io/r-course-module-3/slides/shiny-module.html
+
+**Presentation Source:** [TBD]
+
+**Presentation PDF:** [TBD]
+
+&nbsp;
+
+**CREDITS & LICENSES**
+
+This presentation is delivered with the help of several free and open source tools and libraries. It utilises the [reveal.js](https://revealjs.com/) presentation framework and has been created using [RMarkdown](https://rmarkdown.rstudio.com), [knitr](https://yihui.name/knitr/), [RStudio](https://www.rstudio.com) and [Pandoc](https://pandoc.org/). [highlight.js](https://highlightjs.org) provides syntax highlighting for code sections. [MathJax](https://www.mathjax.org) supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with [DeckTape](https://github.com/astefanutti/decktape). Please note the respective licenses of these tools and libraries.
+
+
+&nbsp;
+
+If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are **Copyright &copy; 2022 of the Author** and provided under a *CC BY 4.0* public domain license. 

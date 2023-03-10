@@ -1,0 +1,13 @@
+---
+title: "SRC PhD R course Module 9"
+subtitle: "Topic modelling"
+author: "Stefan Daume"
+date: '16. March 2023'
+theme: white
+highlight: zenburn
+transition: none
+css: ./css/mycustom_v3.css
+bibliography: references.bib
+link-citations: false
+#csl: plos-one.csl
+---

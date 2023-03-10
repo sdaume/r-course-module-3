@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Stefan Daume">
+  <title>SRC PhD R course Module 9</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js-3.6.0/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="./custom_highlight.js-9.12.0/styles/zenburn.css">
+  <script src="./custom_highlight.js-9.12.0/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="./reveal.js-3.6.0/css/theme/white.css" id="theme">
+  <link rel="stylesheet" href="./css/mycustom_v3.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js-3.6.0/css/print/pdf.css' : './reveal.js-3.6.0/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js-3.6.0/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">SRC PhD R course Module 9</h1>
+  <p class="subtitle">Topic modelling</p>
+  <p class="author">Stefan Daume</p>
+  <p class="date">16. March 2023</p>
+</section>
+
+<section id="section" class="slide level2 hideslideheader" data-background="#061C30">
+<h2> </h2>
+<div style="display:table;width:100%;table-layout: fixed;">
+<div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
+<p>SRC PhD R course Module 9</p>
+<p>Topic modelling</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+</div>
+<div style="display:table;width:100%;table-layout: fixed;">
+<div class="mytitlepage linksection" style="display:table-cell;width:30%;padding-left:3%;vertical-align:bottom;">
+<p><em><a href="https://twitter.com/stefandaume">@stefandaume</a></em></p>
+<p><em><a href="https://scitingly.net/" class="uri">https://scitingly.net/</a></em></p>
+<p><em><a href="mailto:stefan.daume@su.se" class="email">stefan.daume@su.se</a></em></p>
+</div>
+<div class="mytitlepage authorsection" style="display:table-cell;width:70%;padding-right:3%;">
+<p>  <strong>Stefan Daume</strong></p>
+<p><em><a href="https://www.stockholmresilience.org/meet-our-team/staff/2021-01-27-daume.html">Stockholm Resilience Centre, Stockholm University</a></em></p>
+<p>&amp; <em><a href="https://beijer.kva.se/programmes/complexity/">Beijer Institute of Ecological Economics</a></em></p>
+<p> </p>
+<p><em>16. March 2023</em></p>
+</div>
+</div>
+</section>
+<section id="why-topic-modelling" class="slide level2">
+<h2>Why topic modelling?</h2>
+<ul>
+<li>discovery, summary, answering causal questions in social science</li>
+</ul>
+</section>
+<section id="how-does-it-work" class="slide level2">
+<h2>How does it work?</h2>
+<ul>
+<li>unsupervised, probabilistic classification</li>
+<li>generative model (reverses the document generation process)</li>
+</ul>
+</section>
+<section id="the-notion-of-latent-topics" class="slide level2">
+<h2>The notion of “latent topics”</h2>
+</section>
+<section id="topic-modelling-algorithms" class="slide level2">
+<h2>Topic modelling algorithms</h2>
+<ul>
+<li>LSA, LDA, CTM, STM</li>
+</ul>
+</section>
+<section id="stm-vs-vanilla-lda" class="slide level2">
+<h2>STM vs “vanilla LDA”</h2>
+<ul>
+<li>assumption: topics are independent</li>
+<li>test relationship between topics and document meta-data, test hypothesis</li>
+</ul>
+</section>
+<section id="basic-text-mining-concepts" class="slide level2">
+<h2>Basic text mining concepts</h2>
+<ul>
+<li>documents</li>
+<li>corpus</li>
+<li>tokens</li>
+<li>terms</li>
+</ul>
+</section>
+<section id="basic-steps" class="slide level2">
+<h2>Basic steps</h2>
+<ul>
+<li>get documents to analyse</li>
+<li>preprocess</li>
+<li>create a corpus</li>
+<li>tokenization</li>
+<li>create document-term matrix</li>
+</ul>
+</section>
+<section id="r-packages-to-use" class="slide level2">
+<h2>R packages to use</h2>
+<ul>
+<li>quanteda</li>
+<li>tidytext</li>
+<li>snowballc</li>
+<li>spacyr</li>
+<li>stringr</li>
+<li>stm</li>
+</ul>
+</section>
+<section id="an-example-src-publications" class="slide level2">
+<h2>An example: SRC publications</h2>
+<p><img data-src="textmining-module_files/figure-markdown/unnamed-chunk-1-1.png" /></p>
+</section>
+<section id="a-simplistic-approach" class="slide level2 xs-small-pg-text">
+<h2>A simplistic approach</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">social</td>
+<td style="text-align: right;">265</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">system</td>
+<td style="text-align: right;">256</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ecolog</td>
+<td style="text-align: right;">248</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ecosystem</td>
+<td style="text-align: right;">243</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sustain</td>
+<td style="text-align: right;">216</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">global</td>
+<td style="text-align: right;">175</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">chang</td>
+<td style="text-align: right;">171</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">manag</td>
+<td style="text-align: right;">168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">resili</td>
+<td style="text-align: right;">167</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ngrams-closer-to-topics" class="slide level2">
+<h2>ngrams: closer to “topics”</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">social ecolog</td>
+<td style="text-align: right;">165</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ecosystem servic</td>
+<td style="text-align: right;">146</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ecolog system</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">climat chang</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">baltic sea</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">food system</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">planetari boundari</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">earth system</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">regim shift</td>
+<td style="text-align: right;">32</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-about-temporal-trends" class="slide level2">
+<h2>What about temporal trends?</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-4-1.png" width="50%" /></p>
+</section>
+<section id="topic-modelling-with-stm" class="slide level2">
+<h2>Topic modelling with STM</h2>
+<p>Questions:</p>
+<ul>
+<li>Which latent topics exists?</li>
+<li>How promiment are they?</li>
+<li>Is the topic prevalence influence by document variables?</li>
+<li>How are topics related?</li>
+</ul>
+</section>
+<section id="create-a-document-corpus" class="slide level2">
+<h2>Create a document corpus</h2>
+<ul>
+<li>Decide what constitutes a <strong>document</strong>.</li>
+<li>Create a structured representation of documents with unique document identifiers.</li>
+</ul>
+</section>
+<section id="document-corpus-with-quanteda" class="slide level2">
+<h2>Document corpus with <code>quanteda</code></h2>
+<pre class="r"><code># read the source documents
+src_pubs &lt;- readr::read_csv(&quot;./topicmodels/data/src_pubs_annotated.csv&quot;,
+                            col_types = &quot;c&quot;)
+
+# create a document corpus using quanteda
+pubs_corpus &lt;- src_pubs %&gt;%
+  quanteda::corpus(docid_field = &quot;doc_id&quot;, text_field = &quot;abstract&quot;)</code></pre>
+</section>
+<section id="tokenize-with-quanteda" class="slide level2">
+<h2>Tokenize with <code>quanteda</code></h2>
+<pre class="r"><code># tokenize the document corpus (here we use words as tokens)
+pubs_tokens &lt;- pubs_corpus %&gt;%
+  quanteda::tokens(what = &quot;word&quot;,
+                   remove_punct = TRUE,
+                   remove_symbols = TRUE,
+                   remove_numbers = TRUE,
+                   remove_url = TRUE,
+                   remove_separators = TRUE,
+                   split_hyphens = TRUE)</code></pre>
+</section>
+<section id="create-a-document-feature-matrix-with-quanteda" class="slide level2">
+<h2>Create a ‘document-feature matrix’ with <code>quanteda</code></h2>
+<pre class="r"><code># create a document feature matrix and filter the
+# features (here by removing common English stopwords)
+pubs_dfm &lt;- pubs_tokens %&gt;%
+  quanteda::dfm(tolower = TRUE) %&gt;%
+  quanteda::dfm_remove(pattern = quanteda::stopwords(&quot;english&quot;)) %&gt;%
+  quanteda::dfm_wordstem()</code></pre>
+</section>
+<section id="filter-documents-andor-terms" class="slide level2">
+<h2>Filter documents and/or terms</h2>
+<pre class="r"><code># we can apply additional filtering to the document feature matrix
+pubs_dfm &lt;- pubs_dfm %&gt;%
+  quanteda::dfm_remove(min_nchar = 2) %&gt;% 
+  quanteda::dfm_trim(min_docfreq = 2, docfreq_type = &quot;count&quot;) %&gt;%  
+  quanteda::dfm_subset(quanteda::ntoken(.) &gt; 2)</code></pre>
+</section>
+<section id="fit-the-stm-topic-model" class="slide level2">
+<h2>Fit the STM topic model</h2>
+<pre class="r"><code># create a native STM representation of the DFM
+stm_docs &lt;- quanteda::convert(pubs_dfm, to = &quot;stm&quot;)
+
+# we use 20 topics and consider two covariates
+src_topics &lt;- stm(documents = stm_docs$documents,
+                  vocab = stm_docs$vocab,
+                  data = stm_docs$meta,
+                  prevalence = ~ organisation_phase * src_author_role,
+                  K = 20,
+                  verbose = TRUE)</code></pre>
+</section>
+<section id="inspect-the-topic-model" class="slide level2">
+<h2>Inspect the topic model</h2>
+<pre class="r"><code># list most probable words (different groups of words are available)
+summary(src_topics)
+
+# plot the topic shares/probabilities using plot.STM
+plot(src_topics, n = 5)</code></pre>
+</section>
+<section id="topics---terms" class="slide level2">
+<h2>Topics - Terms</h2>
+<pre class="r"><code>summary(src_topics)
+#&gt; A topic model with 20 topics, 1906 documents and a 5104 word dictionary.
+#&gt; Topic 1 Top Words:
+#&gt;       Highest Prob: fisheri, fish, fisher, poverti, livelihood, scale, market 
+#&gt;       FREX: poverti, fisheri, fisher, livelihood, trap, women, price 
+#&gt;       Lift: ssf, amend, bigger, bought, buy, daw, homarus 
+#&gt;       Score: fisheri, fisher, fish, poverti, market, trap, livelihood 
+#&gt; Topic 2 Top Words:
+#&gt;       Highest Prob: govern, institut, global, chang, polici, ocean, sustain 
+#&gt;       FREX: corpor, institut, govern, innov, ocean, crise, compani 
+#&gt;       Lift: gradualist, multin, philanthropi, preexist, anticipatori, cdm, fip 
+#&gt;       Score: govern, ocean, corpor, institut, actor, coevolv, crise 
+#&gt; Topic 3 Top Words:
+#&gt;       Highest Prob: develop, sustain, scenario, goal, use, polici, assess 
+#&gt;       FREX: amr, sdgs, goal, scenario, target, achiev, sdg 
+#&gt;       Lift: bsms, carson, cbd, cousin, emptiv, fell, galvan 
+#&gt;       Score: amr, sdgs, scenario, sdg, cbd, goal, ipb 
+#&gt; Topic 4 Top Words:
+#&gt;       Highest Prob: urban, citi, green, area, plan, infrastructur, use 
+#&gt;       FREX: urban, citi, garden, gi, green, ug, infrastructur 
+#&gt;       Lift: peri, antithesi, architect, barcelona, cemeteri, cogitatio, colour 
+#&gt;       Score: urban, citi, green, garden, gi, ug, infrastructur 
+#&gt; Topic 5 Top Words:
+#&gt;       Highest Prob: climat, chang, risk, impact, carbon, global, adapt 
+#&gt;       FREX: climat, risk, carbon, hazard, mitig, emiss, vulner 
+#&gt;       Lift: grape, gtc, ipcc, wine, cdr, elsler, nc 
+#&gt;       Score: climat, carbon, emiss, risk, hazard, adapt, chang 
+#&gt; Topic 6 Top Words:
+#&gt;       Highest Prob: research, sustain, knowledg, transform, scienc, approach, practic 
+#&gt;       FREX: research, transdisciplinari, think, knowledg, disciplin, transform, interdisciplinari 
+#&gt;       Lift: comment, doctor, espa, interdisciplinar, interrog, intract, journalist 
+#&gt;       Score: transdisciplinari, transform, think, research, disciplin, career, engag 
+#&gt; Topic 7 Top Words:
+#&gt;       Highest Prob: social, ecolog, system, resili, complex, dynam, adapt 
+#&gt;       FREX: resili, ecolog, social, ses, system, al, deal 
+#&gt;       Lift: armitag, borrini, chapin, malin, unanticip, ostrom, berk 
+#&gt;       Score: resili, social, ses, ecolog, system, adapt, theori 
+#&gt; Topic 8 Top Words:
+#&gt;       Highest Prob: ecosystem, servic, es, valu, well, scale, landscap 
+#&gt;       FREX: es, servic, ecosystem, provis, bundl, off, landscap 
+#&gt;       Lift: cum, ditch, fiber, firewood, photograph, québec, tell 
+#&gt;       Score: servic, es, ecosystem, bundl, ebm, landscap, provis 
+#&gt; Topic 9 Top Words:
+#&gt;       Highest Prob: shift, fish, regim, reef, coral, sea, chang 
+#&gt;       FREX: reef, coral, cucumb, iuu, vessel, regim, shift 
+#&gt;       Lift: brew, breweri, fiji, iuu, mayott, ppcps, scuba 
+#&gt;       Score: reef, coral, fish, iuu, cucumb, herbivor, vessel 
+#&gt; Topic 10 Top Words:
+#&gt;       Highest Prob: natur, human, scienc, data, springer, peopl, decis 
+#&gt;       FREX: media, natur, mental, springer, behavior, children, switzerland 
+#&gt;       Lift: duinen, hollands, ladder, nationa, nff, uenc, enjoy 
+#&gt;       Score: natur, hnc, children, behavior, supplementari, abm, media 
+#&gt; Topic 11 Top Words:
+#&gt;       Highest Prob: govern, adapt, learn, actor, network, collabor, stakehold 
+#&gt;       FREX: learn, collabor, student, actor, stakehold, particip, adapt 
+#&gt;       Lift: acf, brunswick, classroom, igitur, man, misalign, multiactor 
+#&gt;       Score: learn, actor, network, collabor, govern, adapt, student 
+#&gt; Topic 12 Top Words:
+#&gt;       Highest Prob: communiti, sustain, local, practic, peopl, cultur, divers 
+#&gt;       FREX: biocultur, indigen, discours, redd, justic, sf, power 
+#&gt;       Lift: artifact, biocultur, centralis, cocreat, dune, historic, linguist 
+#&gt;       Score: indigen, redd, biocultur, sf, justic, forest, discours 
+#&gt; Topic 13 Top Words:
+#&gt;       Highest Prob: resourc, behaviour, communiti, cooper, user, individu, group 
+#&gt;       FREX: behaviour, cooper, pool, user, attitud, game, harvest 
+#&gt;       Lift: aggress, balines, everyon, hydrocarbon, megapitaria, methanogen, microorgan 
+#&gt;       Score: cooper, behaviour, harvest, templ, attitud, cell, microbi 
+#&gt; Topic 14 Top Words:
+#&gt;       Highest Prob: model, network, data, dynam, analysi, approach, use 
+#&gt;       FREX: node, model, statist, network, graph, simul, nonlinear 
+#&gt;       Lift: barabási, brain, chaotic, crossov, eigenanalysi, ep, epla 
+#&gt;       Score: network, model, node, simul, graph, brokerag, statist 
+#&gt; Topic 15 Top Words:
+#&gt;       Highest Prob: water, land, use, forest, region, basin, moistur 
+#&gt;       FREX: moistur, water, evapor, watersh, rainfal, soil, precipit 
+#&gt;       Lift: 2layer, arcswat, companion, envelop, eulerian, hydrochem, inund 
+#&gt;       Score: water, moistur, evapor, precipit, rainfal, basin, hydrolog 
+#&gt; Topic 16 Top Words:
+#&gt;       Highest Prob: system, human, earth, boundari, global, planetari, tip 
+#&gt;       FREX: planetari, earth, tip, boundari, safe, element, biospher 
+#&gt;       Lift: chemist, destabilis, interglaci, biocid, biogeophys, domino, johan 
+#&gt;       Score: earth, planetari, tip, anthropocen, boundari, safe, human 
+#&gt; Topic 17 Top Words:
+#&gt;       Highest Prob: food, product, system, agricultur, aquacultur, farm, environment 
+#&gt;       FREX: farm, aquacultur, food, nutrit, certif, consumpt, product 
+#&gt;       Lift: acid, affluent, agroecolog, aquafe, buck, cargil, carp 
+#&gt;       Score: aquacultur, food, farm, seafood, nutrit, agricultur, farmer 
+#&gt; Topic 18 Top Words:
+#&gt;       Highest Prob: speci, habitat, biodivers, landscap, forest, divers, function 
+#&gt;       FREX: patch, habitat, trait, speci, dispers, invas, plant 
+#&gt;       Lift: acacia, amphibian, apart, macroinvertebr, plcas, allometr, arabl 
+#&gt;       Score: speci, habitat, patch, trait, bird, forest, golf 
+#&gt; Topic 19 Top Words:
+#&gt;       Highest Prob: sea, baltic, ice, nutrient, indic, ecosystem, increas 
+#&gt;       FREX: baltic, prey, seabird, oxygen, cod, ice, salin 
+#&gt;       Lift: argentatus, auk, biotop, clupea, copepod, deglaci, dissolut 
+#&gt;       Score: baltic, prey, ice, sea, sheet, predat, nutrient 
+#&gt; Topic 20 Top Words:
+#&gt;       Highest Prob: manag, conserv, implement, marin, approach, develop, success 
+#&gt;       FREX: manag, conserv, implement, success, restor, protect, european 
+#&gt;       Lift: bureaucraci, iea, virtu, appeal, ec, forsak, voluntarili 
+#&gt;       Score: conserv, manag, marin, implement, protect, lake, plan</code></pre>
+</section>
+<section id="topic-shares" class="slide level2">
+<h2>Topic shares</h2>
+<pre class="r"><code>plot(src_topics, n = 5)</code></pre>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-6-1.png" width="70%" /></p>
+</section>
+<section id="topic-shares-1" class="slide level2">
+<h2>Topic shares</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-7-1.png" width="70%" /></p>
+</section>
+<section id="estimate-covariate-effects" class="slide level2">
+<h2>Estimate covariate effects</h2>
+<pre class="r"><code># this can be estimated for selected topics (here we evaluate all topics)
+src_topic_effect &lt;- estimateEffect(1:20 ~ organisation_phase * src_author_role,
+                                   stmobj = src_topics,
+                                   metadata = stm_docs$meta, uncertainty = &quot;None&quot;)
+
+# this summarises the regression stats for the estimated covriate effects
+summary(src_topic_effect)</code></pre>
+</section>
+<section id="covariate-effects-summary" class="slide level2 xs-small-pg-text">
+<h2>Covariate effects summary</h2>
+<pre class="r"><code>summary(src_topic_effect)
+#&gt; 
+#&gt; Call:
+#&gt; estimateEffect(formula = 1:20 ~ organisation_phase * src_author_role, 
+#&gt;     stmobj = src_topics, metadata = stm_docs$meta, uncertainty = &quot;None&quot;)
+#&gt; 
+#&gt; 
+#&gt; Topic 1:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.043894   0.010163   4.319
+#&gt; organisation_phase                         -0.003266   0.003211  -1.017
+#&gt; src_author_roleSRC lead                    -0.012772   0.020956  -0.609
+#&gt; organisation_phase:src_author_roleSRC lead  0.014053   0.006580   2.136
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                1.65e-05 ***
+#&gt; organisation_phase                           0.3092    
+#&gt; src_author_roleSRC lead                      0.5423    
+#&gt; organisation_phase:src_author_roleSRC lead   0.0328 *  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 2:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.057766   0.009392   6.151
+#&gt; organisation_phase                         -0.003855   0.003055  -1.262
+#&gt; src_author_roleSRC lead                     0.042349   0.020557   2.060
+#&gt; organisation_phase:src_author_roleSRC lead -0.003296   0.006371  -0.517
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                9.37e-10 ***
+#&gt; organisation_phase                           0.2071    
+#&gt; src_author_roleSRC lead                      0.0395 *  
+#&gt; organisation_phase:src_author_roleSRC lead   0.6050    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 3:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                -0.015733   0.010951  -1.437
+#&gt; organisation_phase                          0.024536   0.003416   7.183
+#&gt; src_author_roleSRC lead                    -0.027101   0.023702  -1.143
+#&gt; organisation_phase:src_author_roleSRC lead  0.005026   0.007309   0.688
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                   0.151    
+#&gt; organisation_phase                         9.75e-13 ***
+#&gt; src_author_roleSRC lead                       0.253    
+#&gt; organisation_phase:src_author_roleSRC lead    0.492    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 4:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.002311   0.010362   0.223
+#&gt; organisation_phase                          0.013478   0.003203   4.209
+#&gt; src_author_roleSRC lead                     0.036058   0.021957   1.642
+#&gt; organisation_phase:src_author_roleSRC lead -0.015233   0.006755  -2.255
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                  0.8235    
+#&gt; organisation_phase                         2.69e-05 ***
+#&gt; src_author_roleSRC lead                      0.1007    
+#&gt; organisation_phase:src_author_roleSRC lead   0.0242 *  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 5:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                              Estimate Std. Error t value
+#&gt; (Intercept)                                 0.0568356  0.0090635   6.271
+#&gt; organisation_phase                         -0.0005562  0.0028451  -0.196
+#&gt; src_author_roleSRC lead                    -0.0304435  0.0190189  -1.601
+#&gt; organisation_phase:src_author_roleSRC lead  0.0044584  0.0059462   0.750
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                4.43e-10 ***
+#&gt; organisation_phase                            0.845    
+#&gt; src_author_roleSRC lead                       0.110    
+#&gt; organisation_phase:src_author_roleSRC lead    0.453    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 6:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.026694   0.013183   2.025
+#&gt; organisation_phase                          0.016999   0.004130   4.116
+#&gt; src_author_roleSRC lead                    -0.008638   0.028904  -0.299
+#&gt; organisation_phase:src_author_roleSRC lead  0.007225   0.008952   0.807
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                   0.043 *  
+#&gt; organisation_phase                         4.03e-05 ***
+#&gt; src_author_roleSRC lead                       0.765    
+#&gt; organisation_phase:src_author_roleSRC lead    0.420    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 7:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.081525   0.010367   7.864
+#&gt; organisation_phase                         -0.003548   0.003279  -1.082
+#&gt; src_author_roleSRC lead                     0.061775   0.020921   2.953
+#&gt; organisation_phase:src_author_roleSRC lead -0.009599   0.006538  -1.468
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                6.18e-15 ***
+#&gt; organisation_phase                          0.27930    
+#&gt; src_author_roleSRC lead                     0.00319 ** 
+#&gt; organisation_phase:src_author_roleSRC lead  0.14222    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 8:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.069504   0.010251   6.780
+#&gt; organisation_phase                         -0.007221   0.003282  -2.200
+#&gt; src_author_roleSRC lead                     0.031797   0.020541   1.548
+#&gt; organisation_phase:src_author_roleSRC lead -0.007902   0.006456  -1.224
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                 1.6e-11 ***
+#&gt; organisation_phase                           0.0279 *  
+#&gt; src_author_roleSRC lead                      0.1218    
+#&gt; organisation_phase:src_author_roleSRC lead   0.2211    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 9:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.068546   0.011160   6.142
+#&gt; organisation_phase                         -0.008991   0.003541  -2.539
+#&gt; src_author_roleSRC lead                    -0.037166   0.023110  -1.608
+#&gt; organisation_phase:src_author_roleSRC lead  0.004824   0.007168   0.673
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                 9.9e-10 ***
+#&gt; organisation_phase                           0.0112 *  
+#&gt; src_author_roleSRC lead                      0.1080    
+#&gt; organisation_phase:src_author_roleSRC lead   0.5010    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 10:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.010330   0.008994   1.149
+#&gt; organisation_phase                          0.010580   0.002817   3.755
+#&gt; src_author_roleSRC lead                     0.033762   0.018491   1.826
+#&gt; organisation_phase:src_author_roleSRC lead -0.013698   0.005694  -2.406
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                0.250851    
+#&gt; organisation_phase                         0.000178 ***
+#&gt; src_author_roleSRC lead                    0.068027 .  
+#&gt; organisation_phase:src_author_roleSRC lead 0.016232 *  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 11:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.075595   0.011635   6.497
+#&gt; organisation_phase                         -0.006890   0.003546  -1.943
+#&gt; src_author_roleSRC lead                    -0.002679   0.024140  -0.111
+#&gt; organisation_phase:src_author_roleSRC lead  0.008442   0.007487   1.128
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                1.04e-10 ***
+#&gt; organisation_phase                           0.0522 .  
+#&gt; src_author_roleSRC lead                      0.9116    
+#&gt; organisation_phase:src_author_roleSRC lead   0.2596    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 12:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                -0.012018   0.009452  -1.271
+#&gt; organisation_phase                          0.015693   0.002967   5.289
+#&gt; src_author_roleSRC lead                     0.022907   0.018680   1.226
+#&gt; organisation_phase:src_author_roleSRC lead -0.003150   0.005795  -0.544
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                   0.204    
+#&gt; organisation_phase                         1.37e-07 ***
+#&gt; src_author_roleSRC lead                       0.220    
+#&gt; organisation_phase:src_author_roleSRC lead    0.587    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 13:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.021977   0.009304   2.362
+#&gt; organisation_phase                          0.004206   0.002979   1.412
+#&gt; src_author_roleSRC lead                     0.009446   0.020470   0.461
+#&gt; organisation_phase:src_author_roleSRC lead -0.004049   0.006484  -0.625
+#&gt;                                            Pr(&gt;|t|)  
+#&gt; (Intercept)                                  0.0183 *
+#&gt; organisation_phase                           0.1582  
+#&gt; src_author_roleSRC lead                      0.6445  
+#&gt; organisation_phase:src_author_roleSRC lead   0.5323  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 14:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.059706   0.011585   5.154
+#&gt; organisation_phase                          0.001077   0.003661   0.294
+#&gt; src_author_roleSRC lead                    -0.029624   0.025034  -1.183
+#&gt; organisation_phase:src_author_roleSRC lead -0.001484   0.007906  -0.188
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                2.82e-07 ***
+#&gt; organisation_phase                            0.769    
+#&gt; src_author_roleSRC lead                       0.237    
+#&gt; organisation_phase:src_author_roleSRC lead    0.851    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 15:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.081321   0.012085   6.729
+#&gt; organisation_phase                         -0.010532   0.003927  -2.682
+#&gt; src_author_roleSRC lead                    -0.032934   0.024053  -1.369
+#&gt; organisation_phase:src_author_roleSRC lead  0.008473   0.007669   1.105
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                2.26e-11 ***
+#&gt; organisation_phase                          0.00739 ** 
+#&gt; src_author_roleSRC lead                     0.17109    
+#&gt; organisation_phase:src_author_roleSRC lead  0.26939    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 16:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.029945   0.010781   2.778
+#&gt; organisation_phase                          0.007309   0.003392   2.155
+#&gt; src_author_roleSRC lead                     0.055467   0.022307   2.487
+#&gt; organisation_phase:src_author_roleSRC lead -0.015391   0.007009  -2.196
+#&gt;                                            Pr(&gt;|t|)   
+#&gt; (Intercept)                                 0.00553 **
+#&gt; organisation_phase                          0.03132 * 
+#&gt; src_author_roleSRC lead                     0.01298 * 
+#&gt; organisation_phase:src_author_roleSRC lead  0.02823 * 
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 17:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                              Estimate Std. Error t value
+#&gt; (Intercept)                                 0.0265394  0.0125760   2.110
+#&gt; organisation_phase                          0.0096007  0.0039190   2.450
+#&gt; src_author_roleSRC lead                    -0.0125880  0.0263187  -0.478
+#&gt; organisation_phase:src_author_roleSRC lead -0.0003143  0.0083236  -0.038
+#&gt;                                            Pr(&gt;|t|)  
+#&gt; (Intercept)                                  0.0350 *
+#&gt; organisation_phase                           0.0144 *
+#&gt; src_author_roleSRC lead                      0.6325  
+#&gt; organisation_phase:src_author_roleSRC lead   0.9699  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 18:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.103303   0.010497   9.841
+#&gt; organisation_phase                         -0.019816   0.003281  -6.040
+#&gt; src_author_roleSRC lead                    -0.026343   0.023161  -1.137
+#&gt; organisation_phase:src_author_roleSRC lead  0.003415   0.007127   0.479
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                 &lt; 2e-16 ***
+#&gt; organisation_phase                         1.85e-09 ***
+#&gt; src_author_roleSRC lead                       0.256    
+#&gt; organisation_phase:src_author_roleSRC lead    0.632    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 19:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.133034   0.013495   9.858
+#&gt; organisation_phase                         -0.027098   0.004202  -6.449
+#&gt; src_author_roleSRC lead                    -0.093693   0.028949  -3.236
+#&gt; organisation_phase:src_author_roleSRC lead  0.022383   0.009004   2.486
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                 &lt; 2e-16 ***
+#&gt; organisation_phase                         1.42e-10 ***
+#&gt; src_author_roleSRC lead                     0.00123 ** 
+#&gt; organisation_phase:src_author_roleSRC lead  0.01301 *  
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+#&gt; 
+#&gt; 
+#&gt; Topic 20:
+#&gt; 
+#&gt; Coefficients:
+#&gt;                                             Estimate Std. Error t value
+#&gt; (Intercept)                                 0.075348   0.007125  10.575
+#&gt; organisation_phase                         -0.010503   0.002230  -4.709
+#&gt; src_author_roleSRC lead                     0.021704   0.015073   1.440
+#&gt; organisation_phase:src_author_roleSRC lead -0.004433   0.004694  -0.944
+#&gt;                                            Pr(&gt;|t|)    
+#&gt; (Intercept)                                 &lt; 2e-16 ***
+#&gt; organisation_phase                         2.66e-06 ***
+#&gt; src_author_roleSRC lead                       0.150    
+#&gt; organisation_phase:src_author_roleSRC lead    0.345    
+#&gt; ---
+#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</section>
+<section id="example-1-topics-over-time" class="slide level2">
+<h2>Example 1: Topics over time</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-9-1.png" width="70%" /></p>
+</section>
+<section id="example-2-src-lead-authorship" class="slide level2">
+<h2>Example 2: SRC lead authorship</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-10-1.png" width="70%" /></p>
+</section>
+<section id="example-3-src-lead-authorship" class="slide level2">
+<h2>Example 3: SRC lead authorship</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-11-1.png" width="70%" /></p>
+</section>
+<section id="example-4-combined-effects" class="slide level2">
+<h2>Example 4: Combined effects</h2>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-12-1.png" width="70%" /></p>
+</section>
+<section id="exercise" class="slide level2">
+<h2>Exercise</h2>
+<ol type="1">
+<li>fit the model with a different K</li>
+<li>test a different prevalence formula (for example <code>n_authors</code> or <code>open_access</code>)</li>
+<li>estimate the covariate effect for this model</li>
+<li>adapt the examples in the script for other topics and covariates</li>
+</ol>
+</section>
+<section><section id="thank-you" class="title-slide slide level1"><h1>Thank You!</h1></section><section id="key-resources" class="slide level2">
+<h2>Key Resources</h2>
+<ul>
+<li>R Markdown
+<ul>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
+<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Cheatsheet: Dynamic documents with rmarkdown cheatsheet</a></li>
+</ul></li>
+<li>Git/Github:
+<ul>
+<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span></li>
+<li>“Excuse me, do you have a moment to talk about version control?” <span class="citation" data-cites="Bryan2017">(Bryan 2017)</span></li>
+<li>Advanced git use: <a href="https://git-scm.com/book/en/v2">Pro Git</a> book <span class="citation" data-cites="Chacon_et_2014_Book">(Chacon and Straub 2014)</span></li>
+<li><a href="https://cbea.ms/git-commit/">How to write a great commit message</a></li>
+</ul></li>
+</ul>
+</section><section id="references" class="slide level2">
+<h2>References</h2>
+<div id="refs" role="doc-bibliography">
+<div id="ref-Bryan2017">
+<p>Bryan, Jennifer. 2017. “Excuse me, do you have a moment to talk about version control?” <em>PeerJ Preprints</em> 5:e3159v2 (August). <a href="https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2">https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2</a>.</p>
+</div>
+<div id="ref-Bryan2021">
+<p>———. 2021. “Happy Git and GitHub for the useR.” <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.</p>
+</div>
+<div id="ref-Chacon_et_2014_Book">
+<p>Chacon, Scott, and Ben Straub. 2014. <em>Pro Git</em>. Apress. <a href="https://doi.org/10.1007/978-1-4842-0076-6">https://doi.org/10.1007/978-1-4842-0076-6</a>.</p>
+</div>
+<div id="ref-XieAllaire_et_2022">
+<p>Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2022. “R Markdown: The Definitive Guide.” <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.</p>
+</div>
+</div>
+</section><section id="colophon" class="slide level2 colophon">
+<h2>Colophon</h2>
+<p><strong>SRC PhD R course Module 7 — Interactive R Markdown with Shiny"</strong> by <em>Stefan Daume</em></p>
+<p> </p>
+<p>Presented on 16. December 2022.</p>
+<p> </p>
+<p>This presentation can be cited using: <em>doi:…</em></p>
+<p> </p>
+<p><strong>PRESENTATION DETAILS</strong></p>
+<p><strong>Author/Affiliation:</strong> Stefan Daume, Stockholm Resilience Centre, Stockholm University</p>
+<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides/shiny-module.html" class="uri">https://sdaume.github.io/r-course-module-3/slides/shiny-module.html</a></p>
+<p><strong>Presentation Source:</strong> [TBD]</p>
+<p><strong>Presentation PDF:</strong> [TBD]</p>
+<p> </p>
+<p><strong>CREDITS &amp; LICENSES</strong></p>
+<p>This presentation is delivered with the help of several free and open source tools and libraries. It utilises the <a href="https://revealjs.com/">reveal.js</a> presentation framework and has been created using <a href="https://rmarkdown.rstudio.com">RMarkdown</a>, <a href="https://yihui.name/knitr/">knitr</a>, <a href="https://www.rstudio.com">RStudio</a> and <a href="https://pandoc.org/">Pandoc</a>. <a href="https://highlightjs.org">highlight.js</a> provides syntax highlighting for code sections. <a href="https://www.mathjax.org">MathJax</a> supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with <a href="https://github.com/astefanutti/decktape">DeckTape</a>. Please note the respective licenses of these tools and libraries.</p>
+<p> </p>
+<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2022 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js-3.6.0/lib/js/head.min.js"></script>
+  <script src="./reveal.js-3.6.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+        // Push each slide change to the browser history
+        history: true,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        math: {
+          mathjax: './MathJax-2.7.5/MathJax.js',
+          config: 'TeX-MML-AM_SVG-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js-3.6.0/plugin/math/math.js', async: true },
+          { src: './reveal.js-3.6.0/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
