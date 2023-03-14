@@ -354,15 +354,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.045324   0.009596   4.723
-#> organisation_phase                         -0.003682   0.003041  -1.211
-#> src_author_roleSRC lead                    -0.014385   0.021840  -0.659
-#> organisation_phase:src_author_roleSRC lead  0.014653   0.006775   2.163
+#> (Intercept)                                 0.044363   0.009496   4.672
+#> organisation_phase                         -0.003415   0.003017  -1.132
+#> src_author_roleSRC lead                    -0.012757   0.020288  -0.629
+#> organisation_phase:src_author_roleSRC lead  0.014155   0.006399   2.212
 #>                                            Pr(>|t|)    
-#> (Intercept)                                2.49e-06 ***
-#> organisation_phase                           0.2261    
-#> src_author_roleSRC lead                      0.5102    
-#> organisation_phase:src_author_roleSRC lead   0.0307 *  
+#> (Intercept)                                3.19e-06 ***
+#> organisation_phase                           0.2578    
+#> src_author_roleSRC lead                      0.5296    
+#> organisation_phase:src_author_roleSRC lead   0.0271 *  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -371,15 +371,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.057513   0.009612   5.984
-#> organisation_phase                         -0.003671   0.003056  -1.201
-#> src_author_roleSRC lead                     0.042315   0.019474   2.173
-#> organisation_phase:src_author_roleSRC lead -0.003440   0.006080  -0.566
+#> (Intercept)                                 0.057436   0.009564   6.005
+#> organisation_phase                         -0.003711   0.003058  -1.214
+#> src_author_roleSRC lead                     0.043307   0.019653   2.204
+#> organisation_phase:src_author_roleSRC lead -0.003690   0.006156  -0.599
 #>                                            Pr(>|t|)    
-#> (Intercept)                                 2.6e-09 ***
-#> organisation_phase                           0.2298    
-#> src_author_roleSRC lead                      0.0299 *  
-#> organisation_phase:src_author_roleSRC lead   0.5716    
+#> (Intercept)                                2.28e-09 ***
+#> organisation_phase                           0.2250    
+#> src_author_roleSRC lead                      0.0277 *  
+#> organisation_phase:src_author_roleSRC lead   0.5490    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -388,15 +388,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                -0.015880   0.011055  -1.436
-#> organisation_phase                          0.024623   0.003442   7.154
-#> src_author_roleSRC lead                    -0.026937   0.022539  -1.195
-#> organisation_phase:src_author_roleSRC lead  0.005000   0.007097   0.705
+#> (Intercept)                                -0.015386   0.010677  -1.441
+#> organisation_phase                          0.024415   0.003335   7.321
+#> src_author_roleSRC lead                    -0.026845   0.023037  -1.165
+#> organisation_phase:src_author_roleSRC lead  0.005096   0.007083   0.719
 #>                                            Pr(>|t|)    
-#> (Intercept)                                   0.151    
-#> organisation_phase                          1.2e-12 ***
-#> src_author_roleSRC lead                       0.232    
-#> organisation_phase:src_author_roleSRC lead    0.481    
+#> (Intercept)                                   0.150    
+#> organisation_phase                         3.62e-13 ***
+#> src_author_roleSRC lead                       0.244    
+#> organisation_phase:src_author_roleSRC lead    0.472    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -405,15 +405,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.003175   0.010878   0.292
-#> organisation_phase                          0.013116   0.003363   3.900
-#> src_author_roleSRC lead                     0.037755   0.021558   1.751
-#> organisation_phase:src_author_roleSRC lead -0.015788   0.006744  -2.341
+#> (Intercept)                                 0.002399   0.010377   0.231
+#> organisation_phase                          0.013387   0.003184   4.205
+#> src_author_roleSRC lead                     0.036567   0.022893   1.597
+#> organisation_phase:src_author_roleSRC lead -0.015461   0.007172  -2.156
 #>                                            Pr(>|t|)    
-#> (Intercept)                                  0.7704    
-#> organisation_phase                         9.94e-05 ***
-#> src_author_roleSRC lead                      0.0801 .  
-#> organisation_phase:src_author_roleSRC lead   0.0193 *  
+#> (Intercept)                                  0.8172    
+#> organisation_phase                         2.73e-05 ***
+#> src_author_roleSRC lead                      0.1104    
+#> organisation_phase:src_author_roleSRC lead   0.0312 *  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -422,15 +422,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                              Estimate Std. Error t value
-#> (Intercept)                                 0.0567325  0.0088904   6.381
-#> organisation_phase                         -0.0004705  0.0027788  -0.169
-#> src_author_roleSRC lead                    -0.0315325  0.0178430  -1.767
-#> organisation_phase:src_author_roleSRC lead  0.0046685  0.0055989   0.834
+#> (Intercept)                                 0.0570869  0.0090225   6.327
+#> organisation_phase                         -0.0005075  0.0028453  -0.178
+#> src_author_roleSRC lead                    -0.0305499  0.0192017  -1.591
+#> organisation_phase:src_author_roleSRC lead  0.0042764  0.0059676   0.717
 #>                                            Pr(>|t|)    
-#> (Intercept)                                 2.2e-10 ***
-#> organisation_phase                           0.8656    
-#> src_author_roleSRC lead                      0.0774 .  
-#> organisation_phase:src_author_roleSRC lead   0.4045    
+#> (Intercept)                                3.11e-10 ***
+#> organisation_phase                            0.858    
+#> src_author_roleSRC lead                       0.112    
+#> organisation_phase:src_author_roleSRC lead    0.474    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -439,15 +439,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.026958   0.011986   2.249
-#> organisation_phase                          0.016915   0.003802   4.449
-#> src_author_roleSRC lead                    -0.006071   0.027106  -0.224
-#> organisation_phase:src_author_roleSRC lead  0.006310   0.008456   0.746
+#> (Intercept)                                 0.026399   0.012828   2.058
+#> organisation_phase                          0.016921   0.003990   4.241
+#> src_author_roleSRC lead                    -0.010423   0.026699  -0.390
+#> organisation_phase:src_author_roleSRC lead  0.007842   0.008313   0.943
 #>                                            Pr(>|t|)    
-#> (Intercept)                                  0.0246 *  
-#> organisation_phase                         9.13e-06 ***
-#> src_author_roleSRC lead                      0.8228    
-#> organisation_phase:src_author_roleSRC lead   0.4556    
+#> (Intercept)                                  0.0397 *  
+#> organisation_phase                         2.33e-05 ***
+#> src_author_roleSRC lead                      0.6963    
+#> organisation_phase:src_author_roleSRC lead   0.3457    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -456,15 +456,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.082062   0.010530   7.793
-#> organisation_phase                         -0.003702   0.003199  -1.157
-#> src_author_roleSRC lead                     0.060520   0.020999   2.882
-#> organisation_phase:src_author_roleSRC lead -0.009238   0.006536  -1.413
+#> (Intercept)                                 0.081534   0.009601   8.492
+#> organisation_phase                         -0.003471   0.003054  -1.137
+#> src_author_roleSRC lead                     0.063843   0.020301   3.145
+#> organisation_phase:src_author_roleSRC lead -0.010235   0.006183  -1.655
 #>                                            Pr(>|t|)    
-#> (Intercept)                                1.07e-14 ***
-#> organisation_phase                            0.247    
-#> src_author_roleSRC lead                       0.004 ** 
-#> organisation_phase:src_author_roleSRC lead    0.158    
+#> (Intercept)                                 < 2e-16 ***
+#> organisation_phase                          0.25582    
+#> src_author_roleSRC lead                     0.00169 ** 
+#> organisation_phase:src_author_roleSRC lead  0.09803 .  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -473,15 +473,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.069651   0.010323   6.747
-#> organisation_phase                         -0.007289   0.003135  -2.325
-#> src_author_roleSRC lead                     0.032162   0.022434   1.434
-#> organisation_phase:src_author_roleSRC lead -0.008137   0.006939  -1.173
+#> (Intercept)                                 0.069556   0.010749   6.471
+#> organisation_phase                         -0.007315   0.003334  -2.194
+#> src_author_roleSRC lead                     0.032771   0.020426   1.604
+#> organisation_phase:src_author_roleSRC lead -0.008325   0.006324  -1.316
 #>                                            Pr(>|t|)    
-#> (Intercept)                                1.99e-11 ***
-#> organisation_phase                           0.0202 *  
-#> src_author_roleSRC lead                      0.1518    
-#> organisation_phase:src_author_roleSRC lead   0.2411    
+#> (Intercept)                                1.23e-10 ***
+#> organisation_phase                           0.0283 *  
+#> src_author_roleSRC lead                      0.1088    
+#> organisation_phase:src_author_roleSRC lead   0.1882    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -490,15 +490,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.069354   0.011134   6.229
-#> organisation_phase                         -0.009190   0.003446  -2.667
-#> src_author_roleSRC lead                    -0.036831   0.023753  -1.551
-#> organisation_phase:src_author_roleSRC lead  0.004821   0.007433   0.649
+#> (Intercept)                                 0.069542   0.010816   6.429
+#> organisation_phase                         -0.009293   0.003450  -2.694
+#> src_author_roleSRC lead                    -0.035914   0.023126  -1.553
+#> organisation_phase:src_author_roleSRC lead  0.004510   0.007050   0.640
 #>                                            Pr(>|t|)    
-#> (Intercept)                                5.77e-10 ***
-#> organisation_phase                          0.00772 ** 
-#> src_author_roleSRC lead                     0.12117    
-#> organisation_phase:src_author_roleSRC lead  0.51669    
+#> (Intercept)                                1.62e-10 ***
+#> organisation_phase                          0.00712 ** 
+#> src_author_roleSRC lead                     0.12060    
+#> organisation_phase:src_author_roleSRC lead  0.52247    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -507,15 +507,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.010874   0.008240   1.320
-#> organisation_phase                          0.010457   0.002563   4.081
-#> src_author_roleSRC lead                     0.031421   0.017911   1.754
-#> organisation_phase:src_author_roleSRC lead -0.013007   0.005656  -2.300
+#> (Intercept)                                 0.010298   0.008828   1.167
+#> organisation_phase                          0.010632   0.002753   3.861
+#> src_author_roleSRC lead                     0.032415   0.017749   1.826
+#> organisation_phase:src_author_roleSRC lead -0.013301   0.005615  -2.369
 #>                                            Pr(>|t|)    
-#> (Intercept)                                  0.1871    
-#> organisation_phase                         4.68e-05 ***
-#> src_author_roleSRC lead                      0.0796 .  
-#> organisation_phase:src_author_roleSRC lead   0.0216 *  
+#> (Intercept)                                0.243552    
+#> organisation_phase                         0.000117 ***
+#> src_author_roleSRC lead                    0.067967 .  
+#> organisation_phase:src_author_roleSRC lead 0.017941 *  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -524,15 +524,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.075546   0.011973   6.309
-#> organisation_phase                         -0.006989   0.003790  -1.844
-#> src_author_roleSRC lead                    -0.002697   0.026735  -0.101
-#> organisation_phase:src_author_roleSRC lead  0.008284   0.008236   1.006
+#> (Intercept)                                 0.076997   0.011795   6.528
+#> organisation_phase                         -0.007359   0.003786  -1.944
+#> src_author_roleSRC lead                    -0.003654   0.025052  -0.146
+#> organisation_phase:src_author_roleSRC lead  0.008783   0.007957   1.104
 #>                                            Pr(>|t|)    
-#> (Intercept)                                3.48e-10 ***
-#> organisation_phase                           0.0653 .  
-#> src_author_roleSRC lead                      0.9197    
-#> organisation_phase:src_author_roleSRC lead   0.3146    
+#> (Intercept)                                8.52e-11 ***
+#> organisation_phase                           0.0521 .  
+#> src_author_roleSRC lead                      0.8840    
+#> organisation_phase:src_author_roleSRC lead   0.2699    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -541,15 +541,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                -0.012093   0.008972  -1.348
-#> organisation_phase                          0.015666   0.002849   5.500
-#> src_author_roleSRC lead                     0.023387   0.020209   1.157
-#> organisation_phase:src_author_roleSRC lead -0.003201   0.006332  -0.506
+#> (Intercept)                                -0.012129   0.009284  -1.306
+#> organisation_phase                          0.015664   0.002917   5.370
+#> src_author_roleSRC lead                     0.022351   0.019284   1.159
+#> organisation_phase:src_author_roleSRC lead -0.002920   0.006067  -0.481
 #>                                            Pr(>|t|)    
-#> (Intercept)                                   0.178    
-#> organisation_phase                         4.32e-08 ***
+#> (Intercept)                                   0.192    
+#> organisation_phase                         8.83e-08 ***
 #> src_author_roleSRC lead                       0.247    
-#> organisation_phase:src_author_roleSRC lead    0.613    
+#> organisation_phase:src_author_roleSRC lead    0.630    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -558,15 +558,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.022268   0.009767   2.280
-#> organisation_phase                          0.004140   0.003037   1.363
-#> src_author_roleSRC lead                     0.008876   0.019749   0.449
-#> organisation_phase:src_author_roleSRC lead -0.003988   0.006077  -0.656
+#> (Intercept)                                 0.021870   0.010330   2.117
+#> organisation_phase                          0.004201   0.003216   1.306
+#> src_author_roleSRC lead                     0.012175   0.022449   0.542
+#> organisation_phase:src_author_roleSRC lead -0.004876   0.006871  -0.710
 #>                                            Pr(>|t|)  
-#> (Intercept)                                  0.0227 *
-#> organisation_phase                           0.1730  
-#> src_author_roleSRC lead                      0.6532  
-#> organisation_phase:src_author_roleSRC lead   0.5117  
+#> (Intercept)                                  0.0344 *
+#> organisation_phase                           0.1916  
+#> src_author_roleSRC lead                      0.5876  
+#> organisation_phase:src_author_roleSRC lead   0.4780  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -575,15 +575,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                              Estimate Std. Error t value
-#> (Intercept)                                 0.0605840  0.0118124   5.129
-#> organisation_phase                          0.0008032  0.0037433   0.215
-#> src_author_roleSRC lead                    -0.0297799  0.0246842  -1.206
-#> organisation_phase:src_author_roleSRC lead -0.0016320  0.0076814  -0.212
+#> (Intercept)                                 0.0605761  0.0118263   5.122
+#> organisation_phase                          0.0008367  0.0037790   0.221
+#> src_author_roleSRC lead                    -0.0319376  0.0246385  -1.296
+#> organisation_phase:src_author_roleSRC lead -0.0007792  0.0077646  -0.100
 #>                                            Pr(>|t|)    
-#> (Intercept)                                3.21e-07 ***
-#> organisation_phase                            0.830    
-#> src_author_roleSRC lead                       0.228    
-#> organisation_phase:src_author_roleSRC lead    0.832    
+#> (Intercept)                                3.33e-07 ***
+#> organisation_phase                            0.825    
+#> src_author_roleSRC lead                       0.195    
+#> organisation_phase:src_author_roleSRC lead    0.920    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -592,15 +592,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.081345   0.011605   7.009
-#> organisation_phase                         -0.010522   0.003679  -2.860
-#> src_author_roleSRC lead                    -0.032706   0.024016  -1.362
-#> organisation_phase:src_author_roleSRC lead  0.008302   0.007447   1.115
+#> (Intercept)                                 0.080878   0.012365   6.541
+#> organisation_phase                         -0.010378   0.003855  -2.692
+#> src_author_roleSRC lead                    -0.033139   0.026116  -1.269
+#> organisation_phase:src_author_roleSRC lead  0.008508   0.008103   1.050
 #>                                            Pr(>|t|)    
-#> (Intercept)                                3.32e-12 ***
-#> organisation_phase                          0.00428 ** 
-#> src_author_roleSRC lead                     0.17340    
-#> organisation_phase:src_author_roleSRC lead  0.26505    
+#> (Intercept)                                7.84e-11 ***
+#> organisation_phase                          0.00717 ** 
+#> src_author_roleSRC lead                     0.20463    
+#> organisation_phase:src_author_roleSRC lead  0.29384    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -609,15 +609,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.029942   0.010524   2.845
-#> organisation_phase                          0.007303   0.003250   2.247
-#> src_author_roleSRC lead                     0.055802   0.022512   2.479
-#> organisation_phase:src_author_roleSRC lead -0.015447   0.007074  -2.184
+#> (Intercept)                                 0.029829   0.010495   2.842
+#> organisation_phase                          0.007276   0.003295   2.208
+#> src_author_roleSRC lead                     0.056004   0.022225   2.520
+#> organisation_phase:src_author_roleSRC lead -0.015499   0.006860  -2.259
 #>                                            Pr(>|t|)   
-#> (Intercept)                                 0.00449 **
-#> organisation_phase                          0.02474 * 
-#> src_author_roleSRC lead                     0.01327 * 
-#> organisation_phase:src_author_roleSRC lead  0.02911 * 
+#> (Intercept)                                 0.00453 **
+#> organisation_phase                          0.02738 * 
+#> src_author_roleSRC lead                     0.01182 * 
+#> organisation_phase:src_author_roleSRC lead  0.02398 * 
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -626,15 +626,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                              Estimate Std. Error t value
-#> (Intercept)                                 0.0266516  0.0126134   2.113
-#> organisation_phase                          0.0095863  0.0038842   2.468
-#> src_author_roleSRC lead                    -0.0123350  0.0263262  -0.469
-#> organisation_phase:src_author_roleSRC lead -0.0003028  0.0081606  -0.037
+#> (Intercept)                                 0.0268493  0.0124909   2.150
+#> organisation_phase                          0.0095019  0.0038839   2.447
+#> src_author_roleSRC lead                    -0.0112521  0.0277978  -0.405
+#> organisation_phase:src_author_roleSRC lead -0.0003438  0.0084222  -0.041
 #>                                            Pr(>|t|)  
-#> (Intercept)                                  0.0347 *
-#> organisation_phase                           0.0137 *
-#> src_author_roleSRC lead                      0.6394  
-#> organisation_phase:src_author_roleSRC lead   0.9704  
+#> (Intercept)                                  0.0317 *
+#> organisation_phase                           0.0145 *
+#> src_author_roleSRC lead                      0.6857  
+#> organisation_phase:src_author_roleSRC lead   0.9674  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -643,15 +643,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.103778   0.011502   9.023
-#> organisation_phase                         -0.019904   0.003614  -5.507
-#> src_author_roleSRC lead                    -0.024972   0.022688  -1.101
-#> organisation_phase:src_author_roleSRC lead  0.002927   0.007069   0.414
+#> (Intercept)                                 0.103923   0.011529   9.014
+#> organisation_phase                         -0.020057   0.003558  -5.637
+#> src_author_roleSRC lead                    -0.025858   0.023760  -1.088
+#> organisation_phase:src_author_roleSRC lead  0.003330   0.007258   0.459
 #>                                            Pr(>|t|)    
 #> (Intercept)                                 < 2e-16 ***
-#> organisation_phase                         4.15e-08 ***
-#> src_author_roleSRC lead                       0.271    
-#> organisation_phase:src_author_roleSRC lead    0.679    
+#> organisation_phase                         1.99e-08 ***
+#> src_author_roleSRC lead                       0.277    
+#> organisation_phase:src_author_roleSRC lead    0.646    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -660,15 +660,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.133222   0.013488   9.877
-#> organisation_phase                         -0.027272   0.004214  -6.472
-#> src_author_roleSRC lead                    -0.093331   0.028418  -3.284
-#> organisation_phase:src_author_roleSRC lead  0.022324   0.008880   2.514
+#> (Intercept)                                 0.132417   0.013833   9.572
+#> organisation_phase                         -0.026938   0.004288  -6.282
+#> src_author_roleSRC lead                    -0.092584   0.028813  -3.213
+#> organisation_phase:src_author_roleSRC lead  0.022041   0.009073   2.429
 #>                                            Pr(>|t|)    
 #> (Intercept)                                 < 2e-16 ***
-#> organisation_phase                         1.22e-10 ***
-#> src_author_roleSRC lead                     0.00104 ** 
-#> organisation_phase:src_author_roleSRC lead  0.01202 *  
+#> organisation_phase                         4.13e-10 ***
+#> src_author_roleSRC lead                     0.00133 ** 
+#> organisation_phase:src_author_roleSRC lead  0.01522 *  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
@@ -677,15 +677,15 @@ summary(src_topic_effect)
 #> 
 #> Coefficients:
 #>                                             Estimate Std. Error t value
-#> (Intercept)                                 0.075540   0.007150  10.564
-#> organisation_phase                         -0.010602   0.002239  -4.735
-#> src_author_roleSRC lead                     0.020996   0.015314   1.371
-#> organisation_phase:src_author_roleSRC lead -0.004167   0.004762  -0.875
+#> (Intercept)                                 0.076036   0.007201  10.560
+#> organisation_phase                         -0.010771   0.002294  -4.695
+#> src_author_roleSRC lead                     0.020513   0.014881   1.378
+#> organisation_phase:src_author_roleSRC lead -0.004044   0.004648  -0.870
 #>                                            Pr(>|t|)    
 #> (Intercept)                                 < 2e-16 ***
-#> organisation_phase                         2.35e-06 ***
-#> src_author_roleSRC lead                       0.171    
-#> organisation_phase:src_author_roleSRC lead    0.382    
+#> organisation_phase                         2.85e-06 ***
+#> src_author_roleSRC lead                       0.168    
+#> organisation_phase:src_author_roleSRC lead    0.384    
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -715,7 +715,7 @@ summary(src_topic_effect)
 4.  adapt the examples in the script for other topics and covariates
 
 **[Sample
-code](https://github.com/sdaume/r-course-module-3/topicmodels/topicmodel.R)**
+code](https://github.com/sdaume/r-course-module-3/blob/main/topicmodels/topicmodel.R)**
 
 # Thank You!
 

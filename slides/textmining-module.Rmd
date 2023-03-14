@@ -446,7 +446,7 @@ axis(1, at = org_phase_values$organisation_phase,
 3. estimate the covariate effect for this model
 4. adapt the examples in the script for other topics and covariates
 
-**[Sample code](https://github.com/sdaume/r-course-module-3/topicmodels/topicmodel.R)**
+**[Sample code](https://github.com/sdaume/r-course-module-3/blob/main/topicmodels/topicmodel.R)**
 
 
 # Thank You!
