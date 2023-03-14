@@ -47,7 +47,7 @@ load("../topicmodels/data/src_topic_effect.Rdata")
   <div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
   SRC PhD R course Module 9
   
-  Topic modelling
+  Structural Topic Modeling
     
   &nbsp;
     
@@ -87,7 +87,14 @@ load("../topicmodels/data/src_topic_effect.Rdata")
 
 ## Why topic modelling?
 
-* discovery, summary, answering causal questions in social science
+* summarize large text collections
+* discover "latent" topics
+* text-based causal inferences and testing social science theories
+
+
+
+## The notion of "latent topics"
+
 
 
 ## How does it work?
@@ -96,18 +103,20 @@ load("../topicmodels/data/src_topic_effect.Rdata")
 * generative model (reverses the document generation process)
 
 
-## The notion of "latent topics"
-
-
 ## Topic modelling algorithms
 
-* LSA, LDA, CTM, STM
+* LSA - [Latent semantic analysis](https://asistdl.onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-4571(199009)41:6%3C391::AID-ASI1%3E3.0.CO;2-9)
+* LDA - Latent dirichlet allocation [@BleiNgEt2003_JMLR_3]
+* CTM - Correlated topic model [@BleiLafferty2007_AAS_1]
+* STM - Structural topic model [@RobertsStewart_et_2019_JSTATS_91]
+
 
 
 ## STM vs "vanilla LDA"
 
-* assumption: topics are independent 
-* test relationship between topics and document meta-data, test hypothesis
+* STM extends CTM (i.e. assumes that topics are correlated) 
+* STM can incorporate arbitrary document meta-data into the topic model
+
 
 
 ## Basic text mining concepts
@@ -123,16 +132,19 @@ load("../topicmodels/data/src_topic_effect.Rdata")
 * get documents to analyse
 * preprocess
 * create a corpus
-* tokenization
+* tokenize
 * create document-term matrix
+* *(evaluate alternative topic numbers)*
+* decide on K, the number of topics, and fit a topic model
+* *(validate semantic integrity of the topic model)*
 
 
 ## R packages to use
 
 * quanteda
 * tidytext
-* snowballc
-* spacyr 
+* (snowballc)
+* (spacyr)
 * stringr
 * stm
 
@@ -211,15 +223,13 @@ terms_by_date(textData = src_pubs,
 ```
 
 
-
-
 ## Topic modelling with STM
 
 Questions:
 
 * Which latent topics exists?
 * How promiment are they?
-* Is the topic prevalence influence by document variables?
+* Is the topic prevalence influenced by document variables?
 * How are topics related?
 
 
@@ -314,13 +324,6 @@ plot(src_topics, n = 5)
 summary(src_topics)
 ```
 
-
-
-## Topic shares
-
-```{r echo=TRUE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
-plot(src_topics, n = 5)
-```
 
 
 ## Topic shares
@@ -443,20 +446,17 @@ axis(1, at = org_phase_values$organisation_phase,
 3. estimate the covariate effect for this model
 4. adapt the examples in the script for other topics and covariates
 
+**[Sample code](https://github.com/sdaume/r-course-module-3/topicmodels/topicmodel.R)**
+
 
 # Thank You!
 
 
 ## Key Resources
 
-* R Markdown
-  * [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) [@XieAllaire_et_2022]
-  * [Cheatsheet: Dynamic documents with rmarkdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)
-* Git/Github:
-  * [Happy Git and GitHub for the useR](https://happygitwithr.com/) [@Bryan2021]
-  * "Excuse me, do you have a moment to talk about version control?" [@Bryan2017]
-  * Advanced git use: [Pro Git](https://git-scm.com/book/en/v2) book [@Chacon_et_2014_Book]
-  * [How to write a great commit message](https://cbea.ms/git-commit/)
+* [quanteda R package](http://quanteda.io/)
+* [stm: An R Package for Structural Topic Models](https://www.jstatsoft.org/article/view/v091i02) [@XieAllaire_et_2022]
+* [oolong R package](https://github.com/chainsawriot/oolong)
 
 
 
@@ -466,11 +466,11 @@ axis(1, at = org_phase_values$organisation_phase,
 
 
 ## Colophon {.colophon}
-**SRC PhD R course Module 7 --- Interactive R Markdown with Shiny"** by *Stefan Daume*
+**SRC PhD R course Module 9 --- Structural Topic Modeling"** by *Stefan Daume*
 
 &nbsp;
 
-Presented on 16. December 2022.
+Presented on 16. March 2023.
 
 &nbsp;
 
@@ -482,7 +482,7 @@ This presentation can be cited using: *doi:...*
 
 **Author/Affiliation:** Stefan Daume, Stockholm Resilience Centre, Stockholm University
 
-**Presentation URL:** https://sdaume.github.io/r-course-module-3/slides/shiny-module.html
+**Presentation URL:** https://sdaume.github.io/r-course-module-3/slides/textmining-module.html
 
 **Presentation Source:** [TBD]
 
@@ -497,4 +497,4 @@ This presentation is delivered with the help of several free and open source too
 
 &nbsp;
 
-If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are **Copyright &copy; 2022 of the Author** and provided under a *CC BY 4.0* public domain license. 
+If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are **Copyright &copy; 2023 of the Author** and provided under a *CC BY 4.0* public domain license. 

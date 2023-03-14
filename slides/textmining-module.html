@@ -38,7 +38,7 @@
 
 <section id="title-slide">
   <h1 class="title">SRC PhD R course Module 9</h1>
-  <p class="subtitle">Topic modelling</p>
+  <p class="subtitle">Structural Topic Modeling</p>
   <p class="author">Stefan Daume</p>
   <p class="date">16. March 2023</p>
 </section>
@@ -48,7 +48,7 @@
 <div style="display:table;width:100%;table-layout: fixed;">
 <div class="title-without-logo" style="display:table-cell;width:100%;padding-right:3%;padding-left:3%;vertical-align:middle;">
 <p>SRC PhD R course Module 9</p>
-<p>Topic modelling</p>
+<p>Structural Topic Modeling</p>
 <p> </p>
 <p> </p>
 <p> </p>
@@ -73,8 +73,13 @@
 <section id="why-topic-modelling" class="slide level2">
 <h2>Why topic modelling?</h2>
 <ul>
-<li>discovery, summary, answering causal questions in social science</li>
+<li>summarize large text collections</li>
+<li>discover “latent” topics</li>
+<li>text-based causal inferences and testing social science theories</li>
 </ul>
+</section>
+<section id="the-notion-of-latent-topics" class="slide level2">
+<h2>The notion of “latent topics”</h2>
 </section>
 <section id="how-does-it-work" class="slide level2">
 <h2>How does it work?</h2>
@@ -83,20 +88,20 @@
 <li>generative model (reverses the document generation process)</li>
 </ul>
 </section>
-<section id="the-notion-of-latent-topics" class="slide level2">
-<h2>The notion of “latent topics”</h2>
-</section>
 <section id="topic-modelling-algorithms" class="slide level2">
 <h2>Topic modelling algorithms</h2>
 <ul>
-<li>LSA, LDA, CTM, STM</li>
+<li>LSA - <a href="https://asistdl.onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-4571(199009)41:6%3C391::AID-ASI1%3E3.0.CO;2-9">Latent semantic analysis</a></li>
+<li>LDA - Latent dirichlet allocation <span class="citation" data-cites="BleiNgEt2003_JMLR_3">(Blei, Ng, and Jordan 2003)</span></li>
+<li>CTM - Correlated topic model <span class="citation" data-cites="BleiLafferty2007_AAS_1">(Blei and Lafferty 2007)</span></li>
+<li>STM - Structural topic model <span class="citation" data-cites="RobertsStewart_et_2019_JSTATS_91">(Roberts, Stewart, and Tingley 2019)</span></li>
 </ul>
 </section>
 <section id="stm-vs-vanilla-lda" class="slide level2">
 <h2>STM vs “vanilla LDA”</h2>
 <ul>
-<li>assumption: topics are independent</li>
-<li>test relationship between topics and document meta-data, test hypothesis</li>
+<li>STM extends CTM (i.e. assumes that topics are correlated)</li>
+<li>STM can incorporate arbitrary document meta-data into the topic model</li>
 </ul>
 </section>
 <section id="basic-text-mining-concepts" class="slide level2">
@@ -114,8 +119,11 @@
 <li>get documents to analyse</li>
 <li>preprocess</li>
 <li>create a corpus</li>
-<li>tokenization</li>
+<li>tokenize</li>
 <li>create document-term matrix</li>
+<li><em>(evaluate alternative topic numbers)</em></li>
+<li>decide on K, the number of topics, and fit a topic model</li>
+<li><em>(validate semantic integrity of the topic model)</em></li>
 </ul>
 </section>
 <section id="r-packages-to-use" class="slide level2">
@@ -123,8 +131,8 @@
 <ul>
 <li>quanteda</li>
 <li>tidytext</li>
-<li>snowballc</li>
-<li>spacyr</li>
+<li>(snowballc)</li>
+<li>(spacyr)</li>
 <li>stringr</li>
 <li>stm</li>
 </ul>
@@ -241,7 +249,7 @@
 <ul>
 <li>Which latent topics exists?</li>
 <li>How promiment are they?</li>
-<li>Is the topic prevalence influence by document variables?</li>
+<li>Is the topic prevalence influenced by document variables?</li>
 <li>How are topics related?</li>
 </ul>
 </section>
@@ -419,12 +427,7 @@ plot(src_topics, n = 5)</code></pre>
 </section>
 <section id="topic-shares" class="slide level2">
 <h2>Topic shares</h2>
-<pre class="r"><code>plot(src_topics, n = 5)</code></pre>
 <p><img src="textmining-module_files/figure-markdown/unnamed-chunk-6-1.png" width="70%" /></p>
-</section>
-<section id="topic-shares-1" class="slide level2">
-<h2>Topic shares</h2>
-<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-7-1.png" width="70%" /></p>
 </section>
 <section id="estimate-covariate-effects" class="slide level2">
 <h2>Estimate covariate effects</h2>
@@ -449,15 +452,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.043894   0.010163   4.319
-#&gt; organisation_phase                         -0.003266   0.003211  -1.017
-#&gt; src_author_roleSRC lead                    -0.012772   0.020956  -0.609
-#&gt; organisation_phase:src_author_roleSRC lead  0.014053   0.006580   2.136
+#&gt; (Intercept)                                 0.045324   0.009596   4.723
+#&gt; organisation_phase                         -0.003682   0.003041  -1.211
+#&gt; src_author_roleSRC lead                    -0.014385   0.021840  -0.659
+#&gt; organisation_phase:src_author_roleSRC lead  0.014653   0.006775   2.163
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                1.65e-05 ***
-#&gt; organisation_phase                           0.3092    
-#&gt; src_author_roleSRC lead                      0.5423    
-#&gt; organisation_phase:src_author_roleSRC lead   0.0328 *  
+#&gt; (Intercept)                                2.49e-06 ***
+#&gt; organisation_phase                           0.2261    
+#&gt; src_author_roleSRC lead                      0.5102    
+#&gt; organisation_phase:src_author_roleSRC lead   0.0307 *  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -466,15 +469,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.057766   0.009392   6.151
-#&gt; organisation_phase                         -0.003855   0.003055  -1.262
-#&gt; src_author_roleSRC lead                     0.042349   0.020557   2.060
-#&gt; organisation_phase:src_author_roleSRC lead -0.003296   0.006371  -0.517
+#&gt; (Intercept)                                 0.057513   0.009612   5.984
+#&gt; organisation_phase                         -0.003671   0.003056  -1.201
+#&gt; src_author_roleSRC lead                     0.042315   0.019474   2.173
+#&gt; organisation_phase:src_author_roleSRC lead -0.003440   0.006080  -0.566
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                9.37e-10 ***
-#&gt; organisation_phase                           0.2071    
-#&gt; src_author_roleSRC lead                      0.0395 *  
-#&gt; organisation_phase:src_author_roleSRC lead   0.6050    
+#&gt; (Intercept)                                 2.6e-09 ***
+#&gt; organisation_phase                           0.2298    
+#&gt; src_author_roleSRC lead                      0.0299 *  
+#&gt; organisation_phase:src_author_roleSRC lead   0.5716    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -483,15 +486,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                -0.015733   0.010951  -1.437
-#&gt; organisation_phase                          0.024536   0.003416   7.183
-#&gt; src_author_roleSRC lead                    -0.027101   0.023702  -1.143
-#&gt; organisation_phase:src_author_roleSRC lead  0.005026   0.007309   0.688
+#&gt; (Intercept)                                -0.015880   0.011055  -1.436
+#&gt; organisation_phase                          0.024623   0.003442   7.154
+#&gt; src_author_roleSRC lead                    -0.026937   0.022539  -1.195
+#&gt; organisation_phase:src_author_roleSRC lead  0.005000   0.007097   0.705
 #&gt;                                            Pr(&gt;|t|)    
 #&gt; (Intercept)                                   0.151    
-#&gt; organisation_phase                         9.75e-13 ***
-#&gt; src_author_roleSRC lead                       0.253    
-#&gt; organisation_phase:src_author_roleSRC lead    0.492    
+#&gt; organisation_phase                          1.2e-12 ***
+#&gt; src_author_roleSRC lead                       0.232    
+#&gt; organisation_phase:src_author_roleSRC lead    0.481    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -500,15 +503,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.002311   0.010362   0.223
-#&gt; organisation_phase                          0.013478   0.003203   4.209
-#&gt; src_author_roleSRC lead                     0.036058   0.021957   1.642
-#&gt; organisation_phase:src_author_roleSRC lead -0.015233   0.006755  -2.255
+#&gt; (Intercept)                                 0.003175   0.010878   0.292
+#&gt; organisation_phase                          0.013116   0.003363   3.900
+#&gt; src_author_roleSRC lead                     0.037755   0.021558   1.751
+#&gt; organisation_phase:src_author_roleSRC lead -0.015788   0.006744  -2.341
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                  0.8235    
-#&gt; organisation_phase                         2.69e-05 ***
-#&gt; src_author_roleSRC lead                      0.1007    
-#&gt; organisation_phase:src_author_roleSRC lead   0.0242 *  
+#&gt; (Intercept)                                  0.7704    
+#&gt; organisation_phase                         9.94e-05 ***
+#&gt; src_author_roleSRC lead                      0.0801 .  
+#&gt; organisation_phase:src_author_roleSRC lead   0.0193 *  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -517,15 +520,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                              Estimate Std. Error t value
-#&gt; (Intercept)                                 0.0568356  0.0090635   6.271
-#&gt; organisation_phase                         -0.0005562  0.0028451  -0.196
-#&gt; src_author_roleSRC lead                    -0.0304435  0.0190189  -1.601
-#&gt; organisation_phase:src_author_roleSRC lead  0.0044584  0.0059462   0.750
+#&gt; (Intercept)                                 0.0567325  0.0088904   6.381
+#&gt; organisation_phase                         -0.0004705  0.0027788  -0.169
+#&gt; src_author_roleSRC lead                    -0.0315325  0.0178430  -1.767
+#&gt; organisation_phase:src_author_roleSRC lead  0.0046685  0.0055989   0.834
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                4.43e-10 ***
-#&gt; organisation_phase                            0.845    
-#&gt; src_author_roleSRC lead                       0.110    
-#&gt; organisation_phase:src_author_roleSRC lead    0.453    
+#&gt; (Intercept)                                 2.2e-10 ***
+#&gt; organisation_phase                           0.8656    
+#&gt; src_author_roleSRC lead                      0.0774 .  
+#&gt; organisation_phase:src_author_roleSRC lead   0.4045    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -534,15 +537,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.026694   0.013183   2.025
-#&gt; organisation_phase                          0.016999   0.004130   4.116
-#&gt; src_author_roleSRC lead                    -0.008638   0.028904  -0.299
-#&gt; organisation_phase:src_author_roleSRC lead  0.007225   0.008952   0.807
+#&gt; (Intercept)                                 0.026958   0.011986   2.249
+#&gt; organisation_phase                          0.016915   0.003802   4.449
+#&gt; src_author_roleSRC lead                    -0.006071   0.027106  -0.224
+#&gt; organisation_phase:src_author_roleSRC lead  0.006310   0.008456   0.746
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                   0.043 *  
-#&gt; organisation_phase                         4.03e-05 ***
-#&gt; src_author_roleSRC lead                       0.765    
-#&gt; organisation_phase:src_author_roleSRC lead    0.420    
+#&gt; (Intercept)                                  0.0246 *  
+#&gt; organisation_phase                         9.13e-06 ***
+#&gt; src_author_roleSRC lead                      0.8228    
+#&gt; organisation_phase:src_author_roleSRC lead   0.4556    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -551,15 +554,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.081525   0.010367   7.864
-#&gt; organisation_phase                         -0.003548   0.003279  -1.082
-#&gt; src_author_roleSRC lead                     0.061775   0.020921   2.953
-#&gt; organisation_phase:src_author_roleSRC lead -0.009599   0.006538  -1.468
+#&gt; (Intercept)                                 0.082062   0.010530   7.793
+#&gt; organisation_phase                         -0.003702   0.003199  -1.157
+#&gt; src_author_roleSRC lead                     0.060520   0.020999   2.882
+#&gt; organisation_phase:src_author_roleSRC lead -0.009238   0.006536  -1.413
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                6.18e-15 ***
-#&gt; organisation_phase                          0.27930    
-#&gt; src_author_roleSRC lead                     0.00319 ** 
-#&gt; organisation_phase:src_author_roleSRC lead  0.14222    
+#&gt; (Intercept)                                1.07e-14 ***
+#&gt; organisation_phase                            0.247    
+#&gt; src_author_roleSRC lead                       0.004 ** 
+#&gt; organisation_phase:src_author_roleSRC lead    0.158    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -568,15 +571,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.069504   0.010251   6.780
-#&gt; organisation_phase                         -0.007221   0.003282  -2.200
-#&gt; src_author_roleSRC lead                     0.031797   0.020541   1.548
-#&gt; organisation_phase:src_author_roleSRC lead -0.007902   0.006456  -1.224
+#&gt; (Intercept)                                 0.069651   0.010323   6.747
+#&gt; organisation_phase                         -0.007289   0.003135  -2.325
+#&gt; src_author_roleSRC lead                     0.032162   0.022434   1.434
+#&gt; organisation_phase:src_author_roleSRC lead -0.008137   0.006939  -1.173
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                 1.6e-11 ***
-#&gt; organisation_phase                           0.0279 *  
-#&gt; src_author_roleSRC lead                      0.1218    
-#&gt; organisation_phase:src_author_roleSRC lead   0.2211    
+#&gt; (Intercept)                                1.99e-11 ***
+#&gt; organisation_phase                           0.0202 *  
+#&gt; src_author_roleSRC lead                      0.1518    
+#&gt; organisation_phase:src_author_roleSRC lead   0.2411    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -585,15 +588,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.068546   0.011160   6.142
-#&gt; organisation_phase                         -0.008991   0.003541  -2.539
-#&gt; src_author_roleSRC lead                    -0.037166   0.023110  -1.608
-#&gt; organisation_phase:src_author_roleSRC lead  0.004824   0.007168   0.673
+#&gt; (Intercept)                                 0.069354   0.011134   6.229
+#&gt; organisation_phase                         -0.009190   0.003446  -2.667
+#&gt; src_author_roleSRC lead                    -0.036831   0.023753  -1.551
+#&gt; organisation_phase:src_author_roleSRC lead  0.004821   0.007433   0.649
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                 9.9e-10 ***
-#&gt; organisation_phase                           0.0112 *  
-#&gt; src_author_roleSRC lead                      0.1080    
-#&gt; organisation_phase:src_author_roleSRC lead   0.5010    
+#&gt; (Intercept)                                5.77e-10 ***
+#&gt; organisation_phase                          0.00772 ** 
+#&gt; src_author_roleSRC lead                     0.12117    
+#&gt; organisation_phase:src_author_roleSRC lead  0.51669    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -602,15 +605,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.010330   0.008994   1.149
-#&gt; organisation_phase                          0.010580   0.002817   3.755
-#&gt; src_author_roleSRC lead                     0.033762   0.018491   1.826
-#&gt; organisation_phase:src_author_roleSRC lead -0.013698   0.005694  -2.406
+#&gt; (Intercept)                                 0.010874   0.008240   1.320
+#&gt; organisation_phase                          0.010457   0.002563   4.081
+#&gt; src_author_roleSRC lead                     0.031421   0.017911   1.754
+#&gt; organisation_phase:src_author_roleSRC lead -0.013007   0.005656  -2.300
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                0.250851    
-#&gt; organisation_phase                         0.000178 ***
-#&gt; src_author_roleSRC lead                    0.068027 .  
-#&gt; organisation_phase:src_author_roleSRC lead 0.016232 *  
+#&gt; (Intercept)                                  0.1871    
+#&gt; organisation_phase                         4.68e-05 ***
+#&gt; src_author_roleSRC lead                      0.0796 .  
+#&gt; organisation_phase:src_author_roleSRC lead   0.0216 *  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -619,15 +622,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.075595   0.011635   6.497
-#&gt; organisation_phase                         -0.006890   0.003546  -1.943
-#&gt; src_author_roleSRC lead                    -0.002679   0.024140  -0.111
-#&gt; organisation_phase:src_author_roleSRC lead  0.008442   0.007487   1.128
+#&gt; (Intercept)                                 0.075546   0.011973   6.309
+#&gt; organisation_phase                         -0.006989   0.003790  -1.844
+#&gt; src_author_roleSRC lead                    -0.002697   0.026735  -0.101
+#&gt; organisation_phase:src_author_roleSRC lead  0.008284   0.008236   1.006
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                1.04e-10 ***
-#&gt; organisation_phase                           0.0522 .  
-#&gt; src_author_roleSRC lead                      0.9116    
-#&gt; organisation_phase:src_author_roleSRC lead   0.2596    
+#&gt; (Intercept)                                3.48e-10 ***
+#&gt; organisation_phase                           0.0653 .  
+#&gt; src_author_roleSRC lead                      0.9197    
+#&gt; organisation_phase:src_author_roleSRC lead   0.3146    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -636,15 +639,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                -0.012018   0.009452  -1.271
-#&gt; organisation_phase                          0.015693   0.002967   5.289
-#&gt; src_author_roleSRC lead                     0.022907   0.018680   1.226
-#&gt; organisation_phase:src_author_roleSRC lead -0.003150   0.005795  -0.544
+#&gt; (Intercept)                                -0.012093   0.008972  -1.348
+#&gt; organisation_phase                          0.015666   0.002849   5.500
+#&gt; src_author_roleSRC lead                     0.023387   0.020209   1.157
+#&gt; organisation_phase:src_author_roleSRC lead -0.003201   0.006332  -0.506
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                   0.204    
-#&gt; organisation_phase                         1.37e-07 ***
-#&gt; src_author_roleSRC lead                       0.220    
-#&gt; organisation_phase:src_author_roleSRC lead    0.587    
+#&gt; (Intercept)                                   0.178    
+#&gt; organisation_phase                         4.32e-08 ***
+#&gt; src_author_roleSRC lead                       0.247    
+#&gt; organisation_phase:src_author_roleSRC lead    0.613    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -653,15 +656,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.021977   0.009304   2.362
-#&gt; organisation_phase                          0.004206   0.002979   1.412
-#&gt; src_author_roleSRC lead                     0.009446   0.020470   0.461
-#&gt; organisation_phase:src_author_roleSRC lead -0.004049   0.006484  -0.625
+#&gt; (Intercept)                                 0.022268   0.009767   2.280
+#&gt; organisation_phase                          0.004140   0.003037   1.363
+#&gt; src_author_roleSRC lead                     0.008876   0.019749   0.449
+#&gt; organisation_phase:src_author_roleSRC lead -0.003988   0.006077  -0.656
 #&gt;                                            Pr(&gt;|t|)  
-#&gt; (Intercept)                                  0.0183 *
-#&gt; organisation_phase                           0.1582  
-#&gt; src_author_roleSRC lead                      0.6445  
-#&gt; organisation_phase:src_author_roleSRC lead   0.5323  
+#&gt; (Intercept)                                  0.0227 *
+#&gt; organisation_phase                           0.1730  
+#&gt; src_author_roleSRC lead                      0.6532  
+#&gt; organisation_phase:src_author_roleSRC lead   0.5117  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -669,16 +672,16 @@ summary(src_topic_effect)</code></pre>
 #&gt; Topic 14:
 #&gt; 
 #&gt; Coefficients:
-#&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.059706   0.011585   5.154
-#&gt; organisation_phase                          0.001077   0.003661   0.294
-#&gt; src_author_roleSRC lead                    -0.029624   0.025034  -1.183
-#&gt; organisation_phase:src_author_roleSRC lead -0.001484   0.007906  -0.188
+#&gt;                                              Estimate Std. Error t value
+#&gt; (Intercept)                                 0.0605840  0.0118124   5.129
+#&gt; organisation_phase                          0.0008032  0.0037433   0.215
+#&gt; src_author_roleSRC lead                    -0.0297799  0.0246842  -1.206
+#&gt; organisation_phase:src_author_roleSRC lead -0.0016320  0.0076814  -0.212
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                2.82e-07 ***
-#&gt; organisation_phase                            0.769    
-#&gt; src_author_roleSRC lead                       0.237    
-#&gt; organisation_phase:src_author_roleSRC lead    0.851    
+#&gt; (Intercept)                                3.21e-07 ***
+#&gt; organisation_phase                            0.830    
+#&gt; src_author_roleSRC lead                       0.228    
+#&gt; organisation_phase:src_author_roleSRC lead    0.832    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -687,15 +690,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.081321   0.012085   6.729
-#&gt; organisation_phase                         -0.010532   0.003927  -2.682
-#&gt; src_author_roleSRC lead                    -0.032934   0.024053  -1.369
-#&gt; organisation_phase:src_author_roleSRC lead  0.008473   0.007669   1.105
+#&gt; (Intercept)                                 0.081345   0.011605   7.009
+#&gt; organisation_phase                         -0.010522   0.003679  -2.860
+#&gt; src_author_roleSRC lead                    -0.032706   0.024016  -1.362
+#&gt; organisation_phase:src_author_roleSRC lead  0.008302   0.007447   1.115
 #&gt;                                            Pr(&gt;|t|)    
-#&gt; (Intercept)                                2.26e-11 ***
-#&gt; organisation_phase                          0.00739 ** 
-#&gt; src_author_roleSRC lead                     0.17109    
-#&gt; organisation_phase:src_author_roleSRC lead  0.26939    
+#&gt; (Intercept)                                3.32e-12 ***
+#&gt; organisation_phase                          0.00428 ** 
+#&gt; src_author_roleSRC lead                     0.17340    
+#&gt; organisation_phase:src_author_roleSRC lead  0.26505    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -704,15 +707,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.029945   0.010781   2.778
-#&gt; organisation_phase                          0.007309   0.003392   2.155
-#&gt; src_author_roleSRC lead                     0.055467   0.022307   2.487
-#&gt; organisation_phase:src_author_roleSRC lead -0.015391   0.007009  -2.196
+#&gt; (Intercept)                                 0.029942   0.010524   2.845
+#&gt; organisation_phase                          0.007303   0.003250   2.247
+#&gt; src_author_roleSRC lead                     0.055802   0.022512   2.479
+#&gt; organisation_phase:src_author_roleSRC lead -0.015447   0.007074  -2.184
 #&gt;                                            Pr(&gt;|t|)   
-#&gt; (Intercept)                                 0.00553 **
-#&gt; organisation_phase                          0.03132 * 
-#&gt; src_author_roleSRC lead                     0.01298 * 
-#&gt; organisation_phase:src_author_roleSRC lead  0.02823 * 
+#&gt; (Intercept)                                 0.00449 **
+#&gt; organisation_phase                          0.02474 * 
+#&gt; src_author_roleSRC lead                     0.01327 * 
+#&gt; organisation_phase:src_author_roleSRC lead  0.02911 * 
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -721,15 +724,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                              Estimate Std. Error t value
-#&gt; (Intercept)                                 0.0265394  0.0125760   2.110
-#&gt; organisation_phase                          0.0096007  0.0039190   2.450
-#&gt; src_author_roleSRC lead                    -0.0125880  0.0263187  -0.478
-#&gt; organisation_phase:src_author_roleSRC lead -0.0003143  0.0083236  -0.038
+#&gt; (Intercept)                                 0.0266516  0.0126134   2.113
+#&gt; organisation_phase                          0.0095863  0.0038842   2.468
+#&gt; src_author_roleSRC lead                    -0.0123350  0.0263262  -0.469
+#&gt; organisation_phase:src_author_roleSRC lead -0.0003028  0.0081606  -0.037
 #&gt;                                            Pr(&gt;|t|)  
-#&gt; (Intercept)                                  0.0350 *
-#&gt; organisation_phase                           0.0144 *
-#&gt; src_author_roleSRC lead                      0.6325  
-#&gt; organisation_phase:src_author_roleSRC lead   0.9699  
+#&gt; (Intercept)                                  0.0347 *
+#&gt; organisation_phase                           0.0137 *
+#&gt; src_author_roleSRC lead                      0.6394  
+#&gt; organisation_phase:src_author_roleSRC lead   0.9704  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -738,15 +741,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.103303   0.010497   9.841
-#&gt; organisation_phase                         -0.019816   0.003281  -6.040
-#&gt; src_author_roleSRC lead                    -0.026343   0.023161  -1.137
-#&gt; organisation_phase:src_author_roleSRC lead  0.003415   0.007127   0.479
+#&gt; (Intercept)                                 0.103778   0.011502   9.023
+#&gt; organisation_phase                         -0.019904   0.003614  -5.507
+#&gt; src_author_roleSRC lead                    -0.024972   0.022688  -1.101
+#&gt; organisation_phase:src_author_roleSRC lead  0.002927   0.007069   0.414
 #&gt;                                            Pr(&gt;|t|)    
 #&gt; (Intercept)                                 &lt; 2e-16 ***
-#&gt; organisation_phase                         1.85e-09 ***
-#&gt; src_author_roleSRC lead                       0.256    
-#&gt; organisation_phase:src_author_roleSRC lead    0.632    
+#&gt; organisation_phase                         4.15e-08 ***
+#&gt; src_author_roleSRC lead                       0.271    
+#&gt; organisation_phase:src_author_roleSRC lead    0.679    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -755,15 +758,15 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.133034   0.013495   9.858
-#&gt; organisation_phase                         -0.027098   0.004202  -6.449
-#&gt; src_author_roleSRC lead                    -0.093693   0.028949  -3.236
-#&gt; organisation_phase:src_author_roleSRC lead  0.022383   0.009004   2.486
+#&gt; (Intercept)                                 0.133222   0.013488   9.877
+#&gt; organisation_phase                         -0.027272   0.004214  -6.472
+#&gt; src_author_roleSRC lead                    -0.093331   0.028418  -3.284
+#&gt; organisation_phase:src_author_roleSRC lead  0.022324   0.008880   2.514
 #&gt;                                            Pr(&gt;|t|)    
 #&gt; (Intercept)                                 &lt; 2e-16 ***
-#&gt; organisation_phase                         1.42e-10 ***
-#&gt; src_author_roleSRC lead                     0.00123 ** 
-#&gt; organisation_phase:src_author_roleSRC lead  0.01301 *  
+#&gt; organisation_phase                         1.22e-10 ***
+#&gt; src_author_roleSRC lead                     0.00104 ** 
+#&gt; organisation_phase:src_author_roleSRC lead  0.01202 *  
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 #&gt; 
@@ -772,33 +775,33 @@ summary(src_topic_effect)</code></pre>
 #&gt; 
 #&gt; Coefficients:
 #&gt;                                             Estimate Std. Error t value
-#&gt; (Intercept)                                 0.075348   0.007125  10.575
-#&gt; organisation_phase                         -0.010503   0.002230  -4.709
-#&gt; src_author_roleSRC lead                     0.021704   0.015073   1.440
-#&gt; organisation_phase:src_author_roleSRC lead -0.004433   0.004694  -0.944
+#&gt; (Intercept)                                 0.075540   0.007150  10.564
+#&gt; organisation_phase                         -0.010602   0.002239  -4.735
+#&gt; src_author_roleSRC lead                     0.020996   0.015314   1.371
+#&gt; organisation_phase:src_author_roleSRC lead -0.004167   0.004762  -0.875
 #&gt;                                            Pr(&gt;|t|)    
 #&gt; (Intercept)                                 &lt; 2e-16 ***
-#&gt; organisation_phase                         2.66e-06 ***
-#&gt; src_author_roleSRC lead                       0.150    
-#&gt; organisation_phase:src_author_roleSRC lead    0.345    
+#&gt; organisation_phase                         2.35e-06 ***
+#&gt; src_author_roleSRC lead                       0.171    
+#&gt; organisation_phase:src_author_roleSRC lead    0.382    
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </section>
 <section id="example-1-topics-over-time" class="slide level2">
 <h2>Example 1: Topics over time</h2>
-<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-9-1.png" width="70%" /></p>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-8-1.png" width="70%" /></p>
 </section>
 <section id="example-2-src-lead-authorship" class="slide level2">
 <h2>Example 2: SRC lead authorship</h2>
-<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-10-1.png" width="70%" /></p>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-9-1.png" width="70%" /></p>
 </section>
 <section id="example-3-src-lead-authorship" class="slide level2">
 <h2>Example 3: SRC lead authorship</h2>
-<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-11-1.png" width="70%" /></p>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-10-1.png" width="70%" /></p>
 </section>
 <section id="example-4-combined-effects" class="slide level2">
 <h2>Example 4: Combined effects</h2>
-<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-12-1.png" width="70%" /></p>
+<p><img src="textmining-module_files/figure-markdown/unnamed-chunk-11-1.png" width="70%" /></p>
 </section>
 <section id="exercise" class="slide level2">
 <h2>Exercise</h2>
@@ -808,34 +811,26 @@ summary(src_topic_effect)</code></pre>
 <li>estimate the covariate effect for this model</li>
 <li>adapt the examples in the script for other topics and covariates</li>
 </ol>
+<p><strong><a href="https://github.com/sdaume/r-course-module-3/topicmodels/topicmodel.R">Sample code</a></strong></p>
 </section>
 <section><section id="thank-you" class="title-slide slide level1"><h1>Thank You!</h1></section><section id="key-resources" class="slide level2">
 <h2>Key Resources</h2>
 <ul>
-<li>R Markdown
-<ul>
-<li><a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
-<li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf">Cheatsheet: Dynamic documents with rmarkdown cheatsheet</a></li>
-</ul></li>
-<li>Git/Github:
-<ul>
-<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> <span class="citation" data-cites="Bryan2021">(Bryan 2021)</span></li>
-<li>“Excuse me, do you have a moment to talk about version control?” <span class="citation" data-cites="Bryan2017">(Bryan 2017)</span></li>
-<li>Advanced git use: <a href="https://git-scm.com/book/en/v2">Pro Git</a> book <span class="citation" data-cites="Chacon_et_2014_Book">(Chacon and Straub 2014)</span></li>
-<li><a href="https://cbea.ms/git-commit/">How to write a great commit message</a></li>
-</ul></li>
+<li><a href="http://quanteda.io/">quanteda R package</a></li>
+<li><a href="https://www.jstatsoft.org/article/view/v091i02">stm: An R Package for Structural Topic Models</a> <span class="citation" data-cites="XieAllaire_et_2022">(Xie, Allaire, and Grolemund 2022)</span></li>
+<li><a href="https://github.com/chainsawriot/oolong">oolong R package</a></li>
 </ul>
 </section><section id="references" class="slide level2">
 <h2>References</h2>
 <div id="refs" role="doc-bibliography">
-<div id="ref-Bryan2017">
-<p>Bryan, Jennifer. 2017. “Excuse me, do you have a moment to talk about version control?” <em>PeerJ Preprints</em> 5:e3159v2 (August). <a href="https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2">https://doi.org/10.7287/PEERJ.PREPRINTS.3159V2</a>.</p>
+<div id="ref-BleiLafferty2007_AAS_1">
+<p>Blei, David M., and John D. Lafferty. 2007. “A correlated topic model of Science.” <em>The Annals of Applied Statistics</em> 1 (1): 17–35. <a href="http://projecteuclid.org/euclid.aoas/1183143727">http://projecteuclid.org/euclid.aoas/1183143727</a>.</p>
 </div>
-<div id="ref-Bryan2021">
-<p>———. 2021. “Happy Git and GitHub for the useR.” <a href="https://happygitwithr.com/">https://happygitwithr.com/</a>.</p>
+<div id="ref-BleiNgEt2003_JMLR_3">
+<p>Blei, David M., Andrew Y. Ng, and Michael I. Jordan. 2003. “Latent dirichlet allocation.” <em>The Journal of Machine Learning Research</em> 3 (March): 993–1022. <a href="http://dl.acm.org/citation.cfm?id=944919.944937">http://dl.acm.org/citation.cfm?id=944919.944937</a>.</p>
 </div>
-<div id="ref-Chacon_et_2014_Book">
-<p>Chacon, Scott, and Ben Straub. 2014. <em>Pro Git</em>. Apress. <a href="https://doi.org/10.1007/978-1-4842-0076-6">https://doi.org/10.1007/978-1-4842-0076-6</a>.</p>
+<div id="ref-RobertsStewart_et_2019_JSTATS_91">
+<p>Roberts, Margaret E., Brandon M. Stewart, and Dustin Tingley. 2019. “Stm: An R package for structural topic models.” <em>Journal of Statistical Software</em> 91 (1): 1–40. <a href="https://doi.org/10.18637/jss.v091.i02">https://doi.org/10.18637/jss.v091.i02</a>.</p>
 </div>
 <div id="ref-XieAllaire_et_2022">
 <p>Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2022. “R Markdown: The Definitive Guide.” <a href="https://bookdown.org/yihui/rmarkdown/">https://bookdown.org/yihui/rmarkdown/</a>.</p>
@@ -843,22 +838,22 @@ summary(src_topic_effect)</code></pre>
 </div>
 </section><section id="colophon" class="slide level2 colophon">
 <h2>Colophon</h2>
-<p><strong>SRC PhD R course Module 7 — Interactive R Markdown with Shiny"</strong> by <em>Stefan Daume</em></p>
+<p><strong>SRC PhD R course Module 9 — Structural Topic Modeling"</strong> by <em>Stefan Daume</em></p>
 <p> </p>
-<p>Presented on 16. December 2022.</p>
+<p>Presented on 16. March 2023.</p>
 <p> </p>
 <p>This presentation can be cited using: <em>doi:…</em></p>
 <p> </p>
 <p><strong>PRESENTATION DETAILS</strong></p>
 <p><strong>Author/Affiliation:</strong> Stefan Daume, Stockholm Resilience Centre, Stockholm University</p>
-<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides/shiny-module.html" class="uri">https://sdaume.github.io/r-course-module-3/slides/shiny-module.html</a></p>
+<p><strong>Presentation URL:</strong> <a href="https://sdaume.github.io/r-course-module-3/slides/textmining-module.html" class="uri">https://sdaume.github.io/r-course-module-3/slides/textmining-module.html</a></p>
 <p><strong>Presentation Source:</strong> [TBD]</p>
 <p><strong>Presentation PDF:</strong> [TBD]</p>
 <p> </p>
 <p><strong>CREDITS &amp; LICENSES</strong></p>
 <p>This presentation is delivered with the help of several free and open source tools and libraries. It utilises the <a href="https://revealjs.com/">reveal.js</a> presentation framework and has been created using <a href="https://rmarkdown.rstudio.com">RMarkdown</a>, <a href="https://yihui.name/knitr/">knitr</a>, <a href="https://www.rstudio.com">RStudio</a> and <a href="https://pandoc.org/">Pandoc</a>. <a href="https://highlightjs.org">highlight.js</a> provides syntax highlighting for code sections. <a href="https://www.mathjax.org">MathJax</a> supports the rendering of mathematical notations. PDF and JPG copies of this presentation were generated with <a href="https://github.com/astefanutti/decktape">DeckTape</a>. Please note the respective licenses of these tools and libraries.</p>
 <p> </p>
-<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2022 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
+<p>If not noted and attributed otherwise, the contents (text, charts, images) of this presentation are <strong>Copyright © 2023 of the Author</strong> and provided under a <em>CC BY 4.0</em> public domain license.</p>
 </section></section>
     </div>
   </div>
