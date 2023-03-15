@@ -129,14 +129,14 @@ load("../topicmodels/data/src_topic_effect.Rdata")
 
 ## Basic steps
 
-* get documents to analyse
-* preprocess
-* create a corpus
-* tokenize
-* create document-term matrix
-* *(evaluate alternative topic numbers)*
-* decide on K, the number of topics, and fit a topic model
-* *(validate semantic integrity of the topic model)*
+1. get documents to analyse
+2. preprocess
+3. create a corpus
+4. tokenize
+5. create document-term matrix
+6. *(evaluate alternative topic numbers)*
+7. decide on K, the number of topics, and fit a topic model
+8. *(validate semantic integrity of the topic model)*
 
 
 ## R packages to use
@@ -228,7 +228,7 @@ terms_by_date(textData = src_pubs,
 Questions:
 
 * Which latent topics exists?
-* How promiment are they?
+* How prominent are they?
 * Is the topic prevalence influenced by document variables?
 * How are topics related?
 
