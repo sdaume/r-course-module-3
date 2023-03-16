@@ -328,7 +328,7 @@ summary(src_topics)
 
 ## Topic shares
 
-```{r echo=FALSE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
+```{r echo=TRUE, fig.width=10, fig.height=7, dpi=200, out.width = "70%"}
 plot(src_topics, n = 5)
 ```
 
